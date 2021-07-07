@@ -1,0 +1,1 @@
+<?php echo do_shortcode('[su_image_carousel source="media: 387,385,383,381,379,377,375,342,341,340,339,338" limit="10" slides_style="minimal" controls_style="light" columns="4" align="center" link="lightbox"]'); ?>

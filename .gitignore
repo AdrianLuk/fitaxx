@@ -1,0 +1,14 @@
+.DS_Store
+.svn
+.cvs
+*.bak
+*.swp
+.vscode
+.installedExtras
+Thumbs.db
+
+node_modules
+
+# wordpress specific
+wp-config.php
+wp-content/uploads/
