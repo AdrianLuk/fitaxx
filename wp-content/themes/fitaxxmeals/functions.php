@@ -159,8 +159,8 @@ if (!function_exists('wpforge_content_nav')):
         global $wp_query;
         $html_id = esc_attr($html_id);
         if ($wp_query->max_num_pages > 1 && get_theme_mod('wpforge_post_nav_display') == 'pagenavi'): ?>
-							<?php wpforge_page_navi();?>
-						<?php else: ?>
+								<?php wpforge_page_navi();?>
+							<?php else: ?>
 			<nav id="<?php echo $html_id; ?>" class="navigation" role="navigation">
 				<h3 class="assistive-text"><?php _e('Post Navigation', 'wp-forge');?></h3>
 				<div class="nav-previous alignleft"><?php next_posts_link(__('<span class="meta-nav">&laquo;</span> Older posts', 'wp-forge'));?></div>
@@ -178,18 +178,18 @@ if (!function_exists('wpforge_comment')):
     case 'trackback':
         // Display trackbacks differently than normal comments.
         ?>
-							<li <?php comment_class();?> id="comment-<?php comment_ID();?>">
-								<p><?php _e('Pingback:', 'wp-forge');?> <?php comment_author_link();?> <?php edit_comment_link(__('(Edit)', 'wp-forge'), '<span class="edit-link"><span class="genericon genericon-edit"></span>', '</span>');?></p>
-								<?php
+								<li <?php comment_class();?> id="comment-<?php comment_ID();?>">
+									<p><?php _e('Pingback:', 'wp-forge');?> <?php comment_author_link();?> <?php edit_comment_link(__('(Edit)', 'wp-forge'), '<span class="edit-link"><span class="genericon genericon-edit"></span>', '</span>');?></p>
+									<?php
     break;
     default:
         // Proceed with normal comments.
         global $post;
         ?>
-							<li <?php comment_class();?> id="li-comment-<?php comment_ID();?>">
-								<article id="comment-<?php comment_ID();?>" class="comment">
-									<header class="comment-meta comment-author vcard">
-										<?php
+								<li <?php comment_class();?> id="li-comment-<?php comment_ID();?>">
+									<article id="comment-<?php comment_ID();?>" class="comment">
+										<header class="comment-meta comment-author vcard">
+											<?php
     echo get_avatar($comment, 72);
         printf(
             '<cite class="fn">%1$s %2$s</cite>',
@@ -205,10 +205,10 @@ if (!function_exists('wpforge_comment')):
             sprintf(__('%1$s at %2$s', 'wp-forge'), get_comment_date(), get_comment_time())
         );
         ?>
-									</header><!-- .comment-meta -->
-									<?php if ('0' == $comment->comment_approved): ?>
-										<p class="comment-awaiting-moderation"><?php _e('Your comment is awaiting moderation.', 'wp-forge');?></p>
-									<?php endif;?>
+										</header><!-- .comment-meta -->
+										<?php if ('0' == $comment->comment_approved): ?>
+											<p class="comment-awaiting-moderation"><?php _e('Your comment is awaiting moderation.', 'wp-forge');?></p>
+										<?php endif;?>
 					<section class="comment-content comment">
 						<?php comment_text();?>
 					</section><!-- .comment-content -->
@@ -550,10 +550,10 @@ add_action('after_setup_theme', 'wpforge_setup_woocommerce');
 if (!function_exists('wpforge_woocommerce_start')):
     function wpforge_woocommerce_start()
 {?>
-							<div id="content" class="cell" role="main">
-								<article id="post-<?php the_ID();?>" <?php post_class();?> <?php wpforge_article_schema('CreativeWork');?>>
-									<div class="entry-content" itemprop="text">
-									<?php
+								<div id="content" class="cell" role="main">
+									<article id="post-<?php the_ID();?>" <?php post_class();?> <?php wpforge_article_schema('CreativeWork');?>>
+										<div class="entry-content" itemprop="text">
+										<?php
     }
     add_action('woocommerce_before_main_content', 'wpforge_woocommerce_start', 10);
 endif;
@@ -562,10 +562,10 @@ endif;
 if (!function_exists('wpforge_woocommerce_end')):
     function wpforge_woocommerce_end()
 {?>
-									</div><!-- .entry-content -->
-								</article><!-- article -->
-							</div><!-- .site-main -->
-						<?php
+										</div><!-- .entry-content -->
+									</article><!-- article -->
+								</div><!-- .site-main -->
+							<?php
     }
     add_action('woocommerce_after_main_content', 'wpforge_woocommerce_end', 10);
 endif;
@@ -660,7 +660,7 @@ add_action('wp_enqueue_scripts', 'fitaxx_scripts', 9999);
 
 // SHORTCODE //
 
-include 'custom-shortcodes.php';
+// include 'custom-shortcodes.php';
 
 function dotiavatar_function()
 {
