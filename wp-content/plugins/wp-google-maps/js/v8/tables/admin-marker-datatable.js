@@ -26,10 +26,19 @@ jQuery(function($) {
 		$(element).find(".wpgmza.bulk_delete").on("click", function(event) {
 			self.onBulkDelete(event);
 		});
+
+		$(element).on("click", "[data-center-marker-id]", function(event) {
+			self.onCenterMarker(event);
+		});
 	}
 	
 	WPGMZA.AdminMarkerDataTable.prototype = Object.create(WPGMZA.DataTable.prototype);
 	WPGMZA.AdminMarkerDataTable.prototype.constructor = WPGMZA.AdminMarkerDataTable;
+	
+	WPGMZA.AdminMarkerDataTable.createInstance = function(element)
+	{
+		return new WPGMZA.AdminMarkerDataTable(element);
+	}
 	
 	WPGMZA.AdminMarkerDataTable.prototype.getDataTableSettings = function()
 	{
@@ -124,13 +133,44 @@ jQuery(function($) {
 			}
 		});
 	}
+
+	WPGMZA.AdminMarkerDataTable.prototype.onCenterMarker = function(event)
+	{
+		var id;
+
+		//Check if we have selected the center on marker button or called this function elsewhere 
+		if(event.currentTarget == undefined)
+		{
+			id = event;
+		}
+		else{
+			id = $(event.currentTarget).attr("data-center-marker-id");
+		}
+
+		var marker = WPGMZA.mapEditPage.map.getMarkerByID(id);
+		
+		if(marker){
+			var latLng = new WPGMZA.LatLng({
+				lat: marker.lat,
+				lng: marker.lng
+			});
+			
+			//Set a static zoom level
+			var zoom_value = 6;
+			WPGMZA.mapEditPage.map.setCenter(latLng);
+			WPGMZA.mapEditPage.map.setZoom(zoom_value);
+			WPGMZA.animateScroll("#wpgmaps_tabs_markers");
+		}
+
+
+	}
 	
-	$(document).ready(function(event) {
+	/*$(document).ready(function(event) {
 		
 		$("[data-wpgmza-admin-marker-datatable]").each(function(index, el) {
-			WPGMZA.adminMarkerDataTable = new WPGMZA.AdminMarkerDataTable(el);
+			WPGMZA.adminMarkerDataTable = WPGMZA.AdminMarkerDataTable.createInstance(el);
 		});
 		
-	});
+	});*/
 	
 });

@@ -5,7 +5,20 @@ namespace WPGMZA;
 if(!defined('ABSPATH'))
 	return;
 
-require_once(plugin_dir_path(__FILE__) . 'class.dom-element.php');
+/**
+ * We don't actually need to be callin require once here at all
+ * 
+ * The autoloader works fine, but because it was rebuilt in some ways for PHP8 
+ * 
+ * We will leave it as it, with a conditional PHP8 brach for now
+ * 
+ * Expect this to be removed more fully soon
+*/
+if(version_compare(phpversion(), '8.0', '>=')){
+	require_once(plugin_dir_path(__FILE__) . 'php8/class.dom-element.php');
+} else {
+	require_once(plugin_dir_path(__FILE__) . 'class.dom-element.php');
+}
 
 class DOMDocument extends \DOMDocument
 {
@@ -63,7 +76,6 @@ class DOMDocument extends \DOMDocument
 	{
 		if(!is_string($src))
 			throw new \Exception('Input must be a string');
-		
 		$result = \DOMDocument::load($src, $options);
 		$this->src_file = $src;
 		
@@ -71,6 +83,70 @@ class DOMDocument extends \DOMDocument
 		$this->onLoaded();
 		
 		return $result;
+	}
+	
+	private function translateLineNumber($htmlLineNumber, $src)
+	{
+		
+	}
+	
+	public function onError($severity, $message, $file, $unused)
+	{
+		if(!preg_match('/DOMDocument::loadHTML.+line: (\d+)/', $message, $m))
+		{
+			trigger_error($message, E_USER_WARNING);
+			return;
+		}
+		
+		$htmlLineNumber	= $m[1];
+		$lines			= file($this->src_file);
+		
+		$totalPhpLines	= count($lines);
+		$lineCounter	= 1;
+		
+		$allowShortTags	= ini_get('short_open_tag') == "1";
+		$regexOpenTag	= ($allowShortTags ? '/<\?(php)?/' : '/<\?php/');
+		$regexCloseTag	= "/\?>/";
+		
+		$inPhp			= false;
+		
+		for($phpLineNumber = 1; $phpLineNumber <= $totalPhpLines; $phpLineNumber++)
+		{
+			if($lineCounter == $htmlLineNumber)
+			{
+				$message = preg_replace(
+					array('/loadHTML/', '/line: \d+/'), 
+					array('loadPHPFile', "line: $phpLineNumber"), 
+					$message
+				);
+
+				/* Supress error because MO files cause issues which can be ignored */
+				@trigger_error($message, E_USER_WARNING);
+				
+				return;
+			}
+			
+			$line			= $lines[$phpLineNumber - 1];
+			
+			$numOpenTags	= preg_match_all($regexOpenTag, $line);
+			$numCloseTags	= preg_match_all($regexCloseTag, $line);
+			
+			if($numOpenTags > $numCloseTags)
+			{
+				$inPhp		= true;
+			}
+			else if($numCloseTags > 0)
+			{
+				$inPhp		= false;
+				$lineCounter--;	// NB: I don't understand why a close tag swallows the newline, but it does appear to
+			}
+			
+			if(!$inPhp)
+				$lineCounter++;
+		}
+		
+		trigger_error("Failed to translate line number", E_USER_WARNING);
+		trigger_error($message, E_USER_WARNING);
 	}
 	
 	/**
@@ -91,8 +167,14 @@ class DOMDocument extends \DOMDocument
 		if(empty($html))
 			throw new \Exception("$src is empty");
 		
-		$html = DOMDocument::convertUTF8ToHTMLEntities($html);
-		$suppress_warnings = !(defined('WP_DEBUG') && WP_DEBUG);
+		$this->src_file		= $src;
+		$html				= DOMDocument::convertUTF8ToHTMLEntities($html);
+		$suppress_warnings	= !(defined('WP_DEBUG') && WP_DEBUG);
+		
+		if(!$suppress_warnings)
+		{
+			$error_handler = set_error_handler(array($this, 'onError'), E_WARNING);
+		}
 		
 		// From PHP 5.4.0 onwards, loadHTML takes 2 arguments
 		if(version_compare(PHP_VERSION, '5.4.0', '>='))
@@ -110,7 +192,8 @@ class DOMDocument extends \DOMDocument
 				$result = $this->loadHTML($html);
 		}
 		
-		$this->src_file = $src;
+		if(!$suppress_warnings)
+			set_error_handler($error_handler);
 		
 		$this->onLoaded();
 		

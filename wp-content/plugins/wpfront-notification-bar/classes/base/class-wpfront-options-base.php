@@ -106,7 +106,7 @@ if (!class_exists('WPFront_Options_Base')) {
         }
 
         //sets the label of the option, for POEDIT compatibility
-        protected function __($label) {
+        protected function label($label) {
             $this->__data[$this->lastOptionName . '_label']['label'] = $label;
         }
 

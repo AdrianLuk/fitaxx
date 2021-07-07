@@ -53,10 +53,11 @@ class AdminMarkerDataTable extends MarkerDataTable
 					<a title="Edit this marker" class="wpgmza_edit_btn button" data-edit-marker-id="' . $id_placeholder . '">
 						<i class="fa fa-edit"> </i>
 					</a>
-					<a href="?page=wp-google-maps-menu&amp;action=edit_marker&amp;id=' . $id_placeholder . '" title="' 
-						. esc_attr( __('Edit this marker location', 'wp-google-maps') )  . 
-						'" class="wpgmza_edit_btn button" id="' . $id_placeholder . '">
+					<a title="' . esc_attr( __('Edit this marker location', 'wp-google-maps') ) . '" data-adjust-marker-id="' . $id_placeholder . '" class="wpgmza_edit_btn button">
 						<i class="fa fa-map-marker"> </i>
+					</a>
+					<a title="Center on marker" class="wpgmza_center_btn button" data-center-marker-id="' . $id_placeholder . '">
+					<i class="fa fa-eye"> </i>
 					</a>
 					<a href="javascript: ;" title="'
 						. esc_attr( __('Delete this marker', 'wp-google-maps') ) . 

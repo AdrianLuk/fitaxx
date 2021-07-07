@@ -9,8 +9,6 @@ jQuery(function($) {
 	{
 		this.element = $("<div class='wpgmza-google-text-overlay'><div class='wpgmza-inner'></div></div>");
 		
-		console.log(options);
-		
 		if(!options)
 			options = {};
 		
@@ -35,7 +33,8 @@ jQuery(function($) {
 		this.element.css({
 			position: "absolute",
 			left: position.x + "px",
-			top: position.y + "px"
+			top: position.y + "px",
+			minWidth : "200px"
 		});
 
 		var panes = this.getPanes();
@@ -50,7 +49,8 @@ jQuery(function($) {
 		this.element.css({
 			position: "absolute",
 			left: position.x + "px",
-			top: position.y + "px"
+			top: position.y + "px",
+			minWidth : "200px"
 		});
 	}
 	

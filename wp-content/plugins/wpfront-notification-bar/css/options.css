@@ -7,7 +7,8 @@
 {
 }
 
-#wpfront-notification-bar-options  input.seconds
+#wpfront-notification-bar-options  input.seconds, 
+#wpfront-notification-bar-options  input.pixels
 {
     width: 40px;
 }
@@ -36,11 +37,19 @@
 #wpfront-notification-bar-options table.form-table .color-selector-div
 {
     display: inline-block;
-    width: 100px;
+    width: 120px;
 }
 
 #wpfront-notification-bar-options table.form-table .color-selector 
 {
+    vertical-align: middle;
+}
+
+#wpfront-notification-bar-options table.form-table .color-value
+{
+    width: 75px;
+    height: 24px;
+    min-height: 0px;
     vertical-align: middle;
 }
 
@@ -65,4 +74,33 @@
     padding: 2px;
     white-space: nowrap;
     overflow: hidden;
+}
+
+#wpfront-notification-bar-options input.cookie-name
+{
+    width: 30%;
+}
+
+#wpfront-notification-bar-options input.post-id-list
+{
+    width: 70%;
+}
+
+.colorpicker input
+{
+    min-height: 0px;
+}
+
+#wpfront-notification-bar-options #media-library-button
+{
+    min-height: 0px;
+    height: 24px;
+    margin-bottom: 5px;
+    line-height: inherit;
+    vertical-align: inherit;
+}
+
+#wpfront-notification-bar-options #reopen-button-image-url
+{
+    width:600px;
 }

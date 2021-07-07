@@ -45,7 +45,7 @@ $vegan = new WP_Query( array(
                     ?></li>
             <?php endwhile; ?> 
             </ul>
-            <? else :
+            <?php else :
                 // no rows found
             endif;
             ?>
@@ -68,7 +68,7 @@ $vegan = new WP_Query( array(
                     ?></li>
             <?php endwhile; ?> 
             </ul>
-            <? else :
+            <?php else :
                 // no rows found
             endif;
             ?>

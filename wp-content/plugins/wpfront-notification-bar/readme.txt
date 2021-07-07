@@ -1,10 +1,11 @@
-﻿=== WPFront Notification Bar ===
+=== WPFront Notification Bar ===
 Contributors: syammohanm
 Donate link: http://wpfront.com/donate/
 Tags: notification bar, wordpress notification bar, top bar, bottom bar, notification, bar, quick bar, fixed bar, sticky bar, message bar, message, floating bar, notice, sticky header, special offer, discount offer, offer, important, attention bar, highlight bar, popup bar, hellobar, heads up, heads up bar, headsup, headsupbar, popup, Toolbar
-Requires at least: 4.0
-Tested up to: 5.2
-Stable tag: 1.7.1
+Requires at least: 5.0
+Tested up to: 5.7
+Requires PHP: 7.0
+Stable tag: 1.9.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -29,8 +30,9 @@ Want to display a notification about a promotion or a news? WPFront Notification
 * **Select the pages/posts** you want to display the notification.
 * **Select the user roles** you want to display the notification.
 * Set **Start** and **End dates**.
+* Hide in **Small Devices**.
 
-Visit [WPFront Notification Bar Ideas](http://wpfront.com/notification-bar-plugin-ideas/) page for some useful functionalities.
+Visit [WPFront Notification Bar Troubleshooting](https://wpfront.com/wordpress-plugins/notification-bar-plugin/wpfront-notification-bar-troubleshooting/) page for troubleshooting steps.
 
 Visit [WPFront Notification Bar Settings](http://wpfront.com/notification-bar-plugin-settings/) page for detailed option descriptions.
 
@@ -62,11 +64,35 @@ The new version(1.3) allows you to filter the bar based on user roles. In this c
 
 == Screenshots ==
  
-1. Bar on top.
-2. Bar on bottom.
-3. Settings page.
+1. Settings page.
 
 == Changelog ==
+
+= 1.9.1 =
+* Compatibility fix.
+
+= 1.9.0 =
+* Reopen button image is now configurable.
+* Add dynamic CSS through URL.
+* Compatibility fixes.
+* Bug fixes.
+* PHP 8.0 fixes.
+* SiteGround conflict fix.
+
+= 1.8.1 =
+* Description correction.
+
+= 1.8 =
+* Preview mode.
+* Debug mode.
+* Hide in small devices and windows.
+* Change cookie names.
+* Edit include/exclude post IDs manually.
+* Edit colors manually.
+* More rel attributes. Thanks to jetxpert.
+* Accessibility and compatibility fixes.
+* Filters 'wpfront_notification_bar_message' and 'wpfront_notification_bar_button_text' added.
+* Bug fixes.
 
 = 1.7.1 =
 * Processes shortcode in button text.
@@ -123,6 +149,15 @@ The new version(1.3) allows you to filter the bar based on user roles. In this c
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.9.1 =
+* Compatibility fix.
+
+= 1.9.0 =
+* Compatibility fixes.
+
+= 1.8 =
+* New features added.
 
 = 1.7.1 =
 * Bug fixes.

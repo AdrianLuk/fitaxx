@@ -29,92 +29,74 @@
  */
 ?>
 
-<style type="text/css">
-    #wpfront-notification-bar 
-    {
-        background: <?php echo $this->options->bar_from_color(); ?>;
-        background: -moz-linear-gradient(top, <?php echo $this->options->bar_from_color(); ?> 0%, <?php echo $this->options->bar_to_color(); ?> 100%);
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,<?php echo $this->options->bar_from_color(); ?>), color-stop(100%,<?php echo $this->options->bar_to_color(); ?>));
-        background: -webkit-linear-gradient(top, <?php echo $this->options->bar_from_color(); ?> 0%,<?php echo $this->options->bar_to_color(); ?> 100%);
-        background: -o-linear-gradient(top, <?php echo $this->options->bar_from_color(); ?> 0%,<?php echo $this->options->bar_to_color(); ?> 100%);
-        background: -ms-linear-gradient(top, <?php echo $this->options->bar_from_color(); ?> 0%,<?php echo $this->options->bar_to_color(); ?> 100%);
-        background: linear-gradient(to bottom, <?php echo $this->options->bar_from_color(); ?> 0%, <?php echo $this->options->bar_to_color(); ?> 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='<?php echo $this->options->bar_from_color(); ?>', endColorstr='<?php echo $this->options->bar_to_color(); ?>',GradientType=0 );
-    }
+<?php
+if (!$this->options->dynamic_css_use_url()) {
+    ?>
+    <style type="text/css">
+    <?php
+    $template = new WPFront_Notification_Bar_Custom_CSS_Template();
+    $template->write($this);
+    ?>
+    </style>
+    <?php
+}
+?>
 
-    #wpfront-notification-bar div.wpfront-message
-    {
-        color: <?php echo $this->options->message_color(); ?>;
-    }
-
-    #wpfront-notification-bar a.wpfront-button
-    {
-        background: <?php echo $this->options->button_from_color(); ?>;
-        background: -moz-linear-gradient(top, <?php echo $this->options->button_from_color(); ?> 0%, <?php echo $this->options->button_to_color(); ?> 100%);
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,<?php echo $this->options->button_from_color(); ?>), color-stop(100%,<?php echo $this->options->button_to_color(); ?>));
-        background: -webkit-linear-gradient(top, <?php echo $this->options->button_from_color(); ?> 0%,<?php echo $this->options->button_to_color(); ?> 100%);
-        background: -o-linear-gradient(top, <?php echo $this->options->button_from_color(); ?> 0%,<?php echo $this->options->button_to_color(); ?> 100%);
-        background: -ms-linear-gradient(top, <?php echo $this->options->button_from_color(); ?> 0%,<?php echo $this->options->button_to_color(); ?> 100%);
-        background: linear-gradient(to bottom, <?php echo $this->options->button_from_color(); ?> 0%, <?php echo $this->options->button_to_color(); ?> 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='<?php echo $this->options->button_from_color(); ?>', endColorstr='<?php echo $this->options->button_to_color(); ?>',GradientType=0 );
-
-        color: <?php echo $this->options->button_text_color(); ?>;
-    }
-
-    #wpfront-notification-bar-open-button
-    {
-        background-color: <?php echo $this->options->open_button_color(); ?>;
-    }
-
-    #wpfront-notification-bar  div.wpfront-close 
-    {
-        border: 1px solid <?php echo $this->options->close_button_color(); ?>;
-        background-color: <?php echo $this->options->close_button_color(); ?>;
-        color: <?php echo $this->options->close_button_color_x(); ?>;
-    }
-
-    #wpfront-notification-bar  div.wpfront-close:hover 
-    {
-        border: 1px solid <?php echo $this->options->close_button_color_hover(); ?>;
-        background-color: <?php echo $this->options->close_button_color_hover(); ?>;
-    }
-</style>
 
 <?php if ($this->options->display_button() && $this->options->button_action() == 2) { ?>
     <script type="text/javascript">
         function wpfront_notification_bar_button_action_script() {
             try {
     <?php echo $this->options->button_action_javascript(); ?>
-            }
-            catch (err) {
+            } catch (err) {
             }
         }
     </script>
 <?php } ?>
 
-<div id="wpfront-notification-bar-spacer"  style="display: none;">
-    <div id="wpfront-notification-bar-open-button" class="<?php echo $this->options->position() == 1 ? 'top wpfront-bottom-shadow' : 'bottom wpfront-top-shadow'; ?>"></div>
-    <div id="wpfront-notification-bar" class="wpfront-fixed <?php if ($this->options->display_shadow()) echo $this->options->position() == 1 ? 'wpfront-bottom-shadow' : 'wpfront-top-shadow'; ?>">
-        <?php if ($this->options->close_button()) { ?>
-            <div class="wpfront-close">X</div>
+<div id="wpfront-notification-bar-spacer" class="<?php echo $this->display_on_page_load() ? ' ' : 'hidden'; ?>">
+    <div id="wpfront-notification-bar-open-button" aria-label="reopen" class="hidden <?php echo $this->options->position() == 1 ? 'top wpfront-bottom-shadow' : 'bottom wpfront-top-shadow'; ?>"></div>
+    <div id="wpfront-notification-bar" class="wpfront-fixed <?php echo $this->display_on_page_load() ? ' load' : ''; ?> <?php echo $this->options->position() == 1 ? ' top' : ' bottom'; ?> <?php if ($this->options->display_shadow()) echo $this->options->position() == 1 ? ' wpfront-bottom-shadow' : ' wpfront-top-shadow'; ?>">
+        
+           <?php   if ($this->options->close_button()) { ?>
+            <div aria-label="close" class="wpfront-close">X</div>
         <?php } ?>
-        <table border="0" cellspacing="0" cellpadding="0">
+        <table border="0" cellspacing="0" cellpadding="0" role="presentation">
             <tr>
                 <td>
                     <div class="wpfront-message">
                         <?php echo $this->get_message_text(); ?>
                     </div>
                     <div>
-                        <?php 
-                            if ($this->options->display_button()) { 
-                                $button_text = $this->get_button_text();
+                        <?php
+                        if ($this->options->display_button()) {
+                            $button_text = $this->get_button_text();
+                            ?>
+                            <?php
+                            if ($this->options->button_action() == 1) {
+                                $rel = array();
+
+                                if ($this->options->button_action_url_nofollow()) {
+                                    $rel[] = 'nofollow';
+                                }
+
+                                if ($this->options->button_action_url_noreferrer()) {
+                                    $rel[] = 'noreferrer';
+                                }
+
+                                if ($this->options->button_action_new_tab() && $this->options->button_action_url_noopener()) {
+                                    $rel[] = 'noopener';
+                                }
+
+                                $rel = implode(' ', $rel);
                                 ?>
-                                <?php if ($this->options->button_action() == 1) { ?>
-                                    <a class="wpfront-button" href="<?php echo $this->options->button_action_url(); ?>"  target="<?php echo $this->options->button_action_new_tab() ? '_blank' : '_self'; ?>" <?php echo $this->options->button_action_url_nofollow() ? 'rel="nofollow"' : ''; ?>><?php echo $button_text; ?></a>
-                                <?php } ?>
-                                <?php if ($this->options->button_action() == 2) { ?>
-                                    <a class="wpfront-button" onclick="javascript:wpfront_notification_bar_button_action_script();"><?php echo $button_text; ?></a>
-                                <?php } ?>
+                                <a class="wpfront-button" href="<?php echo $this->options->button_action_url(); ?>"  target="<?php echo $this->options->button_action_new_tab() ? '_blank' : '_self'; ?>" <?php echo empty($rel) ? '' : "rel=\"$rel\""; ?>><?php echo $button_text; ?></a>
+                                <?php
+                            }
+                            ?>
+                            <?php if ($this->options->button_action() == 2) { ?>
+                                <a class="wpfront-button" onclick="javascript:wpfront_notification_bar_button_action_script();"><?php echo $button_text; ?></a>
+                            <?php } ?>
                         <?php } ?>
                     </div>
                 </td>
@@ -122,8 +104,6 @@
         </table>
     </div>
 </div>
+</div>
 
 
-<style type="text/css">
-<?php echo $this->options->custom_css(); ?>
-</style>

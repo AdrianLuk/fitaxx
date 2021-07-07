@@ -52,7 +52,11 @@ jQuery(function($) {
 		 */
 		localized_strings: null,
 		
+		// NB: Legacy
 		loadingHTML: '<div class="wpgmza-preloader"><div class="wpgmza-loader">...</div></div>',
+		
+		// NB: Correct
+		preloaderHTML: "<div class='wpgmza-preloader'><div></div><div></div><div></div><div></div></div>",
 		
 		getCurrentPage: function() {
 			
@@ -102,6 +106,13 @@ jQuery(function($) {
 			return (WPGMZA.settings.scroll_animation_offset || 0) + $("#wpadminbar").height();
 		},
 		
+		getScrollAnimationDuration: function() {
+			if(WPGMZA.settings.scroll_animation_milliseconds)
+				return WPGMZA.settings.scroll_animation_milliseconds;
+			else
+				return 500;
+		},
+		
 		/**
 		 * Animated scroll, accounts for animation settings and fixed header height
 		 * @method animateScroll
@@ -115,12 +126,7 @@ jQuery(function($) {
 			var offset = WPGMZA.getScrollAnimationOffset();
 			
 			if(!milliseconds)
-			{
-				if(WPGMZA.settings.scroll_animation_milliseconds)
-					milliseconds = WPGMZA.settings.scroll_animation_milliseconds;
-				else
-					milliseconds = 500;
-			}
+				milliseconds = WPGMZA.getScrollAnimationDuration();
 			
 			$("html, body").animate({
 				scrollTop: $(element).offset().top - offset
@@ -165,13 +171,19 @@ jQuery(function($) {
 		 */
 		hexOpacityToRGBA: function(colour, opacity)
 		{
-			hex = parseInt(colour.replace(/^#/, ""), 16);
+			var hex = parseInt(colour.replace(/^#/, ""), 16);
 			return [
 				(hex & 0xFF0000) >> 16,
 				(hex & 0xFF00) >> 8,
 				hex & 0xFF,
 				parseFloat(opacity)
 			];
+		},
+		
+		hexOpacityToString: function(colour, opacity)
+		{
+			var arr = WPGMZA.hexOpacityToRGBA(colour, opacity);
+			return "rgba(" + arr[0] + ", " + arr[1] + ", " + arr[2] + ", " + arr[3] + ")";
 		},
 		
 		/**
@@ -403,13 +415,24 @@ jQuery(function($) {
 			var trigger = "userlocationfound";
 			var nativeFunction = "getCurrentPosition";
 			
+			if(WPGMZA.userLocationDenied)
+			{
+				// NB: This code can also be reached on non https:// sites, the error code is the same
+				if(error)
+					error({code: 1, message: "Location unavailable"});
+				
+				return; // NB: The user has declined to share location. Only ask once per session.
+			}
+			
 			if(watch)
 			{
 				trigger = "userlocationupdated";
 				nativeFunction = "watchPosition";
 				
 				// Call again immediatly to get current position, watchPosition won't fire until the user moves
-				WPGMZA.getCurrentPosition(callback, false);
+				/*setTimeout(function() {
+					WPGMZA.getCurrentPosition(callback, false);
+				}, 0);*/
 			}
 			
 			if(!navigator.geolocation)
@@ -421,6 +444,12 @@ jQuery(function($) {
 			var options = {
 				enableHighAccuracy: true
 			};
+			
+			if(!navigator.geolocation[nativeFunction])
+			{
+				console.warn(nativeFunction + " is not available");
+				return;
+			}
 			
 			navigator.geolocation[nativeFunction](function(position) {
 				if(callback)
@@ -440,6 +469,9 @@ jQuery(function($) {
 				},
 				function(err) {
 					console.warn(err.code, err.message);
+					
+					if(err.code == 1)
+						WPGMZA.userLocationDenied = true;
 					
 					if(error)
 						error(err);
@@ -479,6 +511,23 @@ jQuery(function($) {
 				}
 		},
 		
+		capitalizeWords: function(string)
+		{
+			return (string + "").replace(/^(.)|\s+(.)/g, function(m) {
+				return m.toUpperCase()
+			});
+		},
+		
+		pluralize: function(string)
+		{
+			return WPGMZA.singularize(string) + "s";
+		},
+		
+		singularize: function(string)
+		{
+			return string.replace(/s$/, "");
+		},
+		
 		/**
 		 * This function is for checking inheritence has been setup correctly. For objects that have engine and Pro specific classes, it will automatically add the engine and pro prefix to the supplied string and if such an object exists it will test against that name rather than the un-prefix argument supplied.
 		 *
@@ -504,14 +553,25 @@ jQuery(function($) {
 					break;
 			}
 			
-			if(WPGMZA[engine + pro + instanceName])
+			if(
+				WPGMZA[engine + pro + instanceName]
+				&&
+				engine + instanceName != "OLFeature" // NB: Some classes, such as OLFeature, are static utility classes and cannot be inherited from, do not check the inheritence chain for these
+				)
 				fullInstanceName = engine + pro + instanceName;
 			else if(WPGMZA[pro + instanceName])
 				fullInstanceName = pro + instanceName;
-			else if(WPGMZA[engine + instanceName])
-				fullInstanceName = engine + instanceName;
+			else if(
+				WPGMZA[engine + instanceName] 
+				&& 
+				WPGMZA[engine + instanceName].prototype
+				)
+				fullInstanceName = engine + instanceName; 
 			else
 				fullInstanceName = instanceName;
+			
+			if(fullInstanceName == "OLFeature")
+				return;	// Nothing inherits from OLFeature - it's purely a "static" utility class
 			
 			assert = instance instanceof WPGMZA[fullInstanceName];
 			
@@ -527,19 +587,13 @@ jQuery(function($) {
 		 */
 		getMapByID: function(id) {
 			
-			// Workaround for map ID member not set correctly
-			
-			if(WPGMZA.isProVersion() && !(MYMAP.map instanceof WPGMZA.Map))
-				return MYMAP[id].map;
-			
-			return MYMAP.map;
-			
-			/*for(var i = 0; i < WPGMZA.maps.length; i++) {
+			for(var i = 0; i < WPGMZA.maps.length; i++) {
 				if(WPGMZA.maps[i].id == id)
 					return WPGMZA.maps[i];
 			}
 			
-			return null;*/
+			return null;
+			
 		},
 		
 		/**
@@ -549,7 +603,24 @@ jQuery(function($) {
 		 * @return {boolean} True if the places autocomplete is available
 		 */
 		isGoogleAutocompleteSupported: function() {
-			return typeof google === 'object' && typeof google.maps === 'object' && typeof google.maps.places === 'object' && typeof google.maps.places.Autocomplete === 'function';
+			
+			if(!window.google)
+				return false;
+			
+			if(!google.maps)
+				return false;
+			
+			if(!google.maps.places)
+				return false;
+			
+			if(!google.maps.places.Autocomplete)
+				return false;
+			
+			if(WPGMZA.CloudAPI && WPGMZA.CloudAPI.isBeingUsed)
+				return false;
+			
+			return true;
+			
 		},
 		
 		/**
@@ -636,6 +707,12 @@ jQuery(function($) {
 			
 		},
 		
+		isFullScreen: function() {
+			
+			return wpgmzaisFullScreen;
+			
+		},
+		
 		getQueryParamValue: function(name) {
 			
 			var regex = new RegExp(name + "=([^&#]*)");
@@ -644,7 +721,7 @@ jQuery(function($) {
 			if(!(m = window.location.href.match(regex)))
 				return null;
 			
-			return m[1];	
+			return decodeURIComponent(m[1]);
 		},
 
 		notification: function(text, time) {
@@ -671,10 +748,32 @@ jQuery(function($) {
 		
 	};
 	
+	var wpgmzaisFullScreen = false;
+
+
+	// NB: Warn the user if the built in Array prototype has been extended. This will save debugging headaches where for ... in loops do bizarre things.
+	for(var key in [])
+	{
+		console.warn("It appears that the built in JavaScript Array has been extended, this can create issues with for ... in loops, which may cause failure.");
+		break;
+	}
+	
 	if(window.WPGMZA)
 		window.WPGMZA = $.extend(window.WPGMZA, core);
 	else
 		window.WPGMZA = core;
+
+	/* Usercentrics base level integration */
+	if(window.uc && window.uc.reloadOnOptIn){
+		window.uc.reloadOnOptIn(
+		    'S1pcEj_jZX'
+		); 	
+
+		window.uc.reloadOnOptOut(
+			'S1pcEj_jZX'
+		);
+	}
+
 	
 	for(var key in WPGMZA_localized_data)
 	{
@@ -682,16 +781,20 @@ jQuery(function($) {
 		WPGMZA[key] = value;
 	}
 	
+	// delete window.WPGMZA_localized_data;
+	
 	WPGMZA.settings.useLegacyGlobals = true;
 	
 	jQuery(function($) {
+		
+		$(window).trigger("ready.wpgmza");
 		
 		// Combined script warning
 		if($("script[src*='wp-google-maps.combined.js'], script[src*='wp-google-maps-pro.combined.js']").length)
 			console.warn("Minified script is out of date, using combined script instead.");
 		
 		// Check for multiple jQuery versions
-		var elements = $("script").filter(function() {
+		var elements = $("script[src]").filter(function() {
 			return this.src.match(/(^|\/)jquery\.(min\.)?js(\?|$)/i);
 		});
 
@@ -699,18 +802,36 @@ jQuery(function($) {
 			console.warn("Multiple jQuery versions detected: ", elements);
 		
 		// Rest API
-		WPGMZA.restAPI = WPGMZA.RestAPI.createInstance();
+		WPGMZA.restAPI	= WPGMZA.RestAPI.createInstance();
 		
-		// TODO: Move to map edit page JS
-		$(document).on("click", ".wpgmza_edit_btn", function() {
+		if(WPGMZA.CloudAPI)
+			WPGMZA.cloudAPI	= WPGMZA.CloudAPI.createInstance();
+		
+	
+		$(document).on("fullscreenchange", function() {
 			
-			WPGMZA.animateScroll("#wpgmaps_tabs_markers");
+			wpgmzaisFullScreen = document.fullscreenElement ? true : false;
 			
+		});
+
+		$('body').on('click',"#wpgmzaCloseChat", function(e) {
+			e.preventDefault();
+			$.ajax(WPGMZA.ajaxurl, {
+	    		method: 'POST',
+	    		data: {
+	    			action: 'wpgmza_hide_chat',
+	    			nonce: WPGMZA_localized_data.ajaxnonce
+	    		}	    		
+	    	});
+       		$('.wpgmza-chat-help').remove();
+
+			
+
 		});
 		
 	});
 	
-	$(window).on("load", function(event) {
+	$(document).ready(function(event) {
 		
 		// Array incorrectly extended warning
 		var test = [];
@@ -724,9 +845,7 @@ jQuery(function($) {
 		{
 			var warning = '<div class="notice notice-warning"><p>' + WPGMZA.localized_strings.unsecure_geolocation + "</p></div>";
 			
-			$(".wpgmza-geolocation-setting").each(function(index, el) {
-				$(el).after( $(warning) );
-			});
+			$(".wpgmza-geolocation-setting").first().after( $(warning) );
 		}
 		
 	});
@@ -755,9 +874,59 @@ jQuery(function($) {
 	}
 	
 	$(window).on("scroll", onScroll);
-	$(window).on("load", onScroll);
+	$(document).ready(onScroll);
 	
-	if(WPGMZA.refreshOnLoad)
+	$(function() {
+		
+		function initMaps()
+		{
+			$(document.body).find(".wpgmza_map:not(.wpgmza-initialized)").each(function(index, el) {
+				if(el.wpgmzaMap)
+				{
+					console.warn("Element missing class wpgmza-initialized but does have wpgmzaMap property. No new instance will be created");
+					return;
+				}
+				
+				el.wpgmzaMap = WPGMZA.Map.createInstance(el);
+			});
+			
+			WPGMZA.Map.nextInitTimeoutID = setTimeout(initMaps, 3000);
+		}
+		
+
+		if(WPGMZA.googleAPIStatus && WPGMZA.googleAPIStatus.code == "USER_CONSENT_NOT_GIVEN") {
+			if(jQuery('.wpgmza-gdpr-compliance').length <= 0){
+				$("#wpgmza_map, .wpgmza_map").each(function(index, el) {
+					$(el).append($(WPGMZA.api_consent_html));
+					$(el).css({height: "auto"});
+				});
+				
+				$("button.wpgmza-api-consent").on("click", function(event) {
+					Cookies.set("wpgmza-api-consent-given", true);
+					window.location.reload();
+				});
+			}
+			
+			return;
+		}
+
+		initMaps();
+		
+	});
+	
+	$(document.body).on("click", "button.wpgmza-api-consent", function(event) {
+		Cookies.set("wpgmza-api-consent-given", true);
 		window.location.reload();
+	});
+	
+	$(document.body).on("keydown", function(event) {
+		if(event.altKey)
+			WPGMZA.altKeyDown = true;
+	});
+	
+	$(document.body).on("keyup", function(event) {
+		if(!event.altKey)
+			WPGMZA.altKeyDown = false;
+	});
 	
 });

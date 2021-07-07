@@ -108,18 +108,12 @@ class GoogleMapsAPILoader
 		
 		// Locale
 		$locale = get_locale();
-		$suffix = '.com';
 		
 		switch($locale)
 		{
 			case 'he_IL':
 				// Hebrew correction
 				$locale = 'iw';
-				break;
-			
-			case 'zh_CN':
-				// Chinese integration
-				$suffix = '.cn';
 				break;
 		}
 		
@@ -129,20 +123,29 @@ class GoogleMapsAPILoader
 		// Default params for google maps
 		$params = array(
 			'v' 		=> 'quarterly',
-			'language'	=> $locale,
-			'suffix'	=> $suffix
+			'language'	=> $locale
 		);
 		
 		// API Key
+		
+		// NB: Legacy key
 		$key = get_option('wpgmza_google_maps_api_key');
 		
-		if($key)
+		// NB: Standard key
+		if(empty($key))
+			$key = $wpgmza->settings->wpgmza_google_maps_api_key;
+		
+		if(!empty($key))
 			$params['key'] = $key;
 		else if(is_admin())
 			$params['key'] = get_option('wpgmza_temp_api');
 		
 		// Libraries
 		$libraries = array('geometry', 'places', 'visualization');
+		
+		if($wpgmza->getCurrentPage() == Plugin::PAGE_MAP_EDIT)
+			$libraries[] = 'drawing';
+		
 		$params['libraries'] = implode(',', $libraries);
 		
 		$params = apply_filters( 'wpgmza_google_maps_api_params', $params );
@@ -169,10 +172,7 @@ class GoogleMapsAPILoader
 		
 		$params = $this->getGoogleMapsAPIParams();
 		
-		$suffix = $params['suffix'];
-		unset($params['suffix']);
-
-		$url = '//maps.google' . $suffix . '/maps/api/js?' . http_build_query($params);
+		$url = '//maps.googleapis.com/maps/api/js?' . http_build_query($params);
 		
 		wp_register_script('wpgmza_api_call', $url);
 		
@@ -277,13 +277,21 @@ class GoogleMapsAPILoader
 		if(isset($wpgmza->settings->wpgmza_maps_engine) && $wpgmza->settings->wpgmza_maps_engine == 'open-street-map')
 			$wpgmza->settings->wpgmza_maps_engine = 'open-layers';
 		
-		if(!empty($settings['wpgmza_settings_remove_api']))
+
+		/** 
+		 * Removed in 8.1.2
+		 * 
+		 * This is now controlled purely by the conditional dropdown
+		 *
+		 * Will cause issues if the user is coming from V6 maps,forcing the system to always skip API loading, no option to untoggle settings as it was deprecated
+		*/
+		/*if(!empty($settings['wpgmza_settings_remove_api']))
 		{
 			$status->message = 'Remove API checked in settings';
 			$status->code = GoogleMapsAPILoader::REMOVE_API_CHECKED;
 			
 			return false;
-		}
+		}*/
 		
 		if(!is_admin() && 
 			!empty($settings['wpgmza_gdpr_require_consent_before_load']) && 
@@ -320,7 +328,20 @@ class GoogleMapsAPILoader
 				
 				return false;
 			}
+			
+			if(is_admin() && !empty($post->post_type)){
+				/**
+				 *  V9 Will move away from this switch, and instead use an array with a filter for devs to extend further as needed
+				*/
+				switch($post->post_type){
+					case 'wpsl_stores';
+						$status->message = 'Page is explicitly excluded in settings';
+						$status->code = GoogleMapsAPILoader::PAGE_EXPLICITLY_EXCLUDED;
+						return false;
+				}
+			}
 		}
+
 			
 		if(!empty($settings['wpgmza_load_engine_api_condition']))
 			switch($settings['wpgmza_load_engine_api_condition'])
@@ -398,7 +419,9 @@ class GoogleMapsAPILoader
 		global $wpgmza;
 		
 		// Load our subclass of PHPs DOMDocument, for the populate function
-		require_once(plugin_dir_path(__FILE__) . 'class.dom-document.php');
+		if(!version_compare(phpversion(), '8.0', '>=')){
+			require_once(plugin_dir_path(__FILE__) . 'class.dom-document.php');
+		}
 		
 		// Load HTML
 		$document = new DOMDocument();

@@ -31,6 +31,22 @@
     width: 100%;
 }
 
+#wpfront-notification-bar.wpfront-fixed.load
+{
+    visibility: visible;
+    position: relative;
+}
+
+#wpfront-notification-bar.top
+{
+    top: 0px;
+}
+
+#wpfront-notification-bar.bottom
+{
+    bottom: 0px;
+}
+
 #wpfront-notification-bar  div.wpfront-close
 {
     position: absolute;
@@ -101,7 +117,6 @@
 
 #wpfront-notification-bar-open-button
 {
-    display: none;
     position: absolute;
     right: 10px;
     z-index: 9999;
@@ -110,23 +125,27 @@
     height: 30px;
     cursor: pointer;
     background-repeat: no-repeat;
-    
+
     border-radius: 2px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
-    
+
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
     box-sizing: content-box;
 }
 
+#wpfront-notification-bar-open-button.hidden
+{
+    display: none;
+}
+
 #wpfront-notification-bar-open-button.top 
 {
     top: 0px;
-    background-image: url(../images/arrow_down.png);
     background-position: top center;
     border-top: 0px;
-    
+
     -webkit-border-top-right-radius: 0px;
     -webkit-border-top-left-radius: 0px;
     -moz-border-radius-topright: 0px;
@@ -138,10 +157,9 @@
 #wpfront-notification-bar-open-button.bottom 
 {
     bottom: 0px;
-    background-image: url(../images/arrow_up.png);
     background-position: bottom center;
     border-bottom: 0px;
-    
+
     -webkit-border-bottom-right-radius: 0px;
     -webkit-border-bottom-left-radius: 0px;
     -moz-border-radius-bottomright: 0px;
@@ -152,7 +170,11 @@
 
 #wpfront-notification-bar-spacer
 {
-    display: none;
     position: relative;
+}
+
+#wpfront-notification-bar-spacer.hidden
+{
+    display: none;
 }
 

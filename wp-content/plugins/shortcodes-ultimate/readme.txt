@@ -3,10 +3,10 @@ Contributors: gn_themes
 License: GPLv3
 Donate link: https://paypal.me/anovladimir
 Tags: shortcode, toggle, columns, button, slider
-Requires at least: 4.6
-Tested up to: 5.5
 Requires PHP: 5.3
-Stable tag: 5.9.2
+Requires at least: 4.6
+Tested up to: 5.7
+Stable tag: 5.10.0
 
 A comprehensive collection of visual components for your site
 
@@ -33,7 +33,7 @@ A comprehensive collection of visual components for your site
 
 ### Links
 
-- [Available Shortcodes](https://getshortcodes.com/shortcodes/?utm_campaign=wporg&utm_source=readme&utm_medium=available-shortcodes)
+- [Available Shortcodes](https://getshortcodes.com/docs-category/shortcodes/?utm_campaign=wporg&utm_source=readme&utm_medium=available-shortcodes)
 - [Add-ons](https://getshortcodes.com/add-ons/?utm_campaign=wporg&utm_source=readme&utm_medium=add-ons)
 - [Documentation](https://getshortcodes.com/docs/?utm_campaign=wporg&utm_source=readme&utm_medium=docs)
 - [Support Forum](https://wordpress.org/support/plugin/shortcodes-ultimate)
@@ -140,25 +140,18 @@ Yes! Shortcodes Ultimate is designed to work with any theme, but your theme must
 
 ### Where can I get help?
 
-First, visit the [Help Center](https://getshortcodes.com/support/). If you get stuck, ask for help at the [official support forum](https://wordpress.org/support/plugin/shortcodes-ultimate). Also, you can get personal support from the developer by purchasing any of the [premium add-ons](https://getshortcodes.com/add-ons/).
+First, visit the [Help Center](https://getshortcodes.com/support/). If you get stuck, ask for help at the [community support forum](https://wordpress.org/support/plugin/shortcodes-ultimate). Also, you can get personal support from the developer by purchasing any of the [premium add-ons](https://getshortcodes.com/add-ons/).
 
 
 ## Changelog
 
 
-### 5.9.2
+### 5.10.0
 
 **What's new**
 
-- `[su_qrcode]` now supports nested shortcodes in the `data` attribute
-- Improved performance by reducing the number of DB queries
-
-**Fixes**
-
-- Fixed issue in the Insert Shortcode tool with Taxonomy and Tax terms fields
-- Fixed error `Posts: invalid template name` on some installations
-- This update also fixes the plugin options issue present in 5.9.1
-
+- Major update to the `su_tooltip` shortcode, now it works without jQuery migrate and has more options
+- Fixed logic of the `su_user` shortcode
 
 ---
-[Older changelog entries](https://plugins.trac.wordpress.org/browser/shortcodes-ultimate/trunk/changelog.txt).
+[Version history →](https://plugins.trac.wordpress.org/browser/shortcodes-ultimate/trunk/changelog.txt)

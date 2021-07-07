@@ -130,11 +130,7 @@ class AjaxTable extends Table
 			$query_params[] = $input_params['map_id'];
 		}
 		
-		if(!(is_admin() || (isset($_SERVER['HTTP_REFERER']) && preg_match('/page=wp-google-maps-menu/', $_SERVER['HTTP_REFERER']) && current_user_can('administrator'))))
-		{
-			$clauses['approved'] = 'approved=%d';
-			$query_params[] = 1;
-		}
+		// NB: Moved approval check to MarkerDataTable
 		
 		if(!$clause_for_total)
 		{
@@ -349,8 +345,9 @@ class AjaxTable extends Table
 		
 		// Meta
 		$meta = array();
-		foreach($rows as $key => $value)
-			$meta[$key] = $value;
+		foreach($rows as $key => $value){
+			$meta[$key] = (array) $value;
+		}
 		
 		$result = (object)array(
 			'recordsTotal'		=> $total_count,

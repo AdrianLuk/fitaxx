@@ -12,6 +12,12 @@ jQuery(function($) {
 		this.element = $("#wpgmza-theme-panel");
 		this.map = WPGMZA.maps[0];
 		
+		if(WPGMZA.settings.engine == "open-layers")
+		{
+			this.element.remove();
+			return;
+		}
+		
 		if(!this.element.length)
 		{
 			console.warn("No element to initialise theme panel on");
@@ -19,7 +25,7 @@ jQuery(function($) {
 		}
 		
 		$("#wpgmza-theme-presets").owlCarousel({
-			items: 5,
+			items: 6,
 			dots: true
 		});
 		
@@ -76,7 +82,7 @@ jQuery(function($) {
 		try{
 			data = JSON.parse($("textarea[name='wpgmza_theme_data']").val());
 		}catch(e) {
-			console.log("TODO: Issue a warning on screen");
+			alert(WPGMZA.localized_strings.invalid_theme_data);
 			return;
 		}
 		

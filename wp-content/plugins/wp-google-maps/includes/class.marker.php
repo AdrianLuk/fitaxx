@@ -11,7 +11,7 @@ require_once(plugin_dir_path(__FILE__) . '/class.crud.php');
 /**
  * This class represents a marker
  */
-class Marker extends Crud implements \JsonSerializable
+class Marker extends Feature implements \JsonSerializable
 {
 	const DEFAULT_ICON = WPGMZA_PLUGIN_DIR_URL . 'images/spotlight-poi2.png';
 	
@@ -70,6 +70,7 @@ class Marker extends Crud implements \JsonSerializable
 		$json = Crud::jsonSerialize();
 		
 		unset($json['latlng']);
+		unset($json['lnglat']);
 		
 		return $json;
 	}
@@ -97,6 +98,9 @@ class Marker extends Crud implements \JsonSerializable
 	protected function get_column_parameter($name)
 	{
 		if($name == 'latlng')
+			return "POINT(" . floatval($this->lat) . " " . floatval($this->lng) . ")";
+		
+		if($name == 'lnglat')
 			return "POINT(" . floatval($this->lat) . " " . floatval($this->lng) . ")";
 		
 		return Crud::get_column_parameter($name);
@@ -135,7 +139,11 @@ class Marker extends Crud implements \JsonSerializable
 			$this->id
 		);
 		
-		$stmt = $wpdb->prepare("UPDATE " . $this->get_table_name() . " SET lat=%s, lng=%s, latlng={$wpgmza->spatialFunctionPrefix}GeomFromText(%s) WHERE id=%d", $params);
+		$stmt = $wpdb->prepare("UPDATE " . $this->get_table_name() . " 
+			SET lat=%s, 
+			lng=%s, 
+			latlng={$wpgmza->spatialFunctionPrefix}GeomFromText(%s)
+			WHERE id=%d", $params);
 		
 		$wpdb->query($stmt);
 	}
@@ -160,6 +168,17 @@ class Marker extends Crud implements \JsonSerializable
 	public function getPosition()
 	{
 		return new LatLng($this->lat, $this->lng);
+	}
+	
+	public function setPosition($latlng)
+	{
+		if(!($latlng instanceof LatLng))
+			throw new \Exception("Argument is not an instance of LatLng");
+		
+		$this->lat = $latlng->lat;
+		$this->lng = $latlng->lng;
+		
+		$this->update_latlng();
 	}
 }
 
