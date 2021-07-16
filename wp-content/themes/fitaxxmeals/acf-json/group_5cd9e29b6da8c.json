@@ -1,0 +1,94 @@
+{
+    "key": "group_5cd9e29b6da8c",
+    "title": "Meals - Variations",
+    "fields": [
+        {
+            "key": "field_5cd9e2bb3faa5",
+            "label": "Variations",
+            "name": "variations",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "field_5cd9e2d23faa6",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "Add Variation",
+            "sub_fields": [
+                {
+                    "key": "field_5cd9e2d23faa6",
+                    "label": "Variation",
+                    "name": "variation",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_5dc307168aca0",
+                    "label": "Extra Charge",
+                    "name": "extra_charge",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "min": 0,
+                    "max": "",
+                    "step": "0.5"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "carbs"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "meats"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "the_content"
+    ],
+    "active": true,
+    "description": "",
+    "modified": 1626465768
+}

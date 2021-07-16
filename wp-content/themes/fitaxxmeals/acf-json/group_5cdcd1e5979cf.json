@@ -1,0 +1,43 @@
+{
+    "key": "group_5cdcd1e5979cf",
+    "title": "Home - Featured Meals",
+    "fields": [
+        {
+            "key": "field_5cdcd1ec58c60",
+            "label": "Featured Meal Title",
+            "name": "ft_meal",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_template",
+                "operator": "==",
+                "value": "page-templates\/front-page.php"
+            }
+        ]
+    ],
+    "menu_order": 4,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "modified": 1626465817
+}

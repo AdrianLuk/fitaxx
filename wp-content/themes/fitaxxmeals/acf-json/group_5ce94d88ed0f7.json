@@ -1,0 +1,83 @@
+{
+    "key": "group_5ce94d88ed0f7",
+    "title": "Meals - Portions",
+    "fields": [
+        {
+            "key": "field_5ce94d9e6bbae",
+            "label": "Portion Goal",
+            "name": "portion_goal",
+            "type": "text",
+            "instructions": "What will this goal help achieve? (I.e. Lose Weight, Maintain Weight, etc.)",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5ce94de36bbaf",
+            "label": "Portion Price",
+            "name": "portion_price",
+            "type": "number",
+            "instructions": "in $",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": 0,
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_5d181c49ed600",
+            "label": "Portion Description",
+            "name": "portion_description",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "goals"
+            }
+        ]
+    ],
+    "menu_order": 1,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "modified": 1626465803
+}
