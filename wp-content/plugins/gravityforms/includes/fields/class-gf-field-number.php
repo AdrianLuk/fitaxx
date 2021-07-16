@@ -171,6 +171,7 @@ class GF_Field_Number extends GF_Field {
 		$disabled_text = $is_form_editor ? "disabled='disabled'" : '';
 		$class_suffix  = $is_entry_detail ? '_admin' : '';
 		$class         = $size . $class_suffix;
+		$class         = esc_attr( $class );
 
 		$instruction = '';
 		$read_only   = '';
@@ -211,10 +212,11 @@ class GF_Field_Number extends GF_Field {
 		$placeholder_attribute = $this->get_field_placeholder_attribute();
 		$required_attribute    = $this->isRequired ? 'aria-required="true"' : '';
 		$invalid_attribute     = $this->failed_validation ? 'aria-invalid="true"' : 'aria-invalid="false"';
+		$aria_describedby      = $this->get_aria_describedby();
 
 		$tabindex = $this->get_tabindex();
 
-		$input = sprintf( "<div class='ginput_container ginput_container_number'><input name='input_%d' id='%s' type='{$html_input_type}' {$step_attr} {$min_attr} {$max_attr} value='%s' class='%s' {$tabindex} {$read_only} %s %s %s %s/>%s</div>", $id, $field_id, esc_attr( $value ), esc_attr( $class ), $disabled_text, $placeholder_attribute, $required_attribute, $invalid_attribute, $instruction );
+		$input = sprintf( "<div class='ginput_container ginput_container_number'><input name='input_%d' id='%s' type='{$html_input_type}' {$step_attr} {$min_attr} {$max_attr} value='%s' class='%s' {$tabindex} {$read_only} %s %s %s %s %s/>%s</div>", $id, $field_id, esc_attr( $value ), esc_attr( $class ), $disabled_text, $placeholder_attribute, $required_attribute, $invalid_attribute, $aria_describedby, $instruction );
 		return $input;
 	}
 
@@ -270,19 +272,26 @@ class GF_Field_Number extends GF_Field {
 	}
 
 	public function get_value_save_entry( $value, $form, $input_name, $lead_id, $lead ) {
+		if ( $this->has_calculation() ) {
+			if ( empty( $lead ) ) {
+				$lead = GFFormsModel::get_lead( $lead_id );
+			}
 
-		$value = GFCommon::maybe_add_leading_zero( $value );
+			$value = GFCommon::calculate( $this, $form, $lead );
 
-		$lead  = empty( $lead ) ? RGFormsModel::get_lead( $lead_id ) : $lead;
-		$value = $this->has_calculation() ? GFCommon::round_number( GFCommon::calculate( $this, $form, $lead ), $this->calculationRounding ) : $this->clean_number( $value );
-		//return the value as a string when it is zero and a calc so that the "==" comparison done when checking if the field has changed isn't treated as false
-		if ( $this->has_calculation() && $value == 0 ) {
-			$value = '0';
+			if ( $this->numberFormat !== 'currency' ) {
+				$value = GFCommon::round_number( $value, $this->calculationRounding );
+			}
+
+			// Return the value as a string when it is zero and a calc so that the "==" comparison done when checking if the field has changed isn't treated as false.
+			if ( $value == 0 ) {
+				$value = '0';
+			}
+		} else {
+			$value = $this->clean_number( GFCommon::maybe_add_leading_zero( $value ) );
 		}
 
-		$value_safe = $this->sanitize_entry_value( $value, $form['id'] );
-
-		return $value_safe;
+		return $this->sanitize_entry_value( $value, $form['id'] );
 	}
 
 	public function sanitize_settings() {

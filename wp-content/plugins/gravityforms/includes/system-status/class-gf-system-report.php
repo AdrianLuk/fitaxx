@@ -390,7 +390,8 @@ class GF_System_Report {
 
 		$response = wp_remote_post( $url, $args );
 
-		$background_tasks = wp_remote_retrieve_body( $response ) == 'ok';
+		// Trims the background tasks response to prevent extraneous characters causing unexpected content in the response.
+		$background_tasks = trim( wp_remote_retrieve_body( $response ) ) == 'ok';
 
 		$background_validation_message = '';
 		if ( is_wp_error( $response ) ) {
@@ -404,6 +405,9 @@ class GF_System_Report {
 			}
 		}
 		self::$background_tasks = $background_tasks;
+
+		$db_date  = $wpdb->get_var( 'SELECT utc_timestamp()' );
+		$php_date = date( 'Y-m-d H:i:s' );
 
 		// Prepare system report.
 		$system_report = array(
@@ -450,6 +454,11 @@ class GF_System_Report {
 								'label'        => esc_html__( 'Site URL', 'gravityforms' ),
 								'label_export' => 'Site URL',
 								'value'        => get_site_url(),
+							),
+							array(
+								'label'        => esc_html__( 'REST API Base URL', 'gravityforms' ),
+								'label_export' => 'REST API Base URL',
+								'value'        => rest_url(),
 							),
 							array(
 								'label'        => esc_html__( 'WordPress Version', 'gravityforms' ),
@@ -579,8 +588,8 @@ class GF_System_Report {
 								'value'              => esc_html( phpversion() ),
 								'type'               => 'version_check',
 								'version_compare'    => '>=',
-								'minimum_version'    => '7.1',
-								'validation_message' => esc_html__( 'Recommended: PHP 7.1 or higher.', 'gravityforms' ),
+								'minimum_version'    => '7.3',
+								'validation_message' => esc_html__( 'Recommended: PHP 7.3 or higher.', 'gravityforms' ),
 							),
 							array(
 								'label'        => esc_html__( 'Memory Limit', 'gravityforms' ) . ' (memory_limit)',
@@ -666,6 +675,37 @@ class GF_System_Report {
 								'label'        => esc_html__( 'Database Collation', 'gravityforms' ),
 								'label_export' => 'Database Collation',
 								'value'        => esc_html( $wpdb->get_var( 'SELECT @@collation_database' ) ),
+							),
+						),
+					),
+					array(
+						'title'        => esc_html__( 'Date and Time', 'gravityforms' ),
+						'title_export' => 'Date and Time',
+						'items'        => array(
+							array(
+								'label'        => esc_html__( 'WordPress (Local) Timezone', 'gravityforms' ),
+								'label_export' => 'WordPress (Local) Timezone',
+								'value'        => self::get_timezone(),
+							),
+							array(
+								'label'        => esc_html__( 'MySQL - Universal time (UTC)', 'gravityforms' ),
+								'label_export' => 'MySQL (UTC)',
+								'value'        => $db_date,
+							),
+							array(
+								'label'        => esc_html__( 'MySQL - Local time', 'gravityforms' ),
+								'label_export' => 'MySQL (Local)',
+								'value'        => GFCommon::format_date( $db_date, false ),
+							),
+							array(
+								'label'        => esc_html__( 'PHP - Universal time (UTC)', 'gravityforms' ),
+								'label_export' => 'PHP (UTC)',
+								'value'        => $php_date,
+							),
+							array(
+								'label'        => esc_html__( 'PHP - Local time', 'gravityforms' ),
+								'label_export' => 'PHP (Local)',
+								'value'        => GFCommon::format_date( $php_date, false ),
 							),
 						),
 					),
@@ -834,18 +874,11 @@ class GF_System_Report {
 
 		$locale = apply_filters( 'plugin_locale', get_locale(), 'gravityforms' );
 
+		$web_api       = GFWebAPI::get_instance();
+		$is_v2_enabled = $web_api->is_v2_enabled( $web_api->get_plugin_settings() );
+
 		// Prepare versions array.
 		$gravityforms = array(
-			array(
-				'export_only'               => true,
-				'label'                     => esc_html__( 'Registration', 'gravityforms' ),
-				'label_export'              => 'Registration',
-				'value'                     => $is_registered ? esc_html__( 'Site registered ', 'gravityforms' ) . ' ( ' . $site_key . ' ) ' : '',
-				'is_valid'                  => $is_registered,
-				'value_export'              => $is_registered ? 'Site registered ( ' . $site_key . ' ) ' : 'Not registered',
-				'validation_message'        => $validation_message,
-				'validation_message_export' => '',
-			),
 			array(
 				'label'              => esc_html__( 'Version', 'gravityforms' ),
 				'label_export'       => 'Version',
@@ -905,6 +938,22 @@ class GF_System_Report {
 				'label_export' => 'Locale',
 				'value'        => $locale,
 				'value_export' => $locale,
+			),
+			array(
+				'label'        => esc_html__( 'REST API v2', 'gravityforms' ),
+				'label_export' => 'REST API v2',
+				'value'        => $is_v2_enabled ? __( 'Yes', 'gravityforms' ) : __( 'No', 'gravityforms' ),
+				'value_export' => $is_v2_enabled ? 'Yes' : 'No',
+			),
+			array(
+				'export_only'               => true,
+				'label'                     => esc_html__( 'Registration', 'gravityforms' ),
+				'label_export'              => 'Registration',
+				'value'                     => $is_registered ? esc_html__( 'Site registered ', 'gravityforms' ) . ' ( ' . $site_key . ' ) ' : '',
+				'is_valid'                  => $is_registered,
+				'value_export'              => $is_registered ? 'Site registered ( ' . $site_key . ' ) ' : 'Site not registered',
+				'validation_message'        => $validation_message,
+				'validation_message_export' => '',
 			),
 		);
 
@@ -1566,6 +1615,37 @@ class GF_System_Report {
 	public static function is_rest_api_enabled() {
 		$rest_api_settings = get_option( 'gravityformsaddon_gravityformswebapi_settings' );
 		return ! empty( $rest_api_settings ) && $rest_api_settings['enabled'];
+	}
+
+	/**
+	* Gets the WordPress timezone string.
+	*
+	* Based on WP 5.2 options-general.php.
+	*
+	* @since 2.4.11
+	*
+	* @return string
+	*/
+	public static function get_timezone() {
+		$tzstring = get_option( 'timezone_string' );
+
+		// Remove old Etc mappings. Fallback to gmt_offset.
+		if ( false !== strpos( $tzstring, 'Etc/GMT' ) ) {
+			$tzstring = '';
+		}
+
+		if ( empty( $tzstring ) ) { // Create a UTC+- zone if no timezone string exists
+			$current_offset = get_option( 'gmt_offset' );
+			if ( 0 == $current_offset ) {
+				$tzstring = 'UTC+0';
+			} elseif ( $current_offset < 0 ) {
+				$tzstring = 'UTC' . $current_offset;
+			} else {
+				$tzstring = 'UTC+' . $current_offset;
+			}
+		}
+
+		return $tzstring;
 	}
 
 }
