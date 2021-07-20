@@ -159,8 +159,8 @@ if (!function_exists('wpforge_content_nav')):
         global $wp_query;
         $html_id = esc_attr($html_id);
         if ($wp_query->max_num_pages > 1 && get_theme_mod('wpforge_post_nav_display') == 'pagenavi'): ?>
-									<?php wpforge_page_navi();?>
-								<?php else: ?>
+										<?php wpforge_page_navi();?>
+									<?php else: ?>
 			<nav id="<?php echo $html_id; ?>" class="navigation" role="navigation">
 				<h3 class="assistive-text"><?php _e('Post Navigation', 'wp-forge');?></h3>
 				<div class="nav-previous alignleft"><?php next_posts_link(__('<span class="meta-nav">&laquo;</span> Older posts', 'wp-forge'));?></div>
@@ -178,18 +178,18 @@ if (!function_exists('wpforge_comment')):
     case 'trackback':
         // Display trackbacks differently than normal comments.
         ?>
-									<li <?php comment_class();?> id="comment-<?php comment_ID();?>">
-										<p><?php _e('Pingback:', 'wp-forge');?> <?php comment_author_link();?> <?php edit_comment_link(__('(Edit)', 'wp-forge'), '<span class="edit-link"><span class="genericon genericon-edit"></span>', '</span>');?></p>
-										<?php
+										<li <?php comment_class();?> id="comment-<?php comment_ID();?>">
+											<p><?php _e('Pingback:', 'wp-forge');?> <?php comment_author_link();?> <?php edit_comment_link(__('(Edit)', 'wp-forge'), '<span class="edit-link"><span class="genericon genericon-edit"></span>', '</span>');?></p>
+											<?php
     break;
     default:
         // Proceed with normal comments.
         global $post;
         ?>
-									<li <?php comment_class();?> id="li-comment-<?php comment_ID();?>">
-										<article id="comment-<?php comment_ID();?>" class="comment">
-											<header class="comment-meta comment-author vcard">
-												<?php
+			<li <?php comment_class();?> id="li-comment-<?php comment_ID();?>">
+			<article id="comment-<?php comment_ID();?>" class="comment">
+			<header class="comment-meta comment-author vcard">
+			<?php
     echo get_avatar($comment, 72);
         printf(
             '<cite class="fn">%1$s %2$s</cite>',
@@ -205,19 +205,19 @@ if (!function_exists('wpforge_comment')):
             sprintf(__('%1$s at %2$s', 'wp-forge'), get_comment_date(), get_comment_time())
         );
         ?>
-											</header><!-- .comment-meta -->
-											<?php if ('0' == $comment->comment_approved): ?>
-												<p class="comment-awaiting-moderation"><?php _e('Your comment is awaiting moderation.', 'wp-forge');?></p>
-											<?php endif;?>
-					<section class="comment-content comment">
-						<?php comment_text();?>
-					</section><!-- .comment-content -->
-					<div class="reply">
-						<?php comment_reply_link(array_merge($args, array('reply_text' => __('Reply &raquo;', 'wp-forge'), 'depth' => $depth, 'max_depth' => $args['max_depth'])));?>
-					</div><!-- .reply -->
-					<?php edit_comment_link(__('Edit', 'wp-forge'), '<p class="edit-link"><span class="genericon genericon-edit"></span>', '</p>');?>
-				</article><!-- #comment-## -->
-				<?php
+			</header><!-- .comment-meta -->
+			<?php if ('0' == $comment->comment_approved): ?>
+			<p class="comment-awaiting-moderation"><?php _e('Your comment is awaiting moderation.', 'wp-forge');?></p>
+			<?php endif;?>
+<section class="comment-content comment">
+<?php comment_text();?>
+</section><!-- .comment-content -->
+<div class="reply">
+<?php comment_reply_link(array_merge($args, array('reply_text' => __('Reply &raquo;', 'wp-forge'), 'depth' => $depth, 'max_depth' => $args['max_depth'])));?>
+</div><!-- .reply -->
+<?php edit_comment_link(__('Edit', 'wp-forge'), '<p class="edit-link"><span class="genericon genericon-edit"></span>', '</p>');?>
+</article><!-- #comment-## -->
+<?php
 break;
     endswitch; // end comment_type check
 }
@@ -550,10 +550,10 @@ add_action('after_setup_theme', 'wpforge_setup_woocommerce');
 if (!function_exists('wpforge_woocommerce_start')):
     function wpforge_woocommerce_start()
 {?>
-									<div id="content" class="cell" role="main">
-										<article id="post-<?php the_ID();?>" <?php post_class();?> <?php wpforge_article_schema('CreativeWork');?>>
-											<div class="entry-content" itemprop="text">
-											<?php
+			<div id="content" class="cell" role="main">
+			<article id="post-<?php the_ID();?>" <?php post_class();?> <?php wpforge_article_schema('CreativeWork');?>>
+			<div class="entry-content" itemprop="text">
+			<?php
     }
     add_action('woocommerce_before_main_content', 'wpforge_woocommerce_start', 10);
 endif;
@@ -562,10 +562,10 @@ endif;
 if (!function_exists('wpforge_woocommerce_end')):
     function wpforge_woocommerce_end()
 {?>
-											</div><!-- .entry-content -->
-										</article><!-- article -->
-									</div><!-- .site-main -->
-								<?php
+			</div><!-- .entry-content -->
+			</article><!-- article -->
+			</div><!-- .site-main -->
+			<?php
     }
     add_action('woocommerce_after_main_content', 'wpforge_woocommerce_end', 10);
 endif;
@@ -665,6 +665,57 @@ function fitaxx_scripts()
     }
 }
 add_action('wp_enqueue_scripts', 'fitaxx_scripts', 9999);
+
+// verify promo code rest api endpoint
+function verify_promo_code(WP_REST_Request $request)
+{
+    $email = $request['email'];
+    $code = $request['code'];
+
+    $search_criteria = array(
+        'field_filters' => array(
+            array('key' => '18', 'value' => $email),
+            array('key' => '19', 'value' => $code),
+        ),
+    );
+    $entry_count = GFAPI::count_entries(1, $search_criteria);
+    $promo_codes = get_field('promo_codes', 'option');
+
+    $active_promo_codes = wp_list_filter($promo_codes, ['is_active' => true]);
+    $is_valid_code = in_array($code, array_column($active_promo_codes, 'code'));
+    $queried_promo_code = $active_promo_codes[array_search($code, array_column($active_promo_codes, 'code'))];
+    if (!$is_valid_code) {
+        return ['status' => 'invalid', 'reason' => 'nonexistent_code'];
+    } elseif ($entry_count > 0) {
+        return ['status' => 'invalid', 'reason' => 'already_used'];
+    } else {
+        return ['status' => 'valid', 'data' => $queried_promo_code];
+    }
+}
+
+add_action('rest_api_init', function () {
+    register_rest_route('fitaxx/v1', '/verify-promo-code', array(
+        'methods' => 'GET',
+        'callback' => 'verify_promo_code',
+        'args' => array(
+            'email' => array(
+                'required' => true,
+                'validate_callback' => function ($param, $request, $key) {
+                    return filter_var($param, FILTER_VALIDATE_EMAIL);
+                },
+                'sanitize_callback' => function ($param, $request, $key) {
+                    return filter_var($param, FILTER_SANITIZE_EMAIL);
+                },
+            ),
+            'code' => array(
+                'required' => true,
+                'sanitize_callback' => function ($param, $request, $key) {
+                    return filter_var($param, FILTER_SANITIZE_STRING);
+                },
+            ),
+        ),
+    ));
+});
 
 // SHORTCODE //
 
