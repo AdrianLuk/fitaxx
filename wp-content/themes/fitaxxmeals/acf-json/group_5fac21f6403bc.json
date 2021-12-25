@@ -31,6 +31,13 @@
                 "operator": "==",
                 "value": "fall_menu"
             }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "winter_menu"
+            }
         ]
     ],
     "menu_order": 0,
@@ -41,5 +48,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1626465765
+    "modified": 1640467389
 }
