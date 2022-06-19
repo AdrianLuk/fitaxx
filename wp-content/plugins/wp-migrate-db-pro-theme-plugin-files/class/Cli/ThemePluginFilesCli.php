@@ -203,7 +203,7 @@ class ThemePluginFilesCli extends ThemePluginFilesAddon
             $plugins = isset($remote['site_details'], $remote['site_details']['plugins']) ? $remote['site_details']['plugins'] : [];
         } else {
             $themes  = $this->get_local_themes();
-            $plugins = $this->get_local_plugins();
+            $plugins = $this->filesystem->get_local_plugins();
         }
 
         if (in_array('themes', $stages)) {
@@ -239,15 +239,38 @@ class ThemePluginFilesCli extends ThemePluginFilesAddon
      */
     public function get_themes_to_migrate($profile, $themes)
     {
+        $themes_option     = $profile['theme_plugin_files']['themes_option'];
         $themes_selected   = $profile['theme_plugin_files']['themes_selected'];
+        $themes_excluded   = $profile['theme_plugin_files']['themes_excluded'];
         $themes_to_migrate = [];
 
-        if ('all' === $themes_selected) {
+        if ('all' === $themes_selected || 'all' === $themes_option) {
             $theme_paths = array_map(function ($theme) {
                 return $theme[0]['path'];
             }, $themes);
 
             return array_values($theme_paths);
+        }
+
+        if ('active' === $themes_option) {
+            $active_themes = [];
+            foreach($themes as $theme) {
+                if ($theme[0]['active']) {
+                    $active_themes[] = $theme[0]['path'];
+                }
+            }
+            return array_values($active_themes);
+        }
+
+        if ('except' === $themes_option) {
+            $filtered_excluded = [];
+            foreach($themes as $theme) {
+                if(in_array($theme[0]['path'], $themes_excluded)){
+                    continue;
+                }
+                $filtered_excluded[] = $theme[0]['path'];
+            }
+            return array_values($filtered_excluded);
         }
 
         if (!is_array($themes_selected)) {
@@ -284,16 +307,40 @@ class ThemePluginFilesCli extends ThemePluginFilesAddon
      */
     public function get_plugins_to_migrate($profile, $plugins)
     {
+        $plugins_option     = $profile['theme_plugin_files']['plugins_option'];
         $plugins_selected   = $profile['theme_plugin_files']['plugins_selected'];
+        $plugins_excluded   = $profile['theme_plugin_files']['plugins_excluded'];
         $plugins_to_migrate = [];
 
-        if ('all' === $plugins_selected) {
+        if ('all' === $plugins_selected || 'all' === $plugins_option) {
             $plugin_paths = array_map(function ($plugin) {
                 return $plugin[0]['path'];
             }, $plugins);
-            
+
             return array_values($plugin_paths);
         }
+
+        if ('active' === $plugins_option) {
+            $active_plugins = [];
+            foreach($plugins as $plugin) {
+                if ($plugin[0]['active']) {
+                    $active_plugins[] = $plugin[0]['path'];
+                }
+            }
+            return array_values($active_plugins);
+        }
+
+        if ('except' === $plugins_option) {
+            $filtered_excluded = [];
+            foreach($plugins as $plugin) {
+                if(in_array($plugin[0]['path'], $plugins_excluded)){
+                    continue;
+                }
+                $filtered_excluded[] = $plugin[0]['path'];
+            }
+            return array_values($filtered_excluded);
+        }
+
 
         if (!is_array($plugins_selected)) {
             $plugins_selected = explode(',', $plugins_selected);
@@ -371,6 +418,7 @@ class ThemePluginFilesCli extends ThemePluginFilesAddon
             'action'             => $profile['action'],
             'migration_state_id' => $profile['current_migration']['migration_id'],
             'stage'              => $stage,
+            'is_cli_migration'   => 1
         ];
 
         if ('themes' === $stage) {

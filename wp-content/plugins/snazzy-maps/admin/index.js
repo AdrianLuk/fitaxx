@@ -128,13 +128,13 @@ jQuery(document).ready(function($) {
     );
   };
 
-  $(document).on("change", "#explore-list select", function() {
+  $("#explore-list select").live("change", function() {
     var q = {};
     q[this.name] = $(this).val();
     q["ppage"] = 1; //Reset the page number because we are changing the results
     replaceGET(q);
   });
-  $(document).on("submit", "#search-form", function() {
+  $("#search-form").live("submit", function() {
     replaceGET({
       text: $(this).find('input[name="text"]').val(),
       ppage: 1 //Reset the page number because we are changing the results
@@ -142,19 +142,19 @@ jQuery(document).ready(function($) {
     return false;
   });
 
-  $(document).on("submit", ".style", function() {
+  $(".style").live("submit", function() {
     $(this)
       .find('input[name="new_style"]')
       .val(encodeURIComponent(JSON.stringify($(this).data("style"))));
   });
 
   //Pagination
-  $(document).on("click", ".tablenav-pages a", function() {
+  $(".tablenav-pages a").live("click", function() {
     replaceGET({ ppage: $(this).data("page") });
     return false;
   });
 
-  $(document).on("change", ".current-page", function() {
+  $(".current-page").live("change", function() {
     var start = $(".first-page").data("page");
     var end = $(".last-page").data("page");
     var page = parseInt($(this).val(), 10);

@@ -117,14 +117,14 @@ class WPSEO_Admin_Asset {
 	/**
 	 * For JS Assets. Whether or not the script should be loaded in the footer.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $in_footer;
 
 	/**
 	 * For CSS Assets. Whether this stylesheet is a right-to-left stylesheet.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $rtl;
 
@@ -140,14 +140,14 @@ class WPSEO_Admin_Asset {
 	 *
 	 * @var array
 	 */
-	private $defaults = [
-		'deps'      => [],
+	private $defaults = array(
+		'deps'      => array(),
+		'version'   => WPSEO_VERSION,
 		'in_footer' => true,
 		'rtl'       => true,
 		'media'     => 'all',
-		'version'   => '',
-		'suffix'    => '',
-	];
+		'suffix'    => WPSEO_CSSJS_SUFFIX,
+	);
 
 	/**
 	 * Constructs an instance of the WPSEO_Admin_Asset class.
@@ -207,14 +207,10 @@ class WPSEO_Admin_Asset {
 	/**
 	 * Returns the asset version.
 	 *
-	 * @return string|null
+	 * @return string
 	 */
 	public function get_version() {
-		if ( ! empty( $this->version ) ) {
-			return $this->version;
-		}
-
-		return null;
+		return $this->version;
 	}
 
 	/**
@@ -229,7 +225,7 @@ class WPSEO_Admin_Asset {
 	/**
 	 * Returns whether a script asset should be loaded in the footer of the page.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function is_in_footer() {
 		return $this->in_footer;
@@ -238,7 +234,7 @@ class WPSEO_Admin_Asset {
 	/**
 	 * Returns whether this CSS has a RTL counterpart.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function has_rtl() {
 		return $this->rtl;
@@ -251,5 +247,24 @@ class WPSEO_Admin_Asset {
 	 */
 	public function get_suffix() {
 		return $this->suffix;
+	}
+
+	/**
+	 * Returns the full URL for this asset based on the path to the plugin file.
+	 *
+	 * @deprecated 6.2
+	 * @codeCoverageIgnore
+	 *
+	 * @param string $type        Type of asset.
+	 * @param string $plugin_file Absolute path to the plugin file.
+	 *
+	 * @return string The full URL to the asset.
+	 */
+	public function get_url( $type, $plugin_file ) {
+		_deprecated_function( __CLASS__ . '::get_url', '6.2', 'WPSEO_Admin_Asset_SEO_Location::get_url' );
+
+		$asset_location = new WPSEO_Admin_Asset_SEO_Location( $plugin_file );
+
+		return $asset_location->get_url( $this, $type );
 	}
 }

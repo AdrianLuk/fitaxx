@@ -138,13 +138,11 @@ class ThemePluginFilesRemote
 
     public function ajax_tp_respond_to_get_remote_themes()
     {
-        Util::enable_scandir_bottleneck();
         $this->respond_to_get_remote_folders('themes');
     }
 
     public function ajax_tp_respond_to_get_remote_plugins()
     {
-        Util::enable_scandir_bottleneck();
         $this->respond_to_get_remote_folders('plugins');
     }
 

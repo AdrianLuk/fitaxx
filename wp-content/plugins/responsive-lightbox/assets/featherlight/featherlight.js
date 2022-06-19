@@ -1,36 +1,11 @@
 /**
  * Featherlight - ultra slim jQuery lightbox
- * Version 1.7.14-UMD - http://noelboss.github.io/featherlight/
+ * Version 1.7.12 - http://noelboss.github.io/featherlight/
  *
- * Copyright 2019, Noël Raoul Bossart (http://www.noelboss.com)
+ * Copyright 2017, Noël Raoul Bossart (http://www.noelboss.com)
  * MIT Licensed.
 **/
-(function (factory) {
-	if (typeof define === 'function' && define.amd) {
-		// AMD. Register as an anonymous module.
-		define(['jquery'], factory);
-	} else if (typeof module === 'object' && module.exports) {
-		// Node/CommonJS
-		module.exports = function (root, jQuery) {
-			if (jQuery === undefined) {
-				// require('jQuery') returns a factory that requires window to
-				// build a jQuery instance, we normalize how we use modules
-				// that require this pattern but the window provided is a noop
-				// if it's defined (how jquery works)
-				if (typeof window !== 'undefined') {
-					jQuery = require('jquery');
-				} else {
-					jQuery = require('jquery')(root);
-				}
-			}
-			factory(jQuery);
-			return jQuery;
-		};
-	} else {
-		// Browser globals
-		factory(jQuery);
-	}
-})(function($) {
+(function($) {
 	"use strict";
 
 	if('undefined' === typeof $) {
@@ -96,9 +71,8 @@
 
 	// NOTE: List of available [iframe attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe).
 	var iFrameAttributeSet = {
-		allow: 1, allowfullscreen: 1, frameborder: 1, height: 1, longdesc: 1, marginheight: 1, marginwidth: 1,
-		mozallowfullscreen: 1, name: 1, referrerpolicy: 1, sandbox: 1, scrolling: 1, src: 1, srcdoc: 1, style: 1,
-		webkitallowfullscreen: 1, width: 1
+		allowfullscreen: 1, frameborder: 1, height: 1, longdesc: 1, marginheight: 1, marginwidth: 1,
+		name: 1, referrerpolicy: 1, scrolling: 1, sandbox: 1, src: 1, srcdoc: 1, width: 1
 	};
 
 	// Converts camelCased attributes to dasherized versions for given prefix:
@@ -160,7 +134,7 @@
 		otherClose:     null,                  /* Selector for alternate close buttons (e.g. "a.close") */
 		beforeOpen:     $.noop,                /* Called before open. can return false to prevent opening of lightbox. Gets event as parameter, this contains all data */
 		beforeContent:  $.noop,                /* Called when content is loaded. Gets event as parameter, this contains all data */
-		beforeClose:    $.noop,                /* Called before close. can return false to prevent closing of lightbox. Gets event as parameter, this contains all data */
+		beforeClose:    $.noop,                /* Called before close. can return false to prevent opening of lightbox. Gets event as parameter, this contains all data */
 		afterOpen:      $.noop,                /* Called after open. Gets event as parameter, this contains all data */
 		afterContent:   $.noop,                /* Called after content is ready and has been set. Gets event as parameter, this contains all data */
 		afterClose:     $.noop,                /* Called after close. Gets event as parameter, this contains all data */
@@ -307,11 +281,9 @@
 
 					/* Set content and show */
 					return $.when($content)
-						.always(function($openendContent){
-							if($openendContent) {
-								self.setContent($openendContent);
-								self.afterContent(event);
-							}
+						.always(function($content){
+							self.setContent($content);
+							self.afterContent(event);
 						})
 						.then(self.$instance.promise())
 						/* Call afterOpen after fadeIn is done */
@@ -422,7 +394,7 @@
 						if ( status !== "error" ) {
 							deferred.resolve($container.contents());
 						}
-						deferred.reject();
+						deferred.fail();
 					});
 					return deferred.promise();
 				}
@@ -507,7 +479,7 @@
 			/* make a copy */
 			config = $.extend({}, config);
 
-			/* Only for openTrigger, filter & namespace... */
+			/* Only for openTrigger and namespace... */
 			var namespace = config.namespace || Klass.defaults.namespace,
 				tempConfig = $.extend({}, Klass.defaults, Klass.readElementConfig($source[0], namespace), config),
 				sharedPersist;
@@ -526,14 +498,14 @@
 					$target.data('featherlight-persisted', fl);
 				}
 				if (elemConfig.$currentTarget.blur) {
-					elemConfig.$currentTarget.trigger( 'blur' ); // Otherwise 'enter' key might trigger the dialog again
+					elemConfig.$currentTarget.blur(); // Otherwise 'enter' key might trigger the dialog again
 				}
 				fl.open(event);
 			};
 
 			$source.on(tempConfig.openTrigger+'.'+tempConfig.namespace, tempConfig.filter, handler);
 
-			return {filter: tempConfig.filter, handler: handler};
+			return handler;
 		},
 
 		current: function() {
@@ -558,9 +530,8 @@
 		_onReady: function() {
 			var Klass = this;
 			if(Klass.autoBind){
-				var $autobound = $(Klass.autoBind);
 				/* Bind existing elements */
-				$autobound.each(function(){
+				$(Klass.autoBind).each(function(){
 					Klass.attach($(this));
 				});
 				/* If a click propagates to the document level, then we have an item that was added later on */
@@ -568,18 +539,10 @@
 					if (evt.isDefaultPrevented()) {
 						return;
 					}
-					var $cur = $(evt.currentTarget);
-					var len = $autobound.length;
-					$autobound = $autobound.add($cur);
-					if(len === $autobound.length) {
-						return; /* already bound */
-					}
 					/* Bind featherlight */
-					var data = Klass.attach($cur);
+					var handler = Klass.attach($(evt.currentTarget));
 					/* Dispatch event directly */
-					if (!data.filter || $(evt.target).parentsUntil($cur, data.filter).length > 0) {
-						data.handler(evt);
-					}
+					handler(evt);
 				});
 			}
 		},
@@ -648,7 +611,7 @@
 
 			afterContent: function(_super, event){
 				var r = _super(event);
-				this.$instance.find('[autofocus]:not([disabled])').trigger( 'focus' );
+				this.$instance.find('[autofocus]:not([disabled])').focus();
 				this.onResize(event);
 				return r;
 			}
@@ -665,4 +628,4 @@
 
 	/* bind featherlight on ready if config autoBind is set */
 	$(document).ready(function(){ Featherlight._onReady(); });
-});
+}(jQuery));

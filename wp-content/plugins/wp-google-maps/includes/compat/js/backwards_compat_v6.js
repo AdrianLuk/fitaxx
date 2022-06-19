@@ -1,6 +1,6 @@
 // TODO: Move this file into /js and out of /includes which is for PHP
 jQuery(function($){
-	jQuery(document).ready(function(){
+	jQuery(window).on("load", function(){
 		if(typeof wpgmza_backwards_compat_v6_marker_tab_headings !== "undefined"){
 			$("#wpgmaps_tabs_markers > ul").append(wpgmza_backwards_compat_v6_marker_tab_headings);
 			$("#wpgmaps_tabs_markers").append(wpgmza_backwards_compat_v6_marker_tab_content);
@@ -46,9 +46,7 @@ jQuery(function($){
 		
 		var map;
 
-		if(MYMAP.map)
-			map = MYMAP.map;
-		else if(MYMAP[mapid].map instanceof google.maps.Map)
+		if(MYMAP[mapid].map instanceof google.maps.Map)
 			map = MYMAP[mapid].map;
 		else if(MYMAP[mapid].map instanceof WPGMZA.Map)
 			map = MYMAP[mapid].googleMap;

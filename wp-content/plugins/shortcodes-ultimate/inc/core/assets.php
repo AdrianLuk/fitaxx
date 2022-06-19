@@ -51,14 +51,9 @@ class Su_Assets {
 		wp_register_style( 'animate', plugins_url( 'vendor/animatecss/animate.css', SU_PLUGIN_FILE ), false, '3.1.1', 'all' );
 		// InView
 		wp_register_script( 'jquery-inview', plugins_url( 'vendor/jquery-inview/jquery-inview.js', SU_PLUGIN_FILE ), array( 'jquery' ), '1.1.2', true );
-		// PopperJS
-		wp_register_script(
-			'popper',
-			plugins_url( 'vendor/popper/popper.min.js', SU_PLUGIN_FILE ),
-			array(),
-			'2.9.2',
-			true
-		);
+		// qTip
+		wp_register_style( 'qtip', plugins_url( 'vendor/qtip/qtip.css', SU_PLUGIN_FILE ), false, '2.1.1', 'all' );
+		wp_register_script( 'qtip', plugins_url( 'vendor/qtip/qtip.js', SU_PLUGIN_FILE ), array( 'jquery' ), '2.1.1', true );
 		// Magnific Popup
 		wp_register_style( 'magnific-popup', plugins_url( 'vendor/magnific-popup/magnific-popup.css', SU_PLUGIN_FILE ), false, '1.1.0', 'all' );
 		wp_register_script( 'magnific-popup', plugins_url( 'vendor/magnific-popup/magnific-popup.js', SU_PLUGIN_FILE ), array( 'jquery' ), '1.1.0', true );
@@ -127,12 +122,7 @@ class Su_Assets {
 					'next'    => __( 'Next (Right arrow key)', 'shortcodes-ultimate' ),
 					// translators: %1$s of %2$s represents image counter in lightbox, will be replaced with "1 of 5"
 					'counter' => sprintf( __( '%1$s of %2$s', 'shortcodes-ultimate' ), '%curr%', '%total%' ),
-					'error'   => sprintf(
-						// translators: %1$s and %2$s will be replace <a> and </a> tags
-						__( 'Failed to load content. %1$sOpen link%2$s' ),
-						'<a href="%url%" target="_blank"><u>',
-						'</u></a>'
-					),
+					'error'   => sprintf( '%1$s. <a href="%url%" target="_blank"><u>%2$</u></a>', __( 'Failed to load content.', 'shortcodes-ultimate' ), __( 'Open link', 'shortcodes-ultimate' ) ),
 				),
 			)
 		);

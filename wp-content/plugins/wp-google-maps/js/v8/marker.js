@@ -11,7 +11,7 @@ jQuery(function($) {
 	 * @constructor WPGMZA.Marker
 	 * @memberof WPGMZA
 	 * @param {object} [row] Data to map to this object (eg from the database)
-	 * @augments WPGMZA.Feature
+	 * @augments WPGMZA.MapObject
 	 */
 	WPGMZA.Marker = function(row)
 	{
@@ -34,7 +34,7 @@ jQuery(function($) {
 		this.isFilterable = true;
 		this.disableInfoWindow = false;
 		
-		WPGMZA.Feature.apply(this, arguments);
+		WPGMZA.MapObject.apply(this, arguments);
 		
 		if(row && row.heatmap)
 			return; // Don't listen for these events on heatmap markers.
@@ -55,7 +55,7 @@ jQuery(function($) {
 		this.handleLegacyGlobals(row);
 	}
 	
-	WPGMZA.Marker.prototype = Object.create(WPGMZA.Feature.prototype);
+	WPGMZA.Marker.prototype = Object.create(WPGMZA.MapObject.prototype);
 	WPGMZA.Marker.prototype.constructor = WPGMZA.Marker;
 	
 	/**
@@ -131,9 +131,8 @@ jQuery(function($) {
 	/**
 	 * Called when the marker has been added to a map
 	 * @method
+	 * @method
 	 * @memberof WPGMZA.Marker
-	 * @listens module:WPGMZA.Marker~added
-	 * @fires module:WPGMZA.Marker~select When this marker is targeted by the marker shortcode attribute
 	 */
 	WPGMZA.Marker.prototype.onAdded = function(event)
 	{
@@ -151,13 +150,11 @@ jQuery(function($) {
 			self.onSelect(event);
 		});
 		
-		if(this.map.settings.marker == this.id){
+		if(this.map.settings.marker == this.id)
 			self.trigger("select");
-		}
 		
-		if(this.infoopen == "1"){
-			this.openInfoWindow(true);
-		}
+		if(this.infoopen == "1")
+			this.openInfoWindow();
 	}
 	
 	WPGMZA.Marker.prototype.handleLegacyGlobals = function(row)
@@ -172,16 +169,22 @@ jQuery(function($) {
 				return; // Don't touch the legacy globals
 		}
 		
-		if(!WPGMZA.legacyGlobals.marker_array[this.map_id])
-			WPGMZA.legacyGlobals.marker_array[this.map_id] = [];
+		if(!window.marker_array)
+			window.marker_array = {};
 		
-		WPGMZA.legacyGlobals.marker_array[this.map_id][this.id] = this;
+		if(!marker_array[this.map_id])
+			marker_array[this.map_id] = [];
 		
-		if(!WPGMZA.legacyGlobals.wpgmaps_localize_marker_data[this.map_id])
-			WPGMZA.legacyGlobals.wpgmaps_localize_marker_data[this.map_id] = [];
+		marker_array[this.map_id][this.id] = this;
+		
+		if(!window.wpgmaps_localize_marker_data)
+			window.wpgmaps_localize_marker_data = {};
+		
+		if(!wpgmaps_localize_marker_data[this.map_id])
+			wpgmaps_localize_marker_data[this.map_id] = [];
 		
 		var cloned = $.extend({marker_id: this.id}, row);
-		WPGMZA.legacyGlobals.wpgmaps_localize_marker_data[this.map_id][this.id] = cloned;
+		wpgmaps_localize_marker_data[this.map_id][this.id] = cloned;
 	}
 	
 	WPGMZA.Marker.prototype.initInfoWindow = function()
@@ -197,24 +200,21 @@ jQuery(function($) {
 	 * @method
 	 * @memberof WPGMZA.Marker
 	 */
-	WPGMZA.Marker.prototype.openInfoWindow = function(autoOpen) {
-
-		if(!this.map) {
+	WPGMZA.Marker.prototype.openInfoWindow = function()
+	{
+		if(!this.map)
+		{
 			console.warn("Cannot open infowindow for marker with no map");
 			return;
 		}
 		
 		// NB: This is a workaround for "undefined" in InfoWindows (basic only) on map edit page
-		// removed by Nick 30 Dec 2020
-		// 
-		//if(WPGMZA.currentPage == "map-edit" && !WPGMZA.pro_version)
-		//	return;
+		if(WPGMZA.currentPage == "map-edit" && !WPGMZA.pro_version)
+			return;
 		
-		if(!autoOpen){
-			if(this.map.lastInteractedMarker)
-				this.map.lastInteractedMarker.infoWindow.close();
-			this.map.lastInteractedMarker = this;
-		}
+		if(this.map.lastInteractedMarker)
+			this.map.lastInteractedMarker.infoWindow.close();
+		this.map.lastInteractedMarker = this;
 		
 		this.initInfoWindow();
 		this.infoWindow.open(this.map, this);
@@ -224,7 +224,6 @@ jQuery(function($) {
 	 * Called when the marker has been clicked
 	 * @method
 	 * @memberof WPGMZA.Marker
-	 * @listens module:WPGMZA.Marker~click
 	 */
 	WPGMZA.Marker.prototype.onClick = function(event)
 	{
@@ -235,7 +234,6 @@ jQuery(function($) {
 	 * Called when the marker has been selected, either by the icon being clicked, or from a marker listing
 	 * @method
 	 * @memberof WPGMZA.Marker
-	 * @listens module:WPGMZA.Marker~select
 	 */
 	WPGMZA.Marker.prototype.onSelect = function(event)
 	{
@@ -246,11 +244,10 @@ jQuery(function($) {
 	 * Called when the user hovers the mouse over this marker
 	 * @method
 	 * @memberof WPGMZA.Marker
-	 * @listens module:WPGMZA.Marker~mouseover
 	 */
 	WPGMZA.Marker.prototype.onMouseOver = function(event)
 	{
-		if(WPGMZA.settings.wpgmza_settings_map_open_marker_by == WPGMZA.InfoWindow.OPEN_BY_HOVER)
+		if(this.map.settings.info_window_open_by == WPGMZA.InfoWindow.OPEN_BY_HOVER)
 			this.openInfoWindow();
 	}
 	
@@ -328,9 +325,9 @@ jQuery(function($) {
 	 * @method
 	 * @memberof WPGMZA.Marker
 	 */
-	WPGMZA.Marker.prototype.getAnimation = function()
+	WPGMZA.Marker.prototype.getAnimation = function(animation)
 	{
-		return this.anim;
+		return this.settings.animation;
 	}
 	
 	/**
@@ -341,7 +338,7 @@ jQuery(function($) {
 	 */
 	WPGMZA.Marker.prototype.setAnimation = function(animation)
 	{
-		
+		this.settings.animation = animation;
 	}
 	
 	/**
@@ -444,14 +441,14 @@ jQuery(function($) {
 	}
 	
 	/**
-	 * Overrides Feature.toJSON, serializes the marker to a JSON object
+	 * Overrides MapObject.toJSON, serializes the marker to a JSON object
 	 * @method
 	 * @memberof WPGMZA.Marker
 	 * @return {object} A JSON representation of this marker
 	 */
 	WPGMZA.Marker.prototype.toJSON = function()
 	{
-		var result = WPGMZA.Feature.prototype.toJSON.call(this);
+		var result = WPGMZA.MapObject.prototype.toJSON.call(this);
 		var position = this.getPosition();
 		
 		$.extend(result, {

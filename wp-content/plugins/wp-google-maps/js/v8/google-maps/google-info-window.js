@@ -8,11 +8,11 @@ jQuery(function($) {
 	
 	var Parent;
 	
-	WPGMZA.GoogleInfoWindow = function(feature)
+	WPGMZA.GoogleInfoWindow = function(mapObject)
 	{
-		Parent.call(this, feature);
+		Parent.call(this, mapObject);
 		
-		this.setFeature(feature);
+		this.setMapObject(mapObject);
 	}
 	
 	WPGMZA.GoogleInfoWindow.Z_INDEX		= 99;
@@ -25,16 +25,14 @@ jQuery(function($) {
 	WPGMZA.GoogleInfoWindow.prototype = Object.create(Parent.prototype);
 	WPGMZA.GoogleInfoWindow.prototype.constructor = WPGMZA.GoogleInfoWindow;
 	
-	WPGMZA.GoogleInfoWindow.prototype.setFeature = function(feature)
+	WPGMZA.GoogleInfoWindow.prototype.setMapObject = function(mapObject)
 	{
-		this.feature = feature;
-		
-		if(feature instanceof WPGMZA.Marker)
-			this.googleObject = feature.googleMarker;
-		else if(feature instanceof WPGMZA.Polygon)
-			this.googleObject = feature.googlePolygon;
-		else if(feature instanceof WPGMZA.Polyline)
-			this.googleObject = feature.googlePolyline;
+		if(mapObject instanceof WPGMZA.Marker)
+			this.googleObject = mapObject.googleMarker;
+		else if(mapObject instanceof WPGMZA.Polygon)
+			this.googleObject = mapObject.googlePolygon;
+		else if(mapObject instanceof WPGMZA.Polyline)
+			this.googleObject = mapObject.googlePolyline;
 	}
 	
 	WPGMZA.GoogleInfoWindow.prototype.createGoogleInfoWindow = function()
@@ -58,7 +56,7 @@ jQuery(function($) {
 				return;
 			
 			self.state = WPGMZA.InfoWindow.STATE_CLOSED;
-			self.feature.map.trigger("infowindowclose");
+			self.mapObject.map.trigger("infowindowclose");
 			
 		});
 	}
@@ -67,27 +65,26 @@ jQuery(function($) {
 	 * Opens the info window
 	 * @return boolean FALSE if the info window should not & will not open, TRUE if it will
 	 */
-	WPGMZA.GoogleInfoWindow.prototype.open = function(map, feature) {
+	WPGMZA.GoogleInfoWindow.prototype.open = function(map, mapObject)
+	{
 		var self = this;
 		
-		if(!Parent.prototype.open.call(this, map, feature))
+		if(!Parent.prototype.open.call(this, map, mapObject))
 			return false;
-
 		
 		// Set parent for events to bubble up to
 		this.parent = map;
 		
 		this.createGoogleInfoWindow();
-		this.setFeature(feature);
+		this.setMapObject(mapObject);
 		
 		this.googleInfoWindow.open(
-			this.feature.map.googleMap,
+			this.mapObject.map.googleMap,
 			this.googleObject
 		);
-
+		
 		var guid = WPGMZA.guid();
-		var eaBtn = !WPGMZA.isProVersion() ? this.addEditButton() : '';
-		var html = "<div id='" + guid + "'>" + eaBtn + ' ' + this.content + "</div>";
+		var html = "<div id='" + guid + "'>" + this.content + "</div>";
 
 		this.googleInfoWindow.setContent(html);
 		
@@ -100,7 +97,7 @@ jQuery(function($) {
 			{
 				clearInterval(intervalID);
 				
-				div[0].wpgmzaFeature = self.feature;
+				div[0].wpgmzaMapObject = self.mapObject;
 				div.addClass("wpgmza-infowindow");
 				
 				self.element = div[0];
@@ -108,7 +105,7 @@ jQuery(function($) {
 			}
 			
 		}, 50);
-
+		
 		return true;
 	}
 	
@@ -125,9 +122,9 @@ jQuery(function($) {
 	WPGMZA.GoogleInfoWindow.prototype.setContent = function(html)
 	{
 		Parent.prototype.setContent.call(this, html);
-
+		
 		this.content = html;
-
+		
 		this.createGoogleInfoWindow();
 		
 		this.googleInfoWindow.setContent(html);

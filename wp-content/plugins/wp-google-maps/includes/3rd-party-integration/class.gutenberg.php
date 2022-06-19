@@ -48,7 +48,7 @@ class Gutenberg extends \WPGMZA\Factory
 		if(!is_admin())
 			return;
 		
-		$wpgmza->loadScripts(true);
+		$wpgmza->loadScripts();
 		
 		wp_enqueue_style(
 			'wpgmza-gutenberg-integration', 
@@ -96,16 +96,7 @@ class Gutenberg extends \WPGMZA\Factory
 		$str = "[wpgmza";
 		
 		foreach($attributes as $name => $value)
-		{
-			if(is_string($value))
-				$v = addslashes($value);
-			else if(is_array($value))
-				$v = implode(',', array_map('addslashes', $value));
-			else
-				$v = $value;
-			
-			$str .= " $name=\"" . addslashes($v) . "\"";
-		}
+			$str .= " $name=\"" . addslashes($value) . "\"";
 		
 		$str .= "]";
 		

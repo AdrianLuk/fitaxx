@@ -246,11 +246,11 @@ class ThemePluginFilesFinalize
         $stages    = array();
         $form_data = $this->form_data->getCurrentMigrationData();
 
-        if (isset($form_data['stages']) && in_array('theme_files', $form_data['stages'])) {
+        if (isset($form_data['stages']) && in_array('theme_files', $form_data['stages']) && isset($state_data['theme_folders'])) {
             $stages[] = 'themes';
         }
 
-        if (isset($form_data['stages']) && in_array('plugin_files', $form_data['stages'])) {
+        if (isset($form_data['stages']) && in_array('plugin_files', $form_data['stages']) && isset($state_data['plugin_folders'])) {
             $stages[] = 'plugins';
         }
 

@@ -18,18 +18,18 @@ class WPSEO_Tracking_Theme_Data implements WPSEO_Collection {
 	public function get() {
 		$theme = wp_get_theme();
 
-		return [
-			'theme' => [
+		return array(
+			'theme' => array(
 				'name'        => $theme->get( 'Name' ),
 				'url'         => $theme->get( 'ThemeURI' ),
 				'version'     => $theme->get( 'Version' ),
-				'author'      => [
+				'author'      => array(
 					'name' => $theme->get( 'Author' ),
 					'url'  => $theme->get( 'AuthorURI' ),
-				],
+				),
 				'parentTheme' => $this->get_parent_theme( $theme ),
-			],
-		];
+			),
+		);
 	}
 
 	/**
@@ -37,7 +37,7 @@ class WPSEO_Tracking_Theme_Data implements WPSEO_Collection {
 	 *
 	 * @param WP_Theme $theme The theme object.
 	 *
-	 * @return string|null The name of the parent theme or null.
+	 * @return null|string The name of the parent theme or null.
 	 */
 	private function get_parent_theme( WP_Theme $theme ) {
 		if ( is_child_theme() ) {

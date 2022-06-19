@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wp-migrate-db-pro-theme-plugin-files\n"
 "Report-Msgid-Bugs-To: nom@deliciousbrains.com\n"
-"POT-Creation-Date: 2021-06-21 11:48+0200\n"
+"POT-Creation-Date: 2021-10-19 08:36-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,14 +78,12 @@ msgstr ""
 msgid "Unable to determine folder name for theme %s"
 msgstr ""
 
-#: src/wp-migrate-db-pro-theme-plugin-files/class/ThemePluginFilesFinalize.php:158
 #: src/wp-migrate-db-pro-theme-plugin-files/class/ThemePluginFilesFinalize.php:162
 #, php-format
 msgid ""
 "Temporary file not found when finalizing Theme & Plugin Files migration: %s "
 msgstr ""
 
-#: src/wp-migrate-db-pro-theme-plugin-files/class/ThemePluginFilesFinalize.php:166
 #: src/wp-migrate-db-pro-theme-plugin-files/class/ThemePluginFilesFinalize.php:170
 #, php-format
 msgid ""
@@ -93,7 +91,6 @@ msgid ""
 "migration: %s"
 msgstr ""
 
-#: src/wp-migrate-db-pro-theme-plugin-files/class/ThemePluginFilesFinalize.php:182
 #: src/wp-migrate-db-pro-theme-plugin-files/class/ThemePluginFilesFinalize.php:186
 #, php-format
 msgid ""
@@ -101,17 +98,18 @@ msgid ""
 "migration. Source: %s | Destination: %s"
 msgstr ""
 
-#: src/wp-migrate-db-pro-theme-plugin-files/class/ThemePluginFilesFinalize.php:261
 #: src/wp-migrate-db-pro-theme-plugin-files/class/ThemePluginFilesFinalize.php:265
 #, php-format
 msgid "Unable to verify file migration, %s does not exist."
 msgstr ""
 
 #: src/wp-migrate-db-pro-theme-plugin-files/class/ThemePluginFilesLocal.php:168
+#: src/wp-migrate-db-pro-theme-plugin-files/class/ThemePluginFilesLocal.php:171
 msgid "Error: empty folder list supplied."
 msgstr ""
 
 #: src/wp-migrate-db-pro-theme-plugin-files/class/ThemePluginFilesLocal.php:184
+#: src/wp-migrate-db-pro-theme-plugin-files/class/ThemePluginFilesLocal.php:187
 msgid "Invalid folder list supplied (invalid array)"
 msgstr ""
 
@@ -132,19 +130,25 @@ msgid "More Details »"
 msgstr ""
 
 #: src/wp-migrate-db-pro-theme-plugin-files/class/Cli/ThemePluginFilesCli.php:267
+#: src/wp-migrate-db-pro-theme-plugin-files/class/Cli/ThemePluginFilesCli.php:290
 #, php-format
 msgid "Theme not found on source server: %s"
 msgstr ""
 
 #: src/wp-migrate-db-pro-theme-plugin-files/class/Cli/ThemePluginFilesCli.php:322
+#: src/wp-migrate-db-pro-theme-plugin-files/class/Cli/ThemePluginFilesCli.php:369
 #, php-format
 msgid "Plugin not found on source server: %s"
 msgstr ""
 
 #: src/wp-migrate-db-pro-theme-plugin-files/class/Cli/ThemePluginFilesCli.php:377
+#: src/wp-migrate-db-pro-theme-plugin-files/class/Cli/ThemePluginFilesCli.php:378
+#: src/wp-migrate-db-pro-theme-plugin-files/class/Cli/ThemePluginFilesCli.php:425
 msgid "Initiating themes migration..."
 msgstr ""
 
 #: src/wp-migrate-db-pro-theme-plugin-files/class/Cli/ThemePluginFilesCli.php:381
+#: src/wp-migrate-db-pro-theme-plugin-files/class/Cli/ThemePluginFilesCli.php:382
+#: src/wp-migrate-db-pro-theme-plugin-files/class/Cli/ThemePluginFilesCli.php:429
 msgid "Initiating plugins migration..."
 msgstr ""

@@ -8,29 +8,11 @@ jQuery(function($) {
 	
 	var Parent;
 	
-	WPGMZA.OLMarker = function(options)
+	WPGMZA.OLMarker = function(row)
 	{
 		var self = this;
 		
-		Parent.call(this, options);
-		
-		var settings = {};
-		if(options)
-		{
-			for(var name in options)
-			{
-				if(options[name] instanceof WPGMZA.LatLng)
-				{
-					settings[name] = options[name].toLatLngLiteral();
-				}
-				else if(options[name] instanceof WPGMZA.Map)
-				{
-					// Do nothing (ignore)
-				}
-				else
-					settings[name] = options[name];
-			}
-		}
+		Parent.call(this, row);
 
 		var origin = ol.proj.fromLonLat([
 			parseFloat(this.lng),
@@ -66,12 +48,12 @@ jQuery(function($) {
 			
 			if(this.animation)
 				this.setAnimation(this.animation);
-			else if(this.anim)	// NB: Code to support old name
-				this.setAnimation(this.anim);
 			
-			if(options)
+			this.setLabel(this.settings.label);
+			
+			if(row)
 			{
-				if(options.draggable)
+				if(row.draggable)
 					this.setDraggable(true);
 			}
 			
@@ -85,16 +67,12 @@ jQuery(function($) {
 			
 			this.feature.setStyle(this.getVectorLayerStyle());
 			this.feature.wpgmzaMarker = this;
-			this.feature.wpgmzaFeature = this;
 		}
 		else
 			throw new Error("Invalid marker render mode");
 		
-		this.setOptions(settings);
 		this.trigger("init");
 	}
-	
-	// NB: Does not presently inherit OLFeature, which it probably should
 	
 	if(WPGMZA.isProVersion())
 		Parent = WPGMZA.ProMarker;
@@ -129,19 +107,10 @@ jQuery(function($) {
 		return WPGMZA.OLMarker.defaultVectorLayerStyle;
 	}
 	
-	WPGMZA.OLMarker.prototype.updateElementHeight = function(height, calledOnFocus)
+	WPGMZA.OLMarker.prototype.updateElementHeight = function(height)
 	{
-		var self = this;
-		
 		if(!height)
 			height = $(this.element).find("img").height();
-		
-		if(height == 0 && !calledOnFocus)
-		{
-			$(window).one("focus", function(event) {
-				self.updateElementHeight(false, true);
-			});
-		}
 		
 		$(this.element).css({height: height + "px"});
 	}
@@ -357,8 +326,6 @@ jQuery(function($) {
 		
 		this.isBeingDragged = false;
 		this.trigger({type: "dragend", latLng: latLngAfterDrag});
-
-		this.trigger("change");
 		
 		// NB: "yes" represents disabled
 		if(this.map.settings.wpgmza_settings_map_draggable != "yes")

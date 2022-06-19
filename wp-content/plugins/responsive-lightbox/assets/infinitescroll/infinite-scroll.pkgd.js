@@ -1,5 +1,5 @@
 /*!
- * Infinite Scroll PACKAGED v3.0.6
+ * Infinite Scroll PACKAGED v3.0.4
  * Automatically add next page
  *
  * Licensed GPLv3 for open source use
@@ -797,13 +797,9 @@ proto.updateGetPathTemplate = function( optPath ) {
   }.bind( this );
   // get pageIndex from location
   // convert path option into regex to look for pattern in location
-  // escape query (?) in url, allows for parsing GET parameters 
-  var regexString = optPath
-    .replace( /(\\\?|\?)/, '\\?' )
-    .replace( '{{#}}', '(\\d\\d?\\d?)' );
+  var regexString = optPath.replace( '{{#}}', '(\\d\\d?\\d?)' );
   var templateRe = new RegExp( regexString );
   var match = location.href.match( templateRe );
-
   if ( match ) {
     this.pageIndex = parseInt( match[1], 10 );
     this.log( 'pageIndex', [ this.pageIndex, 'template string' ] );
@@ -863,17 +859,9 @@ proto.updateGetAbsolutePath = function() {
   }
 
   var pathname = location.pathname;
-  // query parameter #829. example.com/?pg=2
-  var isQuery = path.match( /^\?/ );
-  if ( isQuery ) {
-    this.getAbsolutePath = function() {
-      return pathname + this.getPath();
-    };
-    return;
-  }
-
   // /foo/bar/index.html => /foo/bar
   var directory = pathname.substring( 0, pathname.lastIndexOf('/') );
+
   this.getAbsolutePath = function() {
     return directory + '/' + this.getPath();
   };
@@ -908,10 +896,6 @@ proto.destroy = function() {
 
   delete this.element.infiniteScrollGUID;
   delete instances[ this.guid ];
-  // remove jQuery data. #807
-  if ( jQuery && this.$element ) {
-    jQuery.removeData( this.element, 'infiniteScroll' );
-  }
 };
 
 // -------------------------- utilities -------------------------- //
@@ -952,9 +936,6 @@ InfiniteScroll.setJQuery = function( $ ) {
 // -------------------------- setup -------------------------- //
 
 utils.htmlInit( InfiniteScroll, 'infinite-scroll' );
-
-// add noop _init method for jQuery Bridget. #768
-proto._init = function() {};
 
 if ( jQuery && jQuery.bridget ) {
   jQuery.bridget( 'infiniteScroll', InfiniteScroll );
@@ -1033,11 +1014,7 @@ proto.loadNextPage = function() {
     this.onPageError( error, path );
   }.bind( this );
 
-  var onLast = function( response ) {
-    this.lastPageReached( response, path );
-  }.bind( this );
-
-  request( path, this.options.responseType, onLoad, onError, onLast );
+  request( path, this.options.responseType, onLoad, onError );
   this.dispatchEvent( 'request', null, [ path ] );
 };
 
@@ -1235,7 +1212,7 @@ proto.stopPrefill = function() {
 
 // -------------------------- request -------------------------- //
 
-function request( url, responseType, onLoad, onError, onLast ) {
+function request( url, responseType, onLoad, onError ) {
   var req = new XMLHttpRequest();
   req.open( 'GET', url, true );
   // set responseType document to return DOM
@@ -1247,8 +1224,6 @@ function request( url, responseType, onLoad, onError, onLast ) {
   req.onload = function() {
     if ( req.status == 200 ) {
       onLoad( req.response );
-    } else if ( req.status == 204 ) {
-      onLast( req.response );
     } else {
       // not 200 OK, error
       var error = new Error( req.statusText );
@@ -1803,7 +1778,7 @@ return InfiniteScroll;
 }));
 
 /*!
- * Infinite Scroll v3.0.6
+ * Infinite Scroll v3.0.4
  * Automatically add next page
  *
  * Licensed GPLv3 for open source use

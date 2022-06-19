@@ -85,30 +85,7 @@ abstract class AuthAbstract implements AuthInterface {
 		// To save in currently retrieved options array.
 		$this->options['auth_code'] = $code;
 
-		// NOTE: These options need to be saved by overwriting all options, because WP automatic updates can cause an issue: GH #575!
-		$options->set( $all, false, true );
-	}
-
-	/**
-	 * Update Setup Wizard flag in our DB.
-	 *
-	 * @since 2.6.0
-	 *
-	 * @param boolean $state A state (true/false) to set the is_setup_wizard_auth mailer setting.
-	 */
-	public function update_is_setup_wizard_auth( $state ) {
-
-		$options = new PluginOptions();
-		$all     = $options->get_all();
-
-		// To save in DB.
-		$all[ $this->mailer_slug ]['is_setup_wizard_auth'] = (bool) $state;
-
-		// To save in currently retrieved options array.
-		$this->options['is_setup_wizard_auth'] = (bool) $state;
-
-		// NOTE: These options need to be saved by overwriting all options, because WP automatic updates can cause an issue: GH #575!
-		$options->set( $all, false, true );
+		$options->set( $all );
 	}
 
 	/**
@@ -129,8 +106,7 @@ abstract class AuthAbstract implements AuthInterface {
 		// To save in currently retrieved options array.
 		$this->options['access_token'] = $token;
 
-		// NOTE: These options need to be saved by overwriting all options, because WP automatic updates can cause an issue: GH #575!
-		$options->set( $all, false, true );
+		$options->set( $all );
 	}
 
 	/**
@@ -151,8 +127,7 @@ abstract class AuthAbstract implements AuthInterface {
 		// To save in currently retrieved options array.
 		$this->options['refresh_token'] = $token;
 
-		// NOTE: These options need to be saved by overwriting all options, because WP automatic updates can cause an issue: GH #575!
-		$options->set( $all, false, true );
+		$options->set( $all );
 	}
 
 	/**

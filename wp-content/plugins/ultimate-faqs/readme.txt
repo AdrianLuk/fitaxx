@@ -1,108 +1,122 @@
-=== Ultimate FAQ - WordPress FAQ Plugin ===
+=== Ultimate FAQ ===
 Contributors: Rustaurius, EtoileWebDesign
-Tags: FAQ, WooCommerce faq, faqs, faq list, accordion faq, gutenberg faq, faq block, toggle faqs, filtered faqs, grouped faqs, faq order, faq sorting
-Requires at least: 5.0
-Tested up to: 5.7
+Tags: faq, faqs, woocommerce faq, frequently asked questions, faq widget
+Requires at least: 3.9.0
+Tested up to: 5.2
 License: GPLv3
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
+License URI:http://www.gnu.org/licenses/gpl-3.0.html
 
-Easily create and add FAQs to your WordPress site with a Gutenberg block, shortcode or widget. Includes FAQ schema, search, accordion toggle and more.
+FAQ plugin that lets you easily create, order and publicize FAQs using shortcodes, with many unique styles, WooCommerce FAQs and AJAX FAQ search
 
 == Description ==
 
-With this plugin you can easily create FAQs and add them to your WordPress site using a Gutenberg block or shortcode. It makes use of a custom post type and integrates seamlessly into any site. 
+FAQ plugin that lets you create, organize and publicize your FAQs (frequently asked questions) in no time through your Wordpress admin panel. Select from multiple responsive FAQ layouts and styles. Modern accordion style layout that fits into any site.
 
-* [Live Demo](https://www.etoilewebdesign.com/ultimate-faq-demo/)
+[FAQ Demo](https://www.etoilewebdesign.com/ultimate-faq-demo/)
 
-### Key Features
+<strong>Includes Gutenberg blocks for displaying FAQs as well as for the search and submit FAQ form!</strong>
 
-* Create unlimited FAQs
-* Create unlimited FAQ tags and FAQ categories
-* Gutenberg FAQ block
-* FAQ shortcode
-* Responsive accordion layout that will fit any site and any device
-* Ordering and sorting options for your FAQ page
-* Group FAQ options
-* Translation ready (all strings localized and .pot file included)
-* Bulk import FAQs from a spreadsheet
-* Insert custom CSS to style your FAQ layout
+= FAQ Key Features =
+* Unlimited FAQs, with unlimited tag and category support
+* Create FAQ categories
+* Create FAQ posts and assign categories to them
+* Accordion FAQ layout that will fit any site
+* An AJAX FAQ search form
+* Export all FAQs to a PDF to create a user manual
+* Insert custom CSS to style your FAQ posts
 
-This plugin is very user friendly and comes with a walk-through. When you activate the plugin, it will run and help you create your first FAQs, create an FAQ page and also set some important options!
+<em>This plugin is very user friendly and comes with a full guided setup (walkthrough). When you activate the plugin, the setup will run and help you create your first FAQs, create your FAQ page and set some important options!</em>
 
-### Gutenberg Block, Shortcode and Widget
-
-* Just add the <em>Display FAQs</em> Gutenberg block on any page to display your FAQs
-* Or, if you're using a different visual composer or page builder, or the Classic Editor plugin, just add the [ultimate-faqs] shortcode anywhere on any page
-* The plugin also comes with a widget to display your FAQs in any widgetized area in your theme.
-
-### Video Introduction to the Ultimate FAQ Plugin
+<strong>With WooCommerce Integration!</strong> See the "FAQ for WooCommerce" section below for full details and features.
 
 [youtube https://www.youtube.com/watch?v=xeGVZnVrZ6I]
 
-### Additional Features
+`
+[ultimate-faqs]
+`
 
-* Microdata / structured data / question schema (in the correct JSON-LD format) to help with SEO
-* Choose what elements show for each FAQ (e.g. categories, tags, author, date, etc.)
-* FAQ statistics and view count
-* Allow people to comment on individual FAQs
+Simply insert the above shortcode into any page to display your FAQs. 
 
-### FAQs for WooCommerce (Requires Premium)
+The plugin also comes with three easy-to-use Gutenberg blocks: one to display your FAQs, one to display an FAQ submist form and one to 
 
-* Easily add an FAQ tab to each product page
-* Responsive accordion layout that fits seamlessly into any product page
-* Create an FAQ category that matches the name of a product or category in your WooCommerce and it will automatically show!
-* For more info, please see the following video:
+You can use either the toggle and/or accordion responsive FAQ style, to display one expanded FAQ answer on click, or choose to display all FAQs on page load, with the optional responsive list style that offers a more traditional FAQ layout.
+
+Features include frequently asked question statistics that show how many times FAQs have been viewed, styling options, FAQ tags and categories, display and ordering options, among many other options. Includes an FAQ shortcode helper, that lets you create shortcodes with FAQ attributes without having to manually enter the shortcode.
+
+Ultimate FAQ isn't just for frequently asked questions. With its responsive accordion layout, that allows you to toggle and collapse content, it also works great for any content similar to an FAQ and that needs to be hidden until it is clicked, like job postings, recipes, etc.!
+
+= FAQ for WooCommerce =
+
+Using WooCommerce to sell your products? Easily add an FAQ tab to each product page, so your customers can see answers to common questions about the products they're browsing. With its responsive accordion layout, the new WooCommerce FAQ tab will fit seamlessly into any shop. It's the most comprehensive WooCommerce FAQs solution!
+
+For more information about WooCommerce FAQs integration, please see the following video:
 
 [youtube https://www.youtube.com/watch?v=cH3p0fW4c5o]
 
-### Ultimate FAQ Premium
+Want to decide exactly what order your FAQs are displayed in? Use our simple drag-and-drop reordering feature! Create SEO-friendly links to individual FAQ posts to simply direct customers to exactly the right answer, right away. Easily add links to your FAQs to popular social media, such as Facebook, Twitter and Pinterest so that your customers can help you spread the word about your FAQ!
 
-The premium version of this plugin comes with the following great extra features:
+With the smart [submit-question] shortcode (premium), you can let your customers add to your custom FAQ list by submitting a question and even proposing an answer for it!
 
-* FAQ search with autocomplete for question titles
-* Additional FAQ display styles
+= Additional FAQ Features =
+* Select FAQ animation options for displaying posts
+* Toggle FAQ accordion (close open FAQ when a new one is opened) behaviour on/off
+* Allow people to comment on individual FAQ
+* Microdata question schema, to help with SEO
+* Responsive FAQ design that looks great on all screen sizes
+* Group FAQs by category for easy navigation
+* Gutenberg FAQ block with options to specify categories and number of FAQs
+
+This FAQ plugin is great for combining with our <a href='https://wordpress.org/plugins/front-end-only-users/'>user management plugin </a> to create a member's only FAQ area.
+
+Ultimate FAQ uses the WordPress custom post type functionality to create an FAQ post type, allowing for smart and easy integration. No need to deal with a complicated FAQ builder. By utilizing a custom post and the new Gutenberg block functionality, you have the best possible FAQ builder.
+
+Ultimate FAQ can do more than just FAQs. If you have a help desk or knowledge base and need to pass on information to your visitors and/or users, the question/answer formatting is perfect. With its accordion layout and various options related to toggling, as well as the custom fields functionality, you can easily create an in-depth knowledge base and help desk.
+
+Ultimate FAQ has a responsive design that makes your FAQs look good on all screen sizes and all devices. No more worrying about what your mobile FAQs or accordion might look like. All options and styling will be applied accross all devices, so you can focus on your content.
+
+= Premium FAQ features include =
+
 * Choose from 15 toggle icon sets for your frequently asked questions
-* WP Forms Integration
+* WooCommerce FAQ tab with specific FAQs for each product (<a href='https://www.youtube.com/watch?v=cH3p0fW4c5o'>YouTube Video</a>)
+* Different FAQ display styles
 * Share FAQs on social media
-* Select animation options
-* Drag and drop precise re-ordering of FAQs
-* Add an FAQ submit form to your site, so visitors can suggest their own FAQs and also (optionally) answers
-* Admin notification for new FAQ submissions
-* Add additional custom fields to your FAQs, such as a text area, file, link, date and more
-* Export FAQs to spreadsheet
-* Export all FAQs to a PDF to create a user manual
-* SEO-Friendly FAQ, category and tag permalinks
+* User-submitted FAQs and also (optionally) answers
+* Admin notification on FAQ submission
+* AJAX easy FAQ search with autocomplete for question titles
+* Add additional custom fields to your FAQ answer, such as a text area, file, link, date and more
+* Import/Export of FAQs from spreadsheet
+* Export FAQs to PDF
+* SEO-Friendly FAQ, FAQ category and FAQ tag permalinks
 * Advanced FAQ styling options
+* Drag and drop precise re-ordering of FAQs
 * Change the FAQ permalink slug base
+* Gutenberg FAQ search block
+* Gutenberg FAQ block for including a submit question form 
 
-You can find out more information about the premium version and accessing a <strong><em>free 7-day trial</em></strong> here: [https://www.etoilewebdesign.com/plugins/ultimate-faq/](https://www.etoilewebdesign.com/plugins/ultimate-faq/)
+** We are also pleased to offer a free premium 7-day trial feature, which users can choose to test out before buying the premium version! **
 
-### Blocks
+= FAQ Shortcodes =
+* [ultimate-faqs]: display all FAQs, or only specific categories using include_category and exclude_category attributes (both take a comma-separated list of category slugs)
+* [popular-faqs]: displays a number of the most viewed FAQs (5 unless specified).
+* [recent-faqs]: displays a number of the most recently added FAQs (5 unless specified).
+* [select-faq]: display specific FAQ posts, using the attributes faq_name, faq_slug and faq_id which take comma-separated lists of FAQ post names, slugs and ids respectively.
+* [ultimate-faq-search]: display a search form that allows users to find FAQs with a specific string in the title or body of the FAQ post (premium).
+* [submit-question]: display a form that allows users to submit FAQs of their own and, if enabled, enter an answer to their submitted question as well (premium).
 
-* <strong>Display FAQs</strong>: Display all FAQs, or only specific categories using the block attributes
-* <strong>Popular FAQs</strong>: Displays a number of the most viewed FAQs (5 unless specified)
-* <strong>Recent FAQs</strong>: Displays a number of the most recently added FAQs (5 unless specified)
-* <strong>Search FAQs</strong>: Display a search form that allows users to find FAQs with a specific string in the title or body of the FAQ post (premium)
-* <strong>Submit FAQ</strong>: Display a form that allows users to submit FAQs of their own and, if enabled, enter an answer to their submitted question as well (premium)
+For further information and purchasing options for our frequently asked questions plugin, please visit our <strong><a href="http://www.etoilewebdesign.com/plugins/ultimate-faq/">WordPress FAQ plugin</a></strong> homepage.
 
-### Shortcodes
+= Translations =
+- Italian (Thanks to <a href='http://www.nimdaweb.it/'>Nimdaweb</a>)
 
-* [ultimate-faqs]: Display all FAQs, or only specific categories using include_category and exclude_category attributes (both take a comma-separated list of category slugs)
-* [popular-faqs]: Displays a number of the most viewed FAQs (5 unless specified)
-* [recent-faqs]: Displays a number of the most recently added FAQs (5 unless specified)
-* [select-faq]: Display specific FAQ posts, using the attributes faq_name, faq_slug and faq_id which take comma-separated lists of FAQ post names, slugs and ids respectively
-* [ultimate-faq-search]: Display a search form that allows users to find FAQs with a specific string in the title or body of the FAQ post (premium)
-* [submit-question]: Display a form that allows users to submit FAQs of their own and, if enabled, enter an answer to their submitted question as well (premium)
+For help and support, please see:
 
-### For help and support, please see:
+* Our FAQ page, here: https://wordpress.org/plugins/ultimate-faqs/faq/
+* Our installation guide, here: https://wordpress.org/plugins/ultimate-faqs/installation/
+* Our documentation, here: http://www.etoilewebdesign.com/plugins/ultimate-faq/documentation-ultimate-faq/
+* Our tutorial videos, here: https://www.youtube.com/playlist?list=PLEndQUuhlvSrNdfu5FKa1uGHsaKZxgdWt
+* The Ultimate FAQ support forum, here: https://wordpress.org/support/plugin/ultimate-faqs
 
-* Our FAQ page, here: [https://wordpress.org/plugins/ultimate-faqs/faq/](https://wordpress.org/plugins/ultimate-faqs/faq/)
-* Our installation guide, here: [https://wordpress.org/plugins/ultimate-faqs/installation/](https://wordpress.org/plugins/ultimate-faqs/installation/)
-* Our documentation, here: [https://www.etoilewebdesign.com/support-center/?Plugin=UFAQ&Type=FAQs](https://www.etoilewebdesign.com/support-center/?Plugin=UFAQ&Type=FAQs)
-* Our tutorial videos, here: [https://www.youtube.com/playlist?list=PLEndQUuhlvSrNdfu5FKa1uGHsaKZxgdWt
-](https://www.youtube.com/playlist?list=PLEndQUuhlvSrNdfu5FKa1uGHsaKZxgdWt)
-* The Ultimate FAQ support forum, here: [https://wordpress.org/support/plugin/ultimate-faqs](https://wordpress.org/support/plugin/ultimate-faqs)
-
+-----------------------------------------------------------------------------------
 
 == Installation ==
 
@@ -126,28 +140,31 @@ or
     * Click the 'Publish' button
 
 2. To display FAQs on your site:
-    * Place the <em>Display FAQs</em> block or the [ultimate-faqs] shortcode on any page you've created and it will display your FAQs
+    * Place the [ultimate-faqs] shortcode in the content area of any page you've created and it will display your FAQs
     * You can display specific FAQs by making use of the [select-faq] shortcode
-    * Display a select number of your most popular FAQs using the <em>Popular FAQs</em> block or the [popular-faqs] shortcode
-    * Display a select number of your most recent FAQs using the <em>Recent FAQs</em> block or the [recent-faqs] shortcode
+    * Display a select number of your most popular FAQs using the [popular-faqs] shortcode
+    * Display a select number of your most recent FAQs using the [recent-faqs] shortcode
 
 3. To include a submit question form:
-    * Placing the <em>Submit FAQs</em> block or the [submit-question] shortcode on a page will generate a form that allows your visitors to submit FAQ questions and, if enabled, even suggest FAQ answers for their questions (premium)
+    * Placing the [submit-question] shortcode on a page will generate a form that allows your visitors to submit FAQ questions and, if enabled, even suggest FAQ answers for their questions (premium)
 
 4. To include an FAQ search form:
-    * Use the <em>Search FAQs</em> block or the [ultimate-faq-search] shortcode to display an FAQ search form on a page. You can even set it so that all FAQs display on the search page and so that typing in the search box filters the results. (premium)
+    * Use the [ultimate-faq-search] shortcode to display an FAQ search form on a page. You can even set it so that all FAQs display on the search page and so that typing in the search box filters the results. (premium)
 
 5. Customize your FAQ experience by making use of the many available settings and options, including toggle and accordion modes, FAQ comments, FAQ category grouping (premium) and many styling options (premium).
 
-For a list of specific features, see the FAQ description page here: [https://wordpress.org/plugins/ultimate-faqs/](https://wordpress.org/plugins/ultimate-faqs/).
+For a list of specific features, see the FAQ description page here: https://wordpress.org/plugins/ultimate-faqs/.
 
 For help and support, please see:
 
-* Our FAQ page, here: [https://wordpress.org/plugins/ultimate-faqs/faq/](https://wordpress.org/plugins/ultimate-faqs/faq/)
-* Our documentation, here: [https://www.etoilewebdesign.com/support-center/?Plugin=UFAQ&Type=FAQs](https://www.etoilewebdesign.com/support-center/?Plugin=UFAQ&Type=FAQs)
-* Our tutorial videos, here: [https://www.youtube.com/playlist?list=PLEndQUuhlvSrNdfu5FKa1uGHsaKZxgdWt
-](https://www.youtube.com/playlist?list=PLEndQUuhlvSrNdfu5FKa1uGHsaKZxgdWt)
-* The Ultimate FAQ support forum, here: [https://wordpress.org/support/plugin/ultimate-faqs](https://wordpress.org/support/plugin/ultimate-faqs)
+* Our FAQ page, here: https://wordpress.org/plugins/ultimate-faqs/faq/
+* Our documentation, here: http://www.etoilewebdesign.com/plugins/ultimate-faq/documentation-ultimate-faq/
+* Our tutorial videos, here: https://www.youtube.com/playlist?list=PLEndQUuhlvSrNdfu5FKa1uGHsaKZxgdWt
+* The Ultimate FAQ support forum, here: https://wordpress.org/support/plugin/ultimate-faqs
+
+
+--------------------------------------------------------------
+
 
 == Frequently Asked Questions ==
 
@@ -264,150 +281,517 @@ Video 3 - FAQs Ordering
 
 == Changelog ==
 
-= 2.0.19 (2021-06-24) =
-- Fixed an issue in which FAQs that were imported would not display on the front end until manually updated. 
+= 1.8.27 =
+- Changing the way the schema is included to the new JSON-LD format
+- Adding an option to disable the schema
 
-= 2.0.18 (2021-06-21) =
-- Fixed an issue with incorrect permalinks in search results.
-- Fixed an issue in which emails from Ultimate WP Mail were not available for selection.
-- Fixed an issue in which <style> tags were being included even if no custom CSS was provided.
-- Eliminated a PHP notice. 
-- Added a German translation file that was provided by a user of the plugin.
+= 1.8.26 =
+- Removing placeholder text from the admin
 
-= 2.0.17 (2021-05-14) =
-- Fixed an issue causing the AJAX dynamic search results to not automatically show when typing when auto complete was disabled.
-- Fixed a conflict between multiple shortcodes listed on the search page. Please, you still should not have any extra shortcodes on your search page other than the one search shortcode!
-- Fixed issue with incorrect tag and category links on single post page.
+= 1.8.25 =
+- Adds in extra verifications for the import and export forms
 
-= 2.0.16 (2021-05-10) =
-- Fixed an issue in which the wrong URL was being generated for tag links when pretty permalink was enabled.
-- Added an option to disable front-page canonical redirects if you are using your homepage as your FAQ page.
+= 1.8.24 =
+- Correcting notices 
 
-= 2.0.15 (2021-05-05) =
-- Fixed an issue in which the "FAQs per page" wasn't populating subsequent pages when "Group FAQs by Category" was enabled.
+= 1.8.23 =
+- Correcting issue with not being able to import 
 
-= 2.0.14 (2021-04-29) =
-- Fixed an issue causing it to sometimes take two clicks to open an FAQ when accordion was enabled and you were using a reveal effect.
-- Set the default sort order for the popular-faqs shortcode to descending.
+= 1.8.22 =
+- Fixes a minor possible XSS issue 
 
-= 2.0.13 (2021-04-23) =
-- Fixed an issue in which permalinks were not correctly redirecting if you had the destination set to the main FAQ page and pretty permalinks enabled.
+= 1.8.21 =
+- Updated reference variable that was causing a notice in FAQ comments 
 
-= 2.0.12 (2021-04-22) =
-- Added workaround for missing formatting when using Elementor due to the way they filter the content.
-- Removed "Expand All" button from single FAQs.
-- Fixed a display issue, where "Expand All" was displaying instead of "Collapse All" when display_all_faqs was being used.
-- Eliminated a notice. 
+= 1.8.20 =
+- Added in before_title and after_title for the widget titles
 
-= 2.0.11 (2021-04-20) =
-- Fixed incorrect URL for category links in FAQ search result
-- Fixed link type custom fields not abiding the Hide Blank setting
-- Fixed issue with link type custom fields not being formatted as a link on the front end
+= 1.8.19 =
+- Corrected an issue that was causing the "Skip All" button to not work in the tutorial that displays on plugin activation.
 
-= 2.0.10 (2021-04-19) =
-- Corrected console JS error on admin Dashboard page.
-- Updated admin enqueuing conditions.
+= 1.8.18 =
+- Fixed an incorrect post_type reference in the new walkthrough. 
 
-= 2.0.9 (2021-04-15) =
-- Fix for fatal error happening on plugin update.
-- <strong>If you are updating from a pre-2.0.0 version of the plugin, you may have to manually re-activate the plugin after running the update.</strong>
+= 1.8.17 =
+- Missing files didn't actually get added in, in the last update. They're there now.
 
-= 2.0.8 (2021-04-14) =
-- Workaround for infinite loop issue caused by SiteOrigin Page Builder's application of content filtering.
+= 1.8.16 =
+- Adding in missing files for the new guided setup
 
-= 2.0.7 (2021-04-14) =
-- Fixed the duplicate entry on the Plugins screen
-- Fixed an issue with the FAQ Elements Order setting/table that was causing a warning and for it to sometimes not display the correct order
+= 1.8.15 =
+- Added in a new guided setup on plugin activation
+- Updated the review ask pop-up
 
-= 2.0.6 (2021-04-14) =
-- Fix for the plugin deactivating when updating from pre-2.0.0
+= 1.8.14 =
+- Corrected issue in which the number of columns setting reverted back to default if you deactivated and reactivated the plugin 
 
-= 2.0.5 (2021-04-13) =
-- Fixed an issue where, when a single FAQ is linked to, the plugin was no longer scrolling to it.
-- Fixed incorrect path for loading plugin text domain.
-- Added the ability for the display_all_answers and group_by_category settings, for the View.FAQs class, to be filtered. This will allow you to override the default settings, to (among other things) do something like make an FAQ start closed even if it's the only one displaying. You can see the following for an example: https://pastebin.com/gZXFcmtw
+= 1.8.13 =
+- Corrected issue in which category and tag styling options were not saving
+- Corrected a formatting issue that was affecting certain option screens
 
-= 2.0.4 (2021-04-12) =
-- Update to the structured data to make it so that, if you have multiple instances of the shortcode on the same page, it will combine the data from all of them and output only one FAQPage schema.
-- Fixes an issue with filtered FAQ content being displayed on archive pages.
+= 1.8.12 =
+- Added a skip button to the tutorial that shows when the plugin is first activated
+- Added in a few missing images in the plugin admin area
+- Corrected issue that was causing the review request to pop back up even after a review had been left or feedback sent.
 
-= 2.0.3 (2021-04-09) =
-- Disables group-by-category if there's only a single FAQ, which rectifies issue of duplicates showing on single post page.
+= 1.8.11 =
+- Corrected issue with Gutenberg blocks not displaying in new WordPress 5.0
 
-= 2.0.2 (2021-04-08) =
-- When using the "include_category" attribute while having "Group FAQs by Category" enabled, FAQs that are included in multiple categories will only be displayed in the categories specified in the "include_category" attribute.
-- Generated a new .pot file.
+= 1.8.10 =
+- Updated enqueued JS version number to help with any issues related to the frequency of the request for feedback
 
-= 2.0.1 (2021-04-07) =
-- <strong>Please double check after updating to see if the plugin was automatically re-activated. If not, you just need to manually click the Activate button.</strong>
-- Fixed an issue causing the "Share" label to show when it shouldn't
-- Fixed an issue causing new FAQs to not display in the order table
-- Fixed an issue causing the order set in the order table to not apply on the front end
-- Changed default slug base back to the correct "ufaqs"
-- Removed the border that was now appearing by default around the toggle symbol
+= 1.8.9 =
+- Added in missing call to global version number variable for enqueued files
 
-= 2.0.0 (2021-04-06) =
-- <strong>This update includes quite a big change to the construction of the plugin, so please take caution and test before updating on a live site (or wait a few days before updating in case some minor corrective updates need to be released).</strong>
-- <strong>Please also double check after updating to see if the plugin was automatically re-activated. If not, you just need to manually click the Activate button.</strong>
-- Rebuilt the plugin, from the ground up, to be object oriented.
-- Updated the structure of the settings pages.
-- Fixed an issue with the WooCommerce integration causing other tabs to not display.
-- Fixed an issue with reveal effects not working.
-- Fixed issues with custom field importing.
-- If there's only a single FAQ being displayed, it will automatically display opened
-- CSS/styling updates, including for columns and WP Forms integration.
-- Updates to several styling options.
-- Updates to several option descriptions, to clarify them.
-- Updated the conditional loading of CSS and JS assets. 
-- Added labelling option.
-- Cleaning up/removing unnecessary code and files.
-- Eliminating notices.
-- JS localization.
-- Updated .pot file. (If you have created a translation based on the old version, you might need to just update your .po file for this new version.)
+= 1.8.8 =
+- Added version number to enqueued files
 
-= 1.9.12 =
-- Fixing an issue in which tabs and content from other sources were not showing in WooCommerce tabs
+= 1.8.7 =
+- Update to fix class conflict with PHPSpreadsheet if using more than one of our plugins
 
-= 1.9.11 =
-- Updated .pot file for translations.
-- Update to plugin name and description to clarify purpose and use.
+= 1.8.6 =
+- Update to fix same-page permalinks
+- Update to fix sidebar misalignment issue when Group By Category is enabled
 
-= 1.9.10 =
-- Further update for the feedback notice due to user who seems to still not be able to dismiss it.
+= 1.8.5 =
+- Update to correct potential alignment issues when Group FAQs by Category enabled
 
-= 1.9.9 =
-- Corrects recent issue causing the feedback notice to not dismiss correctly
+= 1.8.4 =
+- Made the request for feedback less intrusive
 
-= 1.9.8 =
-- Updated plugin documentation to take into account features that have been modified and added recently, and to more accurately reflect the current version of the plugin.
+= 1.8.3 =
+- Another minor update for the rewite_rules issue
 
-= 1.9.7 =
-- CSS updates for the admin
-- Updating plugin and author links to the current correct URLs
-- Small change in the name to make purpose of plugin more clear
+= 1.8.2 =
+- Removed an extra set of quotation marks that was causing flush_rewrite_rules to sometimes be called unnecessarily on init
+- Fixed a styling option that wasn't working correctly for setting the category heading type
 
-= 1.9.6 =
-- Adding labelling option
+= 1.8.1 =
+- Fixes a notice about trying to get property of a non-object
 
-= 1.9.5 =
-- Correcting/eliminating several PHP notices
-- Updating the version of FPDF used to 1.82
+= 1.8.0 =
+- <strong>This is a big update with many new features, corrections, revised admin styling, etc., so please take caution and test before updating on a live site</strong>
+- Added in easy-to-use Gutenberg blocks for ultimate-faqs, ultimate-faq-search, submit-faq, recent-faqs and popular-faqs shortcodes
+- Added in Gutenberg compatibily for the FAQ post create/edit screen
+- The Options pages have a brand new and easy-to-use design!
+- Added in new labelling options
+- Added in a feature to display FAQs in multiple columns
+- Added in option to set a default category for submitted questions
+- Added in option to choose the number of FAQs that display per page (pagination), with options for distinct pages, a load more button or infinite scroll
+- Made block styling options apply to border block theme as well
+- Added in styling option for category headings
+- Added in functionality for FAQ search, when "show on load" isn't being used, to have all FAQ results clear again when the search bar is cleared
+- Added in option for the permalink to display just the text or just the icon
+- Switched from using PHPExcel to the new PHPSpreadsheet for importing and exporting
+- Made permalink text also a link (not just the icon)
+- Corrected some alignment and styling issues with the FAQ Details meta box on the FAQ post create/edit screen
+- Corrected issue with question/title styling not applying if you chose something other than H4 for FAQ Heading Type
+- Updated comment label for FAQs that have comments enabled
+- Minor styling changes to the FAQ display, including alignment of labels and corresponding fields
+- Removed Color Block option from FAQ Display Style. (With the current Toggle Symbol styling options, it was redundant. If you had this option chosen, nothing will change, as it will automatically switch you to the Default option and keep any color changes you had made using the Toggle Symbol styling as well as your choice for the Color Block Shape.)
+- Generated new .pot file
 
-= 1.9.4 =
-- Update to correct a potential minor XSS vulnerability
+= 1.7.3 =
+- Made the review ask pop up conditional on having JavaScript enabled and error-free
 
-= 1.9.3 =
-- CSS update for the admin styling options page layout
-- Clarifying the purpose of the plugin in the name
+= 1.7.2 =
+- Added in an option to highlight the search term in the FAQ question and answer when using the search shortcode
 
-= 1.9.2 =
-- Small CSS update for admin options page layout
+= 1.7.1 =
+- Added an explanation for why "file" type custom fields cannot be included in a user-submitted FAQ
+- Fixed a small admin CSS conflict with Gravity Forms
 
-= 1.9.1 =
-- Added extra security to the import feature.
+= 1.7.0 =
+- Added the ability to include a "Post Date" and any custom fields when importing or exporting FAQs to a spreadsheet
+- Added an attribute so that only FAQ posts in a parent category is displayed instead of all of the FAQ posts in child categories as welll
+- Added UTF-8 support for PDF exports
+- Fixed a problem where only the top category could be opened if the FAQ shortcode was included twice on a page
+- Fixed an issue where the menu bar wasn't displayed on the edit FAQ screen
+- Fixed an error where blank lines could be imported via spreadsheet as blank FAQs
+- "File" type custom field labels no longer display on the submit FAQ form
 
-= 1.9.0 =
-- Added a new feature to integrate with WP Forms. Now you can set a field in your WP Forms contact form to automatically suggest and display FAQs when someone starts typing their message.
-- Corrected an issue where the FAQ search was sometimes not working when the auto complete option was disabled.
-- Corrected an issue where sometimes the post count did not return correctly if the same post matched for multiple words. 
+= 1.6.20 =
+- Updated the free trial button
 
+= 1.6.19 =
+- Small update to fix the broken dashboard image links
+
+= 1.6.18 =
+- We're doing a big FAQ admin area styling update, first up is the dashboard!
+- Clarified the 'file' field type restriction for the submit FAQ shortcode
+
+= 1.6.17 =
+- Added an option to change who has access to the FAQ admin area
+
+= 1.6.16 =
+- Added in an option to have the category toggles accordion
+
+= 1.6.15 =
+- Added in an option to let users submit custom fields along with their questions when using the submit question shortcode
+
+= 1.6.14 =
+- Fixed a deprecated function issue for PHP 7.2 users
+
+= 1.6.13 =
+- Added in Ultimate WP Mail integration for the submit shortcode
+
+= 1.6.12 =
+- Minor styling updates
+
+= 1.6.11 =
+- Re-running the set options operation for those who had updated to version 1.6.10
+
+= 1.6.10 =
+- Fixed an issue where new users were getting blank FAQs
+
+= 1.6.9 =
+- Added in the option to re-order the elements of an FAQ (body, date/author, categories, etc.)
+
+= 1.6.8 =
+- Fixed a conflict with other plugins that use CSSTidy for CSS sanitization
+- Added the ability to link to the search shortcode with a term preloaded
+
+= 1.6.7 =
+- Fixed the settings page for those using PHP7
+- Fixed the faq_id attribute of the select-faq shortcode
+
+= 1.6.6 =
+- Added in a captcha option for the submit question shortcode
+- Fixed an HTML validation error
+
+= 1.6.5 =
+- Updated color select sanitizing function
+
+= 1.6.4 =
+- Removed unnecessary code from AJAX processing file
+- Improved admin data processing
+
+= 1.6.3 =
+- Added a nonce field to the settings form
+ 
+= 1.6.2 =
+- Minor admin styling update
+
+= 1.6.1 =
+- Minor performance enhancement
+
+= 1.6.0 =
+- Added in a new FAQ style, contemporary
+- Fixed an apply_filters issue with the_title
+- Internationalized a few strings
+
+= 1.5.40 =
+- Fixed a number of minor styling issues
+
+= 1.5.39 =
+- Maintenance update (notices removed, pageload speed enhancements, small CSS fixes, etc.)
+
+= 1.5.38 =
+- Added spacing and a span for category post counts
+
+= 1.5.37 =
+- Fixed an error with the "Main FAQ page" permalink setting
+
+= 1.5.36 =
+- Minor admin styling update
+
+= 1.5.35 =
+- Changed the menu icon
+- Added missing filters for the title
+- Made it possible to change the email address that submitted question notifications get sent to
+- Add an Italian translation (Thanks to Nimbaweb)
+- Fixed an error where custom CSS wasn't being applied to the search shortcode
+
+= 1.5.34 =
+- Added an option to display the number of FAQs in a category, when FAQs are grouped by category
+
+= 1.5.33 =
+- Updated the text domain of the plugin, to use the improved WordPress standard
+
+= 1.5.32 =
+- Minor admin CSS update
+
+= 1.5.31 =
+- Fixed a small admin CSS issue
+
+= 1.5.30 =
+- Minor CSS styling updates
+
+= 1.5.29 =
+- Fixed an error where a number of widget titles weren't displaying correctly in the admin area
+
+= 1.5.28 =
+- Updated some PHPExcel files for increased import/export compatibility with PHP7
+
+= 1.5.27 =
+- Added an option for a title on a number of the FAQ widgets
+
+= 1.5.26 =
+- Made a number of changes to speed up page loads for longer FAQs
+- Fixed an issue with the "Random FAQ" widget where an FAQ would be displayed multiple times if it was in multiple categories
+
+= 1.5.24 =
+- Fixed a missing slash on the WooCommerce FAQs tab in the admin area
+
+= 1.5.23 =
+- Added a "Random FAQ" widget
+- Added in options to change the toggle icon size and color
+- Fixed a couple of small issues with the AJAX search
+
+= 1.5.22 =
+- Small admin CSS and typo correction in relation to previous update
+
+= 1.5.21 =
+- Split the basic and premium options into a few sub-sections, to make it easier to find the right option
+
+= 1.5.20 =
+- Added a new, simpler way to select which FAQs to display on a product page, directly from the edit product screen
+
+= 1.5.19 =
+- Minor admin area update
+
+= 1.5.18 =
+- Removed a number of notices
+
+= 1.5.17 =
+- Removed a number of notices
+
+= 1.5.16 =
+- Replaced the version of PHPExcel used, so that the spreadsheet uploads will be compatible with PHP7
+- Minor Dashboard fix
+
+= 1.5.15 =
+- Fixed a small Dashboard error that a number of users were experiencing
+
+= 1.5.14 =
+- Minor Dashboard update
+
+= 1.5.13 =
+- Fixed an error where using the trial in this plugin reset the trials for a number of our other plugins
+
+= 1.5.12 =
+- Introducing a free new premium 7-day trial feature, which users can choose to test out before buying the premium version
+
+= 1.5.11 =
+- Added an "Expand/Collapse All" optional set of controls
+- Added in a "Retrieving Results" label for the search shortcode
+- Added a "Link" custom field type
+- Added in helper text when you're editing a category, to show the shortcode required to display only the selected category of FAQs
+- Fixed a problem with sharing an FAQ on Facebook
+
+= 1.5.10 =
+- Fixed an error where permalinks weren't displaying
+
+= 1.5.8 =
+- Added in a pre-built shortcode display on the edit FAQ page, to display a single FAQ
+- Fixed an error where the upgrade box was displayed on multiplate tabs
+
+= 1.5.7 =
+- Fixed an issue where the ratings buttons weren't working using the AJAX search feature
+
+= 1.5.6 =
+- Fixed minor dashboard and attribute errors
+
+= 1.5.5 =
+- Added in a new admin notification option for when questions are received
+- Added in two new shortcode attributes, 'include_category_ids' and 'exclude_category_ids', to let users include categories by ID instead of only by slug
+- Fixed two typos in the labelling area of the backend
+
+= 1.5.4 =
+- Fixed an issue where the most viewed FAQ stat was being sorted as a string
+
+= 1.5.3 =
+- Fixed a labelling issue for the submit FAQ shortcode
+
+= 1.5.2 =
+- Fixed a labelling issue for the submit FAQ shortcode
+
+= 1.5.1 =
+- Added in a message if no FAQs are found in search, and a label for that message in the back-end
+
+= 1.5.0 =
+- Added in a new premium option to change the toggle icon to one of 15 different sets of icons
+- Added in microdata support, to help with SEO
+- FAQs can now be included for an entire WooCommerce category instead of being added for products one at a time
+- Fixed a URL issue when a category or tag was selected, and a visitor tried to select another one
+
+= 1.4.5 =
+- Fixed a number of insufficient permission errors
+
+= 1.4.4 =
+- Added back in the link to edit an FAQ when you're on the single FAQ page
+
+= 1.4.3 =
+- Added in a new set of tutorials for new users
+- Centralized the plugin dashboard and menu
+
+= 1.4.2 =
+- Added a premium styling option for the toggle indicator to adjust the height
+
+= 1.4.1 =
+- Minor update to take out a debugging message
+
+= 1.4.0 =
+- Added two new FAQ display styles, minimalist and border block
+- Added in support for comments directly in the FAQs if enabled
+- Added two new premium features, FAQ ratings and FAQ custom fields
+- Added a premium styling option to let users select which heading the FAQ and comment titles have (h1, h2, etc.)
+
+= 1.3.6 =
+- Minor CSS update
+
+= 1.3.5 =
+- Fixed a font-family error
+
+= 1.3.4 =
+- Fixed an error where if WooCommerce FAQs were set to "Yes", and not category had been created, all FAQs would show
+
+= 1.3.3 =
+- Fixed an error where scroll to top would take a visitor to the first instance of an FAQ if it was on the page twice
+
+= 1.3.2 =
+- Fixed an error where view count wasn't being counted when FAQs were clicked to expand
+
+= 1.3.1 =
+- Fixed a JS error that was preventing the new shortcode helper from working with other plugins that modify the visual editor
+
+= 1.3.0 =
+- Added a feature that has been requested by a number of users, an FAQ shortcode helper, which lets you build shortcodes without having to remember and manually input the attributes. This feature can be turned off via the settings page, if you'd like to keep your tinyMCE button bar free of extra buttons
+- Fixed an error where category titles were no longer displaying
+
+= 1.2.11 =
+- Global post variable is now reset after the FAQs query loop
+
+= 1.2.10 =
+- Should make the plugin compatible with a couple of page builder plugins
+
+= 1.2.9 =
+- If there are no tags or categories for a particular FAQ, they should now be hidden
+
+= 1.2.8 =
+- Added an attribute, show_on_load, which will show all FAQs when the page first loads and then refresh the results when a visitor adds a search term
+
+= 1.2.7 =
+- Fixed an error where same page permalinks weren't opening the posts
+
+= 1.2.6 =
+- Added an option to just use the page ID for WooCommerce instead of the product's ID
+
+= 1.2.5 =
+- Fixed a broken link
+- Added extra information about the premium version
+
+= 1.2.4 =
+- Fixed an error where FAQs on the same page as the search shortcode couldn't be clicked at times
+
+= 1.2.3 =
+- Added in WPML support for the main shortcodes
+- Fixed an error with a missing ID tag
+
+= 1.2.2 =
+- Added the ability to have multiple widgets or shortcodes on a page
+- Fixed a small error with the popular FAQs shortcode
+
+= 1.2.1 =
+- Fixed a missing file error
+
+= 1.2.0 =
+- Added in a new premium feature: WooCommerce FAQs tab, which lets you add a different list of FAQs on the product page for each WooCommerce product
+- Added the ability to filter FAQs by category
+
+= 1.1.19 =
+- Added another set of labeling options
+
+= 1.1.18 =
+- Minor CSS update
+
+= 1.1.17 =
+- Added anumber of extra labeling options
+
+= 1.1.16 =
+- Minor CSS update
+
+= 1.1.15 =
+- CSV files can now be used for FAQ imports
+
+= 1.1.14 =
+- Fixed a parent-child issue, where if a parent category was added in the include_category attribute, it was possible to end up with unexpected categories when an FAQ was in multiple categories
+
+= 1.1.13 =
+- Fixed a number of PHP notices
+
+= 1.1.12 =
+- Minor CSS update
+
+= 1.1.11 =
+- Fixed a missing div error that could come up with certain options selected
+
+= 1.1.10 =
+- Minor CSS update
+
+= 1.1.9 =
+- Added a "Category Toggle" options for users who group their FAQs by category
+- Cleaned up some of the code dealing with options
+
+= 1.1.8 =
+- Fixed a scrolling error with non-FAQ links
+
+= 1.1.7 =
+- Should fix small problems with the "select-faq" shortcode and the "FAQ ID List" widget
+
+= 1.1.6 =
+- Removed blank categories from FAQ search results
+- Added in a "Permalink Type" option, which lets you decide between linking to the post in the main page and the individual post page
+
+= 1.1.5 =
+- Fixed a problem with FAQ permalinks not opening in the list
+
+= 1.1.4 =
+- Fixed a conflict with WooCommerce, where a UFAQ script was keeping product information tabs open
+
+= 1.1.3 =
+- Fixed a problem where links inside of a toggable FAQ weren't clickable
+
+= 1.1.2 =
+- Added a color picker to the color fields on the styling options area
+
+= 1.1.1 =
+- Added 'display_all_answers' as a shortcode attribute, so some pages can have all answers displayed and others can have the started list style
+- Fixed an option mistake
+
+= 1.1.0 =
+- Added new premium display styles
+- Added an autocomplete titles option for the AJAX search shortcode
+- Added more styling options to customize new display styles
+- Added an option to add a 'Back to Top' link to each FAQ post
+- Fixed a reveal error with non-accordion display and no effect selected
+
+= 1.0.9 =
+- Added some CSS classes in preparation for an upcoming large CSS/styling update
+
+= 1.0.8 =
+- Added a unique identifier to each FAQ so that if it is repeated on the same page, the correct post should open
+
+= 1.0.7 =
+- Minor CSS update
+
+= 1.0.6 =
+- Fixed an issue where new users weren't able to update ordering even after upgrading to premium
+
+= 1.0.5 =
+- Minor CSS update
+
+= 1.0.4 =
+- Fixed a status error message
+
+= 1.0.3 =
+- Added in widgets to display a number of popular or recently created faqs
+
+= 1.0.2 =
+- CSS update for the ordering table in the admin area
+
+= 1.0.1 =
+- Fix for the FAQ ordering bug
+
+= 1.0.0 =
+- Premium version release, check out our website for all of the details <http://www.etoilewebdesign.com/ultimate-faq/>

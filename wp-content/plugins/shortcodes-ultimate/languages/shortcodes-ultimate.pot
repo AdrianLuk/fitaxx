@@ -1,4 +1,4 @@
-# Copyright (C) 2021 Shortcodes Ultimate
+# Copyright (C) 2020 Shortcodes Ultimate
 # This file is distributed under the same license as the Shortcodes Ultimate package.
 msgid ""
 msgstr ""
@@ -78,7 +78,7 @@ msgstr ""
 msgid "Content slider"
 msgstr ""
 
-#: admin/class-shortcodes-ultimate-admin-extra-shortcodes.php:126, includes/shortcodes/lightbox-content.php:104
+#: admin/class-shortcodes-ultimate-admin-extra-shortcodes.php:126, includes/shortcodes/lightbox-content.php:104, includes/shortcodes/tooltip.php:46
 msgid "Shadow"
 msgstr ""
 
@@ -174,7 +174,7 @@ msgstr ""
 msgid "Available shortcodes"
 msgstr ""
 
-#: admin/class-shortcodes-ultimate-admin-shortcodes.php:88, admin/class-shortcodes-ultimate-admin-top-level.php:39, admin/class-shortcodes-ultimate-admin.php:267, includes/functions-galleries.php:297, inc/core/widget.php:14, inc/core/widget.php:40, admin/partials/help/sidebar.php:3
+#: admin/class-shortcodes-ultimate-admin-shortcodes.php:88, admin/class-shortcodes-ultimate-admin-top-level.php:39, admin/class-shortcodes-ultimate-admin.php:267, includes/functions-galleries.php:289, inc/core/widget.php:14, inc/core/widget.php:40, admin/partials/help/sidebar.php:3
 msgid "Shortcodes Ultimate"
 msgstr ""
 
@@ -272,69 +272,77 @@ msgstr ""
 msgid "Shortcodes Ultimate is not activated, because it requires WordPress version %1$s (or higher). You have version %2$s."
 msgstr ""
 
-#: includes/functions-galleries.php:258
+#: includes/functions-galleries.php:250
 msgid "Original image size"
 msgstr ""
 
-#: includes/functions-galleries.php:292
+#: includes/functions-galleries.php:284
 msgid "Slide link"
 msgstr ""
 
-#: includes/functions-galleries.php:298
+#: includes/functions-galleries.php:290
 msgid "Use this field to add custom links to slides used with Slider, Carousel and Custom Gallery shortcodes"
 msgstr ""
 
-#: inc/core/assets.php:88
+#: inc/core/assets.php:83
 msgid "Choose file"
 msgstr ""
 
-#: inc/core/assets.php:89
+#: inc/core/assets.php:84
 msgid "Insert"
 msgstr ""
 
-#: inc/core/assets.php:90
+#: inc/core/assets.php:85
 msgid "Select images"
 msgstr ""
 
-#: inc/core/assets.php:91
+#: inc/core/assets.php:86
 msgid "Add selected images"
 msgstr ""
 
-#: inc/core/assets.php:92
+#: inc/core/assets.php:87
 msgid "Please enter a name for new preset"
 msgstr ""
 
-#: inc/core/assets.php:93
+#: inc/core/assets.php:88
 msgid "New preset"
 msgstr ""
 
-#: inc/core/assets.php:94
+#: inc/core/assets.php:89
 msgid "Last used settings"
 msgstr ""
 
-#: inc/core/assets.php:122
+#: inc/core/assets.php:117
 msgid "This shortcode doesn't work in live preview. Please insert it into editor and preview on the site."
 msgstr ""
 
-#: inc/core/assets.php:124
+#: inc/core/assets.php:119
 msgid "Close (Esc)"
 msgstr ""
 
-#: inc/core/assets.php:125
+#: inc/core/assets.php:120
 msgid "Loading..."
 msgstr ""
 
-#: inc/core/assets.php:126
+#: inc/core/assets.php:121
 msgid "Previous (Left arrow key)"
 msgstr ""
 
-#: inc/core/assets.php:127
+#: inc/core/assets.php:122
 msgid "Next (Right arrow key)"
 msgstr ""
 
 #. translators: %1$s of %2$s represents image counter in lightbox, will be replaced with "1 of 5"
-#: inc/core/assets.php:129
+#: inc/core/assets.php:124
 msgid "%1$s of %2$s"
+msgstr ""
+
+#: inc/core/assets.php:125
+msgid "Failed to load content."
+msgstr ""
+
+#: inc/core/assets.php:125
+msgid "Open link"
 msgstr ""
 
 #: inc/core/generator-views.php:53
@@ -622,11 +630,11 @@ msgstr ""
 msgid "Accordion"
 msgstr ""
 
-#: includes/shortcodes/accordion.php:14, includes/shortcodes/animate.php:44, includes/shortcodes/audio.php:37, includes/shortcodes/box.php:56, includes/shortcodes/button.php:144, includes/shortcodes/carousel.php:143, includes/shortcodes/column.php:40, includes/shortcodes/csv-table.php:52, includes/shortcodes/custom-gallery.php:82, includes/shortcodes/dailymotion.php:103, includes/shortcodes/display-posts.php:223, includes/shortcodes/divider.php:74, includes/shortcodes/document.php:50, includes/shortcodes/dropcap.php:33, includes/shortcodes/dummy-image.php:53, includes/shortcodes/dummy-text.php:46, includes/shortcodes/expand.php:88, includes/shortcodes/feed.php:39, includes/shortcodes/frame.php:25, includes/shortcodes/gmap.php:58, includes/shortcodes/guests.php:13, includes/shortcodes/heading.php:56, includes/shortcodes/highlight.php:26, includes/shortcodes/image-carousel.php:193, includes/shortcodes/label.php:27, includes/shortcodes/lightbox-content.php:109, includes/shortcodes/lightbox.php:38, includes/shortcodes/list.php:35, includes/shortcodes/members.php:35, includes/shortcodes/menu.php:18, includes/shortcodes/note.php:37, includes/shortcodes/permalink.php:38, includes/shortcodes/private.php:13, includes/shortcodes/pullquote.php:22, includes/shortcodes/qrcode.php:81, includes/shortcodes/quote.php:34, includes/shortcodes/row.php:15, includes/shortcodes/service.php:41, includes/shortcodes/siblings.php:19, includes/shortcodes/slider.php:124, includes/shortcodes/spacer.php:22, includes/shortcodes/spoiler.php:67, includes/shortcodes/subpages.php:25, includes/shortcodes/table.php:34, includes/shortcodes/tabs.php:58, includes/shortcodes/tabs.php:117, includes/shortcodes/tooltip.php:103, includes/shortcodes/video.php:67, includes/shortcodes/vimeo.php:71, includes/shortcodes/youtube-advanced.php:134, includes/shortcodes/youtube.php:60
+#: includes/shortcodes/accordion.php:14, includes/shortcodes/animate.php:44, includes/shortcodes/audio.php:37, includes/shortcodes/box.php:56, includes/shortcodes/button.php:144, includes/shortcodes/carousel.php:143, includes/shortcodes/column.php:40, includes/shortcodes/csv-table.php:52, includes/shortcodes/custom-gallery.php:82, includes/shortcodes/dailymotion.php:103, includes/shortcodes/display-posts.php:223, includes/shortcodes/divider.php:74, includes/shortcodes/document.php:50, includes/shortcodes/dropcap.php:33, includes/shortcodes/dummy-image.php:53, includes/shortcodes/dummy-text.php:46, includes/shortcodes/expand.php:88, includes/shortcodes/feed.php:39, includes/shortcodes/frame.php:25, includes/shortcodes/gmap.php:58, includes/shortcodes/guests.php:13, includes/shortcodes/heading.php:56, includes/shortcodes/highlight.php:26, includes/shortcodes/image-carousel.php:187, includes/shortcodes/label.php:27, includes/shortcodes/lightbox-content.php:109, includes/shortcodes/lightbox.php:38, includes/shortcodes/list.php:35, includes/shortcodes/members.php:35, includes/shortcodes/menu.php:18, includes/shortcodes/note.php:37, includes/shortcodes/permalink.php:38, includes/shortcodes/private.php:13, includes/shortcodes/pullquote.php:22, includes/shortcodes/qrcode.php:81, includes/shortcodes/quote.php:34, includes/shortcodes/row.php:15, includes/shortcodes/service.php:41, includes/shortcodes/siblings.php:19, includes/shortcodes/slider.php:124, includes/shortcodes/spacer.php:22, includes/shortcodes/spoiler.php:61, includes/shortcodes/subpages.php:25, includes/shortcodes/table.php:34, includes/shortcodes/tabs.php:52, includes/shortcodes/tabs.php:111, includes/shortcodes/tooltip.php:99, includes/shortcodes/video.php:67, includes/shortcodes/vimeo.php:71, includes/shortcodes/youtube-advanced.php:134, includes/shortcodes/youtube.php:60
 msgid "Extra CSS class"
 msgstr ""
 
-#: includes/shortcodes/accordion.php:15, includes/shortcodes/animate.php:45, includes/shortcodes/audio.php:38, includes/shortcodes/box.php:57, includes/shortcodes/button.php:145, includes/shortcodes/carousel.php:144, includes/shortcodes/column.php:41, includes/shortcodes/csv-table.php:53, includes/shortcodes/custom-gallery.php:83, includes/shortcodes/dailymotion.php:104, includes/shortcodes/display-posts.php:224, includes/shortcodes/divider.php:75, includes/shortcodes/document.php:51, includes/shortcodes/dropcap.php:34, includes/shortcodes/dummy-image.php:54, includes/shortcodes/dummy-text.php:47, includes/shortcodes/expand.php:89, includes/shortcodes/feed.php:40, includes/shortcodes/gmap.php:59, includes/shortcodes/guests.php:14, includes/shortcodes/heading.php:57, includes/shortcodes/highlight.php:27, includes/shortcodes/image-carousel.php:194, includes/shortcodes/label.php:28, includes/shortcodes/lightbox-content.php:110, includes/shortcodes/lightbox.php:39, includes/shortcodes/list.php:36, includes/shortcodes/members.php:36, includes/shortcodes/menu.php:19, includes/shortcodes/note.php:38, includes/shortcodes/permalink.php:39, includes/shortcodes/private.php:14, includes/shortcodes/pullquote.php:23, includes/shortcodes/qrcode.php:82, includes/shortcodes/quote.php:35, includes/shortcodes/row.php:16, includes/shortcodes/service.php:42, includes/shortcodes/siblings.php:20, includes/shortcodes/slider.php:125, includes/shortcodes/spacer.php:23, includes/shortcodes/spoiler.php:68, includes/shortcodes/subpages.php:26, includes/shortcodes/table.php:35, includes/shortcodes/tabs.php:59, includes/shortcodes/tabs.php:118, includes/shortcodes/tooltip.php:104, includes/shortcodes/video.php:68, includes/shortcodes/vimeo.php:72, includes/shortcodes/youtube-advanced.php:135, includes/shortcodes/youtube.php:61
+#: includes/shortcodes/accordion.php:15, includes/shortcodes/animate.php:45, includes/shortcodes/audio.php:38, includes/shortcodes/box.php:57, includes/shortcodes/button.php:145, includes/shortcodes/carousel.php:144, includes/shortcodes/column.php:41, includes/shortcodes/csv-table.php:53, includes/shortcodes/custom-gallery.php:83, includes/shortcodes/dailymotion.php:104, includes/shortcodes/display-posts.php:224, includes/shortcodes/divider.php:75, includes/shortcodes/document.php:51, includes/shortcodes/dropcap.php:34, includes/shortcodes/dummy-image.php:54, includes/shortcodes/dummy-text.php:47, includes/shortcodes/expand.php:89, includes/shortcodes/feed.php:40, includes/shortcodes/gmap.php:59, includes/shortcodes/guests.php:14, includes/shortcodes/heading.php:57, includes/shortcodes/highlight.php:27, includes/shortcodes/image-carousel.php:188, includes/shortcodes/label.php:28, includes/shortcodes/lightbox-content.php:110, includes/shortcodes/lightbox.php:39, includes/shortcodes/list.php:36, includes/shortcodes/members.php:36, includes/shortcodes/menu.php:19, includes/shortcodes/note.php:38, includes/shortcodes/permalink.php:39, includes/shortcodes/private.php:14, includes/shortcodes/pullquote.php:23, includes/shortcodes/qrcode.php:82, includes/shortcodes/quote.php:35, includes/shortcodes/row.php:16, includes/shortcodes/service.php:42, includes/shortcodes/siblings.php:20, includes/shortcodes/slider.php:125, includes/shortcodes/spacer.php:23, includes/shortcodes/spoiler.php:62, includes/shortcodes/subpages.php:26, includes/shortcodes/table.php:35, includes/shortcodes/tabs.php:53, includes/shortcodes/tabs.php:112, includes/shortcodes/tooltip.php:100, includes/shortcodes/video.php:68, includes/shortcodes/vimeo.php:72, includes/shortcodes/youtube-advanced.php:135, includes/shortcodes/youtube.php:61
 msgid "Additional CSS class name(s) separated by space(s)"
 msgstr ""
 
@@ -634,7 +642,7 @@ msgstr ""
 msgid "Accordion with spoilers"
 msgstr ""
 
-#: includes/shortcodes/accordion.php:24, includes/shortcodes/spoiler.php:74
+#: includes/shortcodes/accordion.php:24, includes/shortcodes/spoiler.php:68
 msgid "Did you know that you can wrap multiple spoilers with [accordion] shortcode to create accordion effect?"
 msgstr ""
 
@@ -726,7 +734,7 @@ msgstr ""
 msgid "Box title"
 msgstr ""
 
-#: includes/shortcodes/box.php:15, includes/shortcodes/dailymotion.php:97, includes/shortcodes/document.php:44, includes/shortcodes/gmap.php:52, includes/shortcodes/permalink.php:28, includes/shortcodes/qrcode.php:19, includes/shortcodes/service.php:15, includes/shortcodes/spoiler.php:13, includes/shortcodes/tabs.php:86, includes/shortcodes/video.php:26, includes/shortcodes/vimeo.php:60, includes/shortcodes/youtube-advanced.php:128, includes/shortcodes/youtube.php:54
+#: includes/shortcodes/box.php:15, includes/shortcodes/dailymotion.php:97, includes/shortcodes/document.php:44, includes/shortcodes/gmap.php:52, includes/shortcodes/permalink.php:28, includes/shortcodes/qrcode.php:19, includes/shortcodes/service.php:15, includes/shortcodes/spoiler.php:13, includes/shortcodes/tabs.php:80, includes/shortcodes/video.php:26, includes/shortcodes/vimeo.php:60, includes/shortcodes/youtube-advanced.php:128, includes/shortcodes/youtube.php:54
 msgid "Title"
 msgstr ""
 
@@ -734,7 +742,7 @@ msgstr ""
 msgid "Text for the box title"
 msgstr ""
 
-#: includes/shortcodes/box.php:21, includes/shortcodes/button.php:31, includes/shortcodes/divider.php:31, includes/shortcodes/dropcap.php:14, includes/shortcodes/expand.php:53, includes/shortcodes/heading.php:14, includes/shortcodes/image-carousel.php:38, includes/shortcodes/label.php:14, includes/shortcodes/meta.php:18, includes/shortcodes/post.php:44, includes/shortcodes/quote.php:15, includes/shortcodes/spoiler.php:25, includes/shortcodes/tabs.php:18, includes/shortcodes/user.php:36
+#: includes/shortcodes/box.php:21, includes/shortcodes/button.php:31, includes/shortcodes/divider.php:31, includes/shortcodes/dropcap.php:14, includes/shortcodes/expand.php:53, includes/shortcodes/heading.php:14, includes/shortcodes/image-carousel.php:38, includes/shortcodes/label.php:14, includes/shortcodes/meta.php:18, includes/shortcodes/post.php:44, includes/shortcodes/quote.php:15, includes/shortcodes/spoiler.php:25, includes/shortcodes/tabs.php:18, includes/shortcodes/tooltip.php:58, includes/shortcodes/user.php:36
 msgid "Default"
 msgstr ""
 
@@ -754,7 +762,7 @@ msgstr ""
 msgid "Noise"
 msgstr ""
 
-#: includes/shortcodes/box.php:28, includes/shortcodes/button.php:42, includes/shortcodes/divider.php:37, includes/shortcodes/dropcap.php:20, includes/shortcodes/heading.php:17, includes/shortcodes/quote.php:18, includes/shortcodes/spoiler.php:30, includes/shortcodes/tabs.php:21
+#: includes/shortcodes/box.php:28, includes/shortcodes/button.php:42, includes/shortcodes/divider.php:37, includes/shortcodes/dropcap.php:20, includes/shortcodes/heading.php:17, includes/shortcodes/quote.php:18, includes/shortcodes/spoiler.php:30, includes/shortcodes/tabs.php:21, includes/shortcodes/tooltip.php:28
 msgid "Style"
 msgstr ""
 
@@ -814,11 +822,11 @@ msgstr ""
 msgid "Button link"
 msgstr ""
 
-#: includes/shortcodes/button.php:21, includes/shortcodes/carousel.php:50, includes/shortcodes/custom-gallery.php:44, includes/shortcodes/feed.php:30, includes/shortcodes/image-carousel.php:144, includes/shortcodes/permalink.php:19, includes/shortcodes/qrcode.php:60, includes/shortcodes/slider.php:50, includes/shortcodes/tabs.php:108
+#: includes/shortcodes/button.php:21, includes/shortcodes/carousel.php:50, includes/shortcodes/custom-gallery.php:44, includes/shortcodes/feed.php:30, includes/shortcodes/image-carousel.php:144, includes/shortcodes/permalink.php:19, includes/shortcodes/qrcode.php:60, includes/shortcodes/slider.php:50, includes/shortcodes/tabs.php:102
 msgid "Open in same tab"
 msgstr ""
 
-#: includes/shortcodes/button.php:22, includes/shortcodes/carousel.php:51, includes/shortcodes/custom-gallery.php:45, includes/shortcodes/feed.php:31, includes/shortcodes/image-carousel.php:145, includes/shortcodes/permalink.php:20, includes/shortcodes/qrcode.php:61, includes/shortcodes/slider.php:51, includes/shortcodes/tabs.php:109
+#: includes/shortcodes/button.php:22, includes/shortcodes/carousel.php:51, includes/shortcodes/custom-gallery.php:45, includes/shortcodes/feed.php:31, includes/shortcodes/image-carousel.php:145, includes/shortcodes/permalink.php:20, includes/shortcodes/qrcode.php:61, includes/shortcodes/slider.php:51, includes/shortcodes/tabs.php:103
 msgid "Open in new tab"
 msgstr ""
 
@@ -858,7 +866,7 @@ msgstr ""
 msgid "Button background color"
 msgstr ""
 
-#: includes/shortcodes/button.php:56, includes/shortcodes/expand.php:40, includes/shortcodes/highlight.php:22, includes/shortcodes/lightbox-content.php:92, includes/shortcodes/lightbox-content.php:98, includes/shortcodes/note.php:23, includes/shortcodes/tooltip.php:43
+#: includes/shortcodes/button.php:56, includes/shortcodes/expand.php:40, includes/shortcodes/highlight.php:22, includes/shortcodes/lightbox-content.php:92, includes/shortcodes/lightbox-content.php:98, includes/shortcodes/note.php:23
 msgid "Text color"
 msgstr ""
 
@@ -1087,7 +1095,7 @@ msgstr ""
 msgid "Display titles for each item"
 msgstr ""
 
-#: includes/shortcodes/carousel.php:106, includes/shortcodes/expand.php:67, includes/shortcodes/frame.php:15, includes/shortcodes/heading.php:33, includes/shortcodes/image-carousel.php:90, includes/shortcodes/lightbox-content.php:76, includes/shortcodes/qrcode.php:45, includes/shortcodes/slider.php:87, includes/shortcodes/tooltip.php:59
+#: includes/shortcodes/carousel.php:106, includes/shortcodes/expand.php:67, includes/shortcodes/frame.php:15, includes/shortcodes/heading.php:33, includes/shortcodes/image-carousel.php:90, includes/shortcodes/lightbox-content.php:76, includes/shortcodes/qrcode.php:45, includes/shortcodes/slider.php:87
 msgid "Center"
 msgstr ""
 
@@ -1135,7 +1143,7 @@ msgstr ""
 msgid "Customizable image carousel"
 msgstr ""
 
-#: includes/shortcodes/carousel.php:238, includes/shortcodes/custom-gallery.php:162, includes/shortcodes/image-carousel.php:236, includes/shortcodes/slider.php:216
+#: includes/shortcodes/carousel.php:238, includes/shortcodes/custom-gallery.php:162, includes/shortcodes/image-carousel.php:230, includes/shortcodes/slider.php:216
 msgid "images not found"
 msgstr ""
 
@@ -1327,7 +1335,7 @@ msgstr ""
 msgid "Start the playback of the video automatically after the player load. May not work on some mobile OS versions"
 msgstr ""
 
-#: includes/shortcodes/dailymotion.php:50, includes/shortcodes/lightbox-content.php:86, includes/shortcodes/qrcode.php:76, includes/shortcodes/tooltip.php:37
+#: includes/shortcodes/dailymotion.php:50, includes/shortcodes/lightbox-content.php:86, includes/shortcodes/qrcode.php:76
 msgid "Background color"
 msgstr ""
 
@@ -1653,7 +1661,7 @@ msgstr ""
 msgid "This option controls the size of thumbnail images. This option only affects image quality, not the actual thumbnail size."
 msgstr ""
 
-#: includes/shortcodes/display-posts.php:193, includes/shortcodes/tabs.php:92
+#: includes/shortcodes/display-posts.php:193, includes/shortcodes/tabs.php:86
 msgid "Disabled"
 msgstr ""
 
@@ -2017,11 +2025,11 @@ msgstr ""
 msgid "Select the style for more/less link"
 msgstr ""
 
-#: includes/shortcodes/expand.php:66, includes/shortcodes/frame.php:14, includes/shortcodes/heading.php:32, includes/shortcodes/image-carousel.php:88, includes/shortcodes/lightbox-content.php:75, includes/shortcodes/pullquote.php:14, includes/shortcodes/qrcode.php:44, includes/shortcodes/tooltip.php:27, includes/shortcodes/tooltip.php:58
+#: includes/shortcodes/expand.php:66, includes/shortcodes/frame.php:14, includes/shortcodes/heading.php:32, includes/shortcodes/image-carousel.php:88, includes/shortcodes/lightbox-content.php:75, includes/shortcodes/pullquote.php:14, includes/shortcodes/qrcode.php:44, includes/shortcodes/tooltip.php:36
 msgid "Left"
 msgstr ""
 
-#: includes/shortcodes/expand.php:68, includes/shortcodes/frame.php:16, includes/shortcodes/heading.php:34, includes/shortcodes/image-carousel.php:89, includes/shortcodes/lightbox-content.php:77, includes/shortcodes/pullquote.php:15, includes/shortcodes/qrcode.php:46, includes/shortcodes/tooltip.php:28, includes/shortcodes/tooltip.php:60
+#: includes/shortcodes/expand.php:68, includes/shortcodes/frame.php:16, includes/shortcodes/heading.php:34, includes/shortcodes/image-carousel.php:89, includes/shortcodes/lightbox-content.php:77, includes/shortcodes/pullquote.php:15, includes/shortcodes/qrcode.php:46, includes/shortcodes/tooltip.php:37
 msgid "Right"
 msgstr ""
 
@@ -2061,7 +2069,7 @@ msgstr ""
 msgid "RSS feed"
 msgstr ""
 
-#: includes/shortcodes/feed.php:15, includes/shortcodes/tabs.php:102, includes/shortcodes/user.php:25
+#: includes/shortcodes/feed.php:15, includes/shortcodes/tabs.php:96, includes/shortcodes/user.php:25
 msgid "URL"
 msgstr ""
 
@@ -2305,7 +2313,7 @@ msgstr ""
 msgid "This option controls how the gallery will be aligned within a page. Left, Right, and Center options require Max Width to be set. Full option requires page template with no sidebar."
 msgstr ""
 
-#: includes/shortcodes/image-carousel.php:99, includes/shortcodes/tooltip.php:72
+#: includes/shortcodes/image-carousel.php:99
 msgid "Max width"
 msgstr ""
 
@@ -2403,14 +2411,6 @@ msgstr ""
 
 #: includes/shortcodes/image-carousel.php:183
 msgid "This option enables outline when carousel gets focus. The outline improves keyboard navigation."
-msgstr ""
-
-#: includes/shortcodes/image-carousel.php:188
-msgid "Random order"
-msgstr ""
-
-#: includes/shortcodes/image-carousel.php:189
-msgid "This option enables random order for selected images"
 msgstr ""
 
 #: includes/shortcodes/label.php:7, includes/shortcodes/label.php:32
@@ -2762,7 +2762,7 @@ msgstr ""
 msgid "Post or page ID"
 msgstr ""
 
-#: includes/shortcodes/permalink.php:24, includes/shortcodes/qrcode.php:64, includes/shortcodes/tabs.php:112
+#: includes/shortcodes/permalink.php:24, includes/shortcodes/qrcode.php:64, includes/shortcodes/tabs.php:106
 msgid "Link target"
 msgstr ""
 
@@ -2931,7 +2931,7 @@ msgid "Show only posts with selected status"
 msgstr ""
 
 #: includes/shortcodes/posts.php:189
-msgid "Set to yes to prevent sticky posts from being moved to the start of the returned list of posts. They are still included, but appear in regular order."
+msgid "Select Yes to ignore posts that is sticked"
 msgstr ""
 
 #: includes/shortcodes/private.php:7
@@ -3215,7 +3215,7 @@ msgstr ""
 msgid "Spoiler"
 msgstr ""
 
-#: includes/shortcodes/spoiler.php:12, includes/shortcodes/spoiler.php:84
+#: includes/shortcodes/spoiler.php:12, includes/shortcodes/spoiler.php:78
 msgid "Spoiler title"
 msgstr ""
 
@@ -3295,7 +3295,7 @@ msgstr ""
 msgid "Icons for spoiler"
 msgstr ""
 
-#: includes/shortcodes/spoiler.php:56, includes/shortcodes/tabs.php:97
+#: includes/shortcodes/spoiler.php:56, includes/shortcodes/tabs.php:91
 msgid "Anchor"
 msgstr ""
 
@@ -3303,19 +3303,11 @@ msgstr ""
 msgid "You can use unique anchor for this spoiler to access it with hash in page url. For example: type here <b%value>Hello</b> and then use url like http://example.com/page-url#Hello. This spoiler will be open and scrolled in"
 msgstr ""
 
-#: includes/shortcodes/spoiler.php:62, includes/shortcodes/tabs.php:53
-msgid "Anchor in URL"
-msgstr ""
-
-#: includes/shortcodes/spoiler.php:63
-msgid "This option specifies whether an anchor will be added to page URL after clicking the spoiler"
-msgstr ""
-
-#: includes/shortcodes/spoiler.php:72
+#: includes/shortcodes/spoiler.php:66
 msgid "Hidden content"
 msgstr ""
 
-#: includes/shortcodes/spoiler.php:73
+#: includes/shortcodes/spoiler.php:67
 msgid "Spoiler with hidden content"
 msgstr ""
 
@@ -3409,47 +3401,43 @@ msgstr ""
 msgid "This option controls how shortcode will look and function on mobile devices."
 msgstr ""
 
-#: includes/shortcodes/tabs.php:54
-msgid "This option specifies whether an anchor will be added to page URL after clicking a tab"
-msgstr ""
-
-#: includes/shortcodes/tabs.php:74
+#: includes/shortcodes/tabs.php:68
 msgid "Tab"
 msgstr ""
 
-#: includes/shortcodes/tabs.php:78
+#: includes/shortcodes/tabs.php:72
 msgid "Tab content"
 msgstr ""
 
-#: includes/shortcodes/tabs.php:79
+#: includes/shortcodes/tabs.php:73
 msgid "Single tab"
 msgstr ""
 
-#: includes/shortcodes/tabs.php:80
+#: includes/shortcodes/tabs.php:74
 msgid "Did you know that you need to wrap single tabs with [tabs] shortcode?"
 msgstr ""
 
-#: includes/shortcodes/tabs.php:85
+#: includes/shortcodes/tabs.php:79
 msgid "Tab name"
 msgstr ""
 
-#: includes/shortcodes/tabs.php:87, includes/shortcodes/tabs.php:197
+#: includes/shortcodes/tabs.php:81, includes/shortcodes/tabs.php:190
 msgid "Tab title"
 msgstr ""
 
-#: includes/shortcodes/tabs.php:93
+#: includes/shortcodes/tabs.php:87
 msgid "Is this tab disabled"
 msgstr ""
 
-#: includes/shortcodes/tabs.php:98
+#: includes/shortcodes/tabs.php:92
 msgid "You can use unique anchor for this tab to access it with hash in page url. For example: use <b%value>Hello</b> and then navigate to url like http://example.com/page-url#Hello. This tab will be activated and scrolled in"
 msgstr ""
 
-#: includes/shortcodes/tabs.php:103
+#: includes/shortcodes/tabs.php:97
 msgid "Link tab to any webpage. Use full URL to turn the tab title into link"
 msgstr ""
 
-#: includes/shortcodes/tabs.php:113
+#: includes/shortcodes/tabs.php:107
 msgid "Choose how to open the custom tab link"
 msgstr ""
 
@@ -3466,111 +3454,151 @@ msgstr ""
 msgid "please specify template name"
 msgstr ""
 
-#: includes/shortcodes/tooltip.php:8
+#: includes/shortcodes/tooltip.php:7
 msgid "Tooltip"
 msgstr ""
 
 #: includes/shortcodes/tooltip.php:14
-msgid "Tooltip title"
+msgid "Basic: Light"
 msgstr ""
 
 #: includes/shortcodes/tooltip.php:15
-msgid "Title of the tooltip. Use empty value to hide the title"
+msgid "Basic: Dark"
 msgstr ""
 
-#: includes/shortcodes/tooltip.php:18, includes/shortcodes/tooltip.php:19
-msgid "Tooltip content"
+#: includes/shortcodes/tooltip.php:16
+msgid "Basic: Yellow"
+msgstr ""
+
+#: includes/shortcodes/tooltip.php:17
+msgid "Basic: Green"
+msgstr ""
+
+#: includes/shortcodes/tooltip.php:18
+msgid "Basic: Red"
+msgstr ""
+
+#: includes/shortcodes/tooltip.php:19
+msgid "Basic: Blue"
 msgstr ""
 
 #: includes/shortcodes/tooltip.php:20
-msgid "Content of the tooltip"
+msgid "Youtube"
+msgstr ""
+
+#: includes/shortcodes/tooltip.php:21
+msgid "Tipsy"
+msgstr ""
+
+#: includes/shortcodes/tooltip.php:22
+msgid "Bootstrap"
+msgstr ""
+
+#: includes/shortcodes/tooltip.php:23
+msgid "jTools"
+msgstr ""
+
+#: includes/shortcodes/tooltip.php:24
+msgid "Tipped"
 msgstr ""
 
 #: includes/shortcodes/tooltip.php:25
+msgid "Cluetip"
+msgstr ""
+
+#: includes/shortcodes/tooltip.php:29
+msgid "Tooltip window style"
+msgstr ""
+
+#: includes/shortcodes/tooltip.php:34
 msgid "Top"
 msgstr ""
 
-#: includes/shortcodes/tooltip.php:26
+#: includes/shortcodes/tooltip.php:35
 msgid "Bottom"
 msgstr ""
 
-#: includes/shortcodes/tooltip.php:31
+#: includes/shortcodes/tooltip.php:40
 msgid "Position"
 msgstr ""
 
-#: includes/shortcodes/tooltip.php:32
+#: includes/shortcodes/tooltip.php:41
 msgid "Tooltip position"
 msgstr ""
 
-#: includes/shortcodes/tooltip.php:38
-msgid "Tooltip background color"
-msgstr ""
-
-#: includes/shortcodes/tooltip.php:44
-msgid "Tooltip text color"
+#: includes/shortcodes/tooltip.php:47
+msgid "Add shadow to tooltip. This option is only works with basic styes, e.g. blue, green etc."
 msgstr ""
 
 #: includes/shortcodes/tooltip.php:52
-msgid "Font size"
+msgid "Rounded corners"
 msgstr ""
 
 #: includes/shortcodes/tooltip.php:53
-msgid "The font size of the tooltip content"
+msgid "Use rounded for tooltip. This option is only works with basic styes, e.g. blue, green etc."
 msgstr ""
 
-#: includes/shortcodes/tooltip.php:63
-msgid "Text align"
+#: includes/shortcodes/tooltip.php:67
+msgid "Font size"
 msgstr ""
 
-#: includes/shortcodes/tooltip.php:64
-msgid "The alignment of the tooltip content"
+#: includes/shortcodes/tooltip.php:68
+msgid "Tooltip font size"
+msgstr ""
+
+#: includes/shortcodes/tooltip.php:72
+msgid "Tooltip title"
 msgstr ""
 
 #: includes/shortcodes/tooltip.php:73
-msgid "The maximum width of the tooltip, in pixels"
+msgid "Enter title for tooltip window. Leave this field empty to hide the title"
 msgstr ""
 
-#: includes/shortcodes/tooltip.php:81
-msgid "Tooltip border radius"
+#: includes/shortcodes/tooltip.php:76, includes/shortcodes/tooltip.php:118
+msgid "Tooltip text"
 msgstr ""
 
-#: includes/shortcodes/tooltip.php:82
-msgid "The radius of the tooltip corners, in pixels. Use 0 to make corners square"
+#: includes/shortcodes/tooltip.php:77
+msgid "Tooltip content"
 msgstr ""
 
-#: includes/shortcodes/tooltip.php:87
-msgid "Tooltip shadow"
+#: includes/shortcodes/tooltip.php:78
+msgid "Enter tooltip content here"
 msgstr ""
 
-#: includes/shortcodes/tooltip.php:88
-msgid "This option enables tooltip shadow"
+#: includes/shortcodes/tooltip.php:83
+msgid "Show and hide on mouse hover"
 msgstr ""
 
-#: includes/shortcodes/tooltip.php:93
-msgid "Show and hide on mouse over"
+#: includes/shortcodes/tooltip.php:84
+msgid "Show and hide by mouse click"
 msgstr ""
 
-#: includes/shortcodes/tooltip.php:94
-msgid "Show and hide on mouse click"
-msgstr ""
-
-#: includes/shortcodes/tooltip.php:95
+#: includes/shortcodes/tooltip.php:85
 msgid "Always visible"
 msgstr ""
 
-#: includes/shortcodes/tooltip.php:98
+#: includes/shortcodes/tooltip.php:88
 msgid "Behavior"
 msgstr ""
 
-#: includes/shortcodes/tooltip.php:99
-msgid "This option determines how the tooltip will be opened"
+#: includes/shortcodes/tooltip.php:89
+msgid "Select tooltip behavior"
 msgstr ""
 
-#: includes/shortcodes/tooltip.php:108
+#: includes/shortcodes/tooltip.php:94
+msgid "Close button"
+msgstr ""
+
+#: includes/shortcodes/tooltip.php:95
+msgid "Show close button"
+msgstr ""
+
+#: includes/shortcodes/tooltip.php:104
 msgid "Hover me to open tooltip"
 msgstr ""
 
-#: includes/shortcodes/tooltip.php:109
+#: includes/shortcodes/tooltip.php:105
 msgid "Tooltip window with custom content"
 msgstr ""
 
@@ -3638,11 +3666,15 @@ msgstr ""
 msgid "This shortcode can display a user data, like login or email, including meta fields"
 msgstr ""
 
-#: includes/shortcodes/user.php:74
+#: includes/shortcodes/user.php:73
 msgid "password field is not allowed"
 msgstr ""
 
-#: includes/shortcodes/user.php:93
+#: includes/shortcodes/user.php:88
+msgid "invalid user ID"
+msgstr ""
+
+#: includes/shortcodes/user.php:99
 msgid "user not found"
 msgstr ""
 
@@ -3848,6 +3880,18 @@ msgid "Details & Pricing"
 msgstr ""
 
 #: admin/partials/help/addons.php:4
+msgid "How to install add-on"
+msgstr ""
+
+#: admin/partials/help/addons.php:5
+msgid "How to get updates"
+msgstr ""
+
+#: admin/partials/help/addons.php:6
+msgid "How to activate license key"
+msgstr ""
+
+#: admin/partials/help/addons.php:7
 msgid "Full add-ons documentation"
 msgstr ""
 

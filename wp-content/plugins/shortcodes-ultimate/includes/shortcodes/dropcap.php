@@ -50,7 +50,8 @@ function su_shortcode_dropcap( $atts = null, $content = null ) {
 
 	$atts['style'] = str_replace( array( '1', '2', '3' ), array( 'default', 'light', 'default' ), $atts['style'] ); // 3.x
 
-	$em = intval( $atts['size'] ) * 0.5 . 'em';
+	// Calculate font-size
+	$em = $atts['size'] * 0.5 . 'em';
 
 	su_query_asset( 'css', 'su-shortcodes' );
 

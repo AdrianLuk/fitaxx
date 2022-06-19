@@ -183,7 +183,7 @@
 
 			tmp.css('padding', (selectedOpts.padding + selectedOpts.margin));
 
-			$('.fancybox-inline-tmp').off('fancybox-cancel').on('fancybox-change', function() {
+			$('.fancybox-inline-tmp').unbind('fancybox-cancel').bind('fancybox-change', function() {
 				$(this).replaceWith(content.children());				
 			});
 
@@ -202,9 +202,9 @@
 					$('<div class="fancybox-inline-tmp" />')
 						.hide()
 						.insertBefore( $(obj) )
-						.on('fancybox-cleanup', function() {
+						.bind('fancybox-cleanup', function() {
 							$(this).replaceWith(content.children());
-						}).on('fancybox-cancel', function() {
+						}).bind('fancybox-cancel', function() {
 							$(this).replaceWith(tmp.children());
 						});
 
@@ -350,10 +350,10 @@
 
 			busy = true;
 
-			$(content.add( overlay )).off();
+			$(content.add( overlay )).unbind();
 
-			$(window).off("resize.fb scroll.fb");
-			$(document).off('keydown.fb');
+			$(window).unbind("resize.fb scroll.fb");
+			$(document).unbind('keydown.fb');
 
 			if (wrap.is(":visible") && currentOpts.titlePosition !== 'outside') {
 				wrap.css('height', wrap.height());
@@ -507,7 +507,7 @@
 				return;
 			}
 
-			titleStr = ( typeof currentOpts.titleFormat === 'function' ) ? currentOpts.titleFormat(titleStr, currentArray, currentIndex, currentOpts) : _format_title(titleStr);
+			titleStr = $.isFunction(currentOpts.titleFormat) ? currentOpts.titleFormat(titleStr, currentArray, currentIndex, currentOpts) : _format_title(titleStr);
 
 			if (!titleStr || titleStr === '') {
 				title.hide();
@@ -540,7 +540,7 @@
 					title
 						.css({
 							'marginLeft' : currentOpts.padding,
-							'width'	: final_pos.width - (currentOpts.padding * 4),
+							'width'	: final_pos.width - (currentOpts.padding * 2),
 							'bottom' : currentOpts.padding
 						})
 						.appendTo( outer );
@@ -568,7 +568,7 @@
 
 		_set_navigation = function() {
 			if (currentOpts.enableEscapeButton || currentOpts.enableKeyboardNav) {
-				$(document).on('keydown.fb', function(e) {
+				$(document).bind('keydown.fb', function(e) {
 					if (e.keyCode == 27 && currentOpts.enableEscapeButton) {
 						e.preventDefault();
 						$.fancybox.close();
@@ -597,8 +597,8 @@
 
 		_finish = function () {
 			if (!$.support.opacity) {
-				content.css('filter', '');
-				wrap.css('filter', '');
+				content.get(0).style.removeAttribute('filter');
+				wrap.get(0).style.removeAttribute('filter');
 			}
 
 			if (selectedOpts.autoDimensions) {
@@ -618,17 +618,17 @@
 			_set_navigation();
 	
 			if (currentOpts.hideOnContentClick)	{
-				content.on('click', $.fancybox.close);
+				content.bind('click', $.fancybox.close);
 			}
 
 			if (currentOpts.hideOnOverlayClick)	{
-				overlay.on('click', $.fancybox.close);
+				overlay.bind('click', $.fancybox.close);
 			}
 
-			$(window).on("resize.fb", $.fancybox.resize);
+			$(window).bind("resize.fb", $.fancybox.resize);
 
 			if (currentOpts.centerOnScroll) {
-				$(window).on("scroll.fb", $.fancybox.center);
+				$(window).bind("scroll.fb", $.fancybox.center);
 			}
 
 			if (currentOpts.type == 'iframe') {
@@ -813,8 +813,8 @@
 
 		$(this)
 			.data('fancybox', $.extend({}, options, ($.metadata ? $(this).metadata() : {})))
-			.off('click.fb')
-			.on('click.fb', function(e) {
+			.unbind('click.fb')
+			.bind('click.fb', function(e) {
 				e.preventDefault();
 
 				if (busy) {
@@ -823,7 +823,7 @@
 
 				busy = true;
 
-				$(this).trigger( 'blur' );
+				$(this).blur();
 
 				selectedArray = [];
 				selectedIndex = 0;
@@ -858,7 +858,7 @@
 		selectedArray = [];
 		selectedIndex = parseInt(opts.index, 10) || 0;
 
-		if (Array.isArray(obj)) {
+		if ($.isArray(obj)) {
 			for (var i = 0, j = obj.length; i < j; i++) {
 				if (typeof obj[i] == 'object') {
 					$(obj[i]).data('fancybox', $.extend({}, opts, obj[i]));
@@ -959,10 +959,10 @@
 
 		$(close.add( nav_left ).add( nav_right )).hide();
 
-		$(content.add( overlay )).off();
+		$(content.add( overlay )).unbind();
 
-		$(window).off("resize.fb scroll.fb");
-		$(document).off('keydown.fb');
+		$(window).unbind("resize.fb scroll.fb");
+		$(document).unbind('keydown.fb');
 
 		content.find('iframe').attr('src', isIE6 && /^https/i.test(window.location.href || '') ? 'javascript:void(false)' : 'about:blank');
 
@@ -1078,21 +1078,21 @@
 			nav_right = $('<a href="javascript:;" id="fancybox-right"><span class="fancy-ico" id="fancybox-right-ico"></span></a>')
 		);
 
-		close.on( 'click', $.fancybox.close );
-		loading.on( 'click', $.fancybox.cancel );
+		close.click($.fancybox.close);
+		loading.click($.fancybox.cancel);
 
-		nav_left.on( 'click', function( e ) {
+		nav_left.click(function(e) {
 			e.preventDefault();
 			$.fancybox.prev();
-		} );
+		});
 
-		nav_right.on( 'click', function( e ) {
+		nav_right.click(function(e) {
 			e.preventDefault();
 			$.fancybox.next();
 		});
 
 		if ($.fn.mousewheel) {
-			wrap.on('mousewheel.fb', function(e, delta) {
+			wrap.bind('mousewheel.fb', function(e, delta) {
 				if (busy) {
 					e.preventDefault();
 

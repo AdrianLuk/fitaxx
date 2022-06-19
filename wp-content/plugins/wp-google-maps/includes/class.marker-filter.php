@@ -92,9 +92,6 @@ class MarkerFilter extends Factory
 		if(!$this->center || !$this->radius)
 			return;
 		
-		if(empty($this->map))
-			$this->loadMap();
-		
 		$lat = $this->_center['lat'] / 180 * 3.1415926;
 		$lng = $this->_center['lng'] / 180 * 3.1415926;
 		$radius = $this->radius;
@@ -104,7 +101,7 @@ class MarkerFilter extends Factory
 		
 		$query->{$context}['radius'] = "
 			(
-				6371 *
+				6381 *
 			
 				2 *
 			
@@ -139,14 +136,6 @@ class MarkerFilter extends Factory
 		$query->params[] = $radius;
 	}
 	
-	protected function applyIDsClause($set)
-	{
-		if(empty($this->ids))
-			return;
-		
-		$query->in('id', $set);
-	}
-	
 	protected function applyLimit($query)
 	{
 		if(empty($this->_limit))
@@ -172,7 +161,6 @@ class MarkerFilter extends Factory
 		$query->table	= $WPGMZA_TABLE_NAME_MARKERS;
 		
 		$this->applyRadiusClause($query);
-		$this->applyIDsClause($query);
 		$this->applyLimit($query);
 		
 		return $query;
@@ -199,7 +187,7 @@ class MarkerFilter extends Factory
 		$query->fields = $this->getColumns($fields);
 		
 		$sql = $query->build();
-
+		
 		$results = $wpdb->get_results($sql);
 		
 		// NB: Optimize by only fetching ID here, for filtering. Only fetch the rest if fetch ID not set.
@@ -213,7 +201,7 @@ class MarkerFilter extends Factory
 			$markers[] = Marker::createInstance($data, Crud::BULK_READ);
 		}
 		
-		return apply_filters('wpgmza_fetch_integrated_markers', $markers, $this);
+		return $markers;
 	}
 	
 	public function getFilteredIDs()
@@ -225,13 +213,11 @@ class MarkerFilter extends Factory
 		$query->fields[] = 'id';
 		
 		$sql = $query->build();
-		$ids = $wpdb->get_col($sql);
+		$results = $wpdbm->get_results($sql);
 		
-		$integrated = apply_filters('wpgmza_fetch_integrated_markers', $markers, $this);
-		foreach($integrated as $key => $value)
-			$ids[] = $value->id;
+		$integratedMarkers = apply_filters('wpgmza_fetch_integrated_markers', array(), $this);
 		
-		return $ids;
+		return $wpdb->get_col($sql);
 	}
 	
 	

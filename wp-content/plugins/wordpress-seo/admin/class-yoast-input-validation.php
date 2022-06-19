@@ -19,7 +19,7 @@ class Yoast_Input_Validation {
 	 *
 	 * @var array
 	 */
-	private static $error_descriptions = [];
+	private static $error_descriptions = array();
 
 	/**
 	 * Check whether an option group is a Yoast SEO setting.
@@ -46,7 +46,7 @@ class Yoast_Input_Validation {
 	 *
 	 * @param string $admin_title The page title, with extra context added.
 	 *
-	 * @return string The modified or original admin title.
+	 * @return string $admin_title The modified or original admin title.
 	 */
 	public static function add_yoast_admin_document_title_errors( $admin_title ) {
 		$errors      = get_settings_errors();
@@ -55,7 +55,7 @@ class Yoast_Input_Validation {
 		foreach ( $errors as $error ) {
 			// For now, filter the admin title only in the Yoast SEO settings pages.
 			if ( self::is_yoast_option_group_name( $error['setting'] ) && $error['code'] !== 'settings_updated' ) {
-				++$error_count;
+				$error_count++;
 			}
 		}
 
@@ -97,11 +97,11 @@ class Yoast_Input_Validation {
 	 *
 	 * @since 12.1
 	 *
-	 * @param array $descriptions An associative array of error descriptions.
-	 *                            For each entry, the key must be the setting variable.
+	 * @param array $descriptions An associative array of error descriptions. For
+	 *                            each entry, the key must be the setting variable.
 	 */
-	public static function set_error_descriptions( $descriptions = [] ) {
-		$defaults = [
+	public static function set_error_descriptions( $descriptions = array() ) {
+		$defaults = array(
 			'baiduverify'     => sprintf(
 				/* translators: %s: additional message with the submitted invalid value */
 				esc_html__( 'Baidu verification codes can only contain letters, numbers, hyphens, and underscores. %s', 'wordpress-seo' ),
@@ -111,6 +111,11 @@ class Yoast_Input_Validation {
 				/* translators: %s: additional message with the submitted invalid value */
 				esc_html__( 'Please check the format of the Facebook Page URL you entered. %s', 'wordpress-seo' ),
 				self::get_dirty_value_message( 'facebook_site' )
+			),
+			'fbadminapp'      => sprintf(
+				/* translators: %s: additional message with the submitted invalid value */
+				esc_html__( 'The Facebook App ID you entered doesn\'t exist. %s', 'wordpress-seo' ),
+				self::get_dirty_value_message( 'fbadminapp' )
 			),
 			'googleverify'    => sprintf(
 				/* translators: %s: additional message with the submitted invalid value */
@@ -167,7 +172,7 @@ class Yoast_Input_Validation {
 				esc_html__( 'Please check the format of the Youtube URL you entered. %s', 'wordpress-seo' ),
 				self::get_dirty_value_message( 'youtube_url' )
 			),
-		];
+		);
 
 		$descriptions = wp_parse_args( $descriptions, $defaults );
 
@@ -191,8 +196,7 @@ class Yoast_Input_Validation {
 	 * @since 12.1
 	 *
 	 * @param string $error_code Code of the error set via `add_settings_error()`, normally the variable name.
-	 *
-	 * @return string|null The error description.
+	 * @return string The error description.
 	 */
 	public static function get_error_description( $error_code ) {
 		if ( ! isset( self::$error_descriptions[ $error_code ] ) ) {
@@ -208,7 +212,6 @@ class Yoast_Input_Validation {
 	 * @since 12.1
 	 *
 	 * @param string $error_code Code of the error set via `add_settings_error()`, normally the variable name.
-	 *
 	 * @return string The aria-invalid HTML attribute or empty string.
 	 */
 	public static function get_the_aria_invalid_attribute( $error_code ) {
@@ -225,7 +228,6 @@ class Yoast_Input_Validation {
 	 * @since 12.1
 	 *
 	 * @param string $error_code Code of the error set via `add_settings_error()`, normally the variable name.
-	 *
 	 * @return string The aria-describedby HTML attribute or empty string.
 	 */
 	public static function get_the_aria_describedby_attribute( $error_code ) {
@@ -242,7 +244,6 @@ class Yoast_Input_Validation {
 	 * @since 12.1
 	 *
 	 * @param string $error_code Code of the error set via `add_settings_error()`, normally the variable name.
-	 *
 	 * @return string The error description HTML or empty string.
 	 */
 	public static function get_the_error_description( $error_code ) {
@@ -262,7 +263,6 @@ class Yoast_Input_Validation {
 	 *
 	 * @param string $error_code  Code of the error set via `add_settings_error()`, normally the variable name.
 	 * @param string $dirty_value The submitted invalid value.
-	 *
 	 * @return void
 	 */
 	public static function add_dirty_value_to_settings_errors( $error_code, $dirty_value ) {
@@ -274,7 +274,6 @@ class Yoast_Input_Validation {
 
 		foreach ( $wp_settings_errors as $index => $error ) {
 			if ( $error['code'] === $error_code ) {
-				// phpcs:ignore WordPress.WP.GlobalVariablesOverride -- This is a deliberate action.
 				$wp_settings_errors[ $index ]['yoast_dirty_value'] = $dirty_value;
 			}
 		}
@@ -286,7 +285,6 @@ class Yoast_Input_Validation {
 	 * @since 12.1
 	 *
 	 * @param string $error_code Code of the error set via `add_settings_error()`, normally the variable name.
-	 *
 	 * @return string The submitted invalid input field value.
 	 */
 	public static function get_dirty_value( $error_code ) {
@@ -307,7 +305,6 @@ class Yoast_Input_Validation {
 	 * @since 12.1
 	 *
 	 * @param string $error_code Code of the error set via `add_settings_error()`, normally the variable name.
-	 *
 	 * @return string The error invalid value message or empty string.
 	 */
 	public static function get_dirty_value_message( $error_code ) {
@@ -317,7 +314,7 @@ class Yoast_Input_Validation {
 			return sprintf(
 				/* translators: %s: form value as submitted. */
 				esc_html__( 'The submitted value was: %s', 'wordpress-seo' ),
-				esc_html( $dirty_value )
+				$dirty_value
 			);
 		}
 

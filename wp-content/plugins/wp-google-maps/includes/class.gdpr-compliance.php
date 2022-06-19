@@ -17,8 +17,8 @@ class GDPRCompliance
 	{
 		if(!GDPRCompliance::$filtersBound)
 		{
-			//add_filter('wpgmza_global_settings_tabs', array($this, 'onGlobalSettingsTabs'));
-			//add_filter('wpgmza_global_settings_tab_content', array($this, 'onGlobalSettingsTabContent'), 10, 1);
+			add_filter('wpgmza_global_settings_tabs', array($this, 'onGlobalSettingsTabs'));
+			add_filter('wpgmza_global_settings_tab_content', array($this, 'onGlobalSettingsTabContent'), 10, 1);
 			
 			add_filter('wpgmza_plugin_get_default_settings', array($this, 'onPluginGetDefaultSettings'));
 			
@@ -71,10 +71,9 @@ class GDPRCompliance
 	
 	/**
 	 * Called by onGlobalSettingsTabContent to add the content to our GDPR tab on the settings page, triggered by the filter wpgmza_global_settings_tab_content.
-	 * @deprecated Built into the settings page as of 8.1.0, provided for legacy support
 	 * @return DOMDocument The GDPR tab content
 	 */
-	public function getSettingsTabContent()
+	protected function getSettingsTabContent()
 	{
 		global $wpgmza;
 		
@@ -89,7 +88,7 @@ class GDPRCompliance
 		$document = apply_filters('wpgmza_gdpr_settings_tab_content', $document);
 		
 		$document->populate($settings);
-
+		
 		return $document;
 	}
 	
@@ -102,7 +101,7 @@ class GDPRCompliance
 	{
 		$wpgmza_other_settings = array_merge( (array)$this->getDefaultSettings(), get_option('WPGMZA_OTHER_SETTINGS') );
 		
-		$html = apply_filters('wpgmza_gdpr_notice', $wpgmza_other_settings['wpgmza_gdpr_default_notice']);
+		$html = $wpgmza_other_settings['wpgmza_gdpr_default_notice'];
 		
 		if(!empty($wpgmza_other_settings['wpgmza_gdpr_override_notice']) && !empty($wpgmza_other_settings['wpgmza_gdpr_notice_override_text']))
 			$html = $wpgmza_other_settings['wpgmza_gdpr_notice_override_text'];
@@ -183,8 +182,6 @@ class GDPRCompliance
 	
 	/**
 	 * Handles POST data when the settings page saves.
-	 * NB: Deprecated as of 8.1.0. The settings page module handles this.
-	 * @deprecated
 	 * @return void
 	 */
 	public function onPOST()

@@ -28,7 +28,6 @@ class Factory
 		$count = count($args);
 		$filter = "wpgmza_create_$class";
 
-
 		if($class == 'WPGMZA\\Factory')
 			throw new \Exception('Factory createInstance would return abstract Factory');
 		
@@ -44,11 +43,6 @@ class Factory
 			$filter_args = array_merge(array($filter), $args);
 		
 		$override = call_user_func_array('apply_filters', $filter_args);
-		
-
-		// NB: This stops override being the same as the first argument, which is needed for example when passing a Map as the first argument of StoreLocator
-		if(count($args) && $args[0] === $override)
-			$override = null;
 		
 		if($override instanceof \WPGMZA\Factory)
 			return $override;

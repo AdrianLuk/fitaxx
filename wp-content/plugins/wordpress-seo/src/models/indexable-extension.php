@@ -1,25 +1,28 @@
 <?php
+/**
+ * Yoast SEO Plugin File.
+ *
+ * @package Yoast\YoastSEO\Models
+ */
 
-namespace Yoast\WP\SEO\Models;
+namespace Yoast\WP\Free\Models;
 
-use Yoast\WP\Lib\Model;
+use Yoast\WP\Free\ORM\Yoast_Model;
 
 /**
  * Abstract class for indexable extensions.
  */
-abstract class Indexable_Extension extends Model {
+abstract class Indexable_Extension extends Yoast_Model {
 
 	/**
-	 * Holds the Indexable instance.
-	 *
-	 * @var Indexable
+	 * @var \Yoast\WP\Free\Models\Indexable
 	 */
 	protected $indexable = null;
 
 	/**
 	 * Returns the indexable this extension belongs to.
 	 *
-	 * @return Indexable The indexable.
+	 * @return \Yoast\WP\Free\Models\Indexable The indexable.
 	 */
 	public function indexable() {
 		if ( $this->indexable === null ) {

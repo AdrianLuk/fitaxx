@@ -29,15 +29,15 @@ class WPSEO_Config_Field_Site_Name extends WPSEO_Config_Field {
 	public function set_adapter( WPSEO_Configuration_Options_Adapter $adapter ) {
 		$adapter->add_custom_lookup(
 			$this->get_identifier(),
-			[ $this, 'get_data' ],
-			[ $this, 'set_data' ]
+			array( $this, 'get_data' ),
+			array( $this, 'set_data' )
 		);
 	}
 
 	/**
 	 * Get the data from the stored options.
 	 *
-	 * @return string|null
+	 * @return null|string
 	 */
 	public function get_data() {
 		if ( WPSEO_Options::get( 'website_name', false ) ) {

@@ -158,13 +158,16 @@ class ThemePluginFilesLocal
             'migration_state_id' => 'key',
             'folders'            => 'json_array',
             'theme_folders'      => 'json_array',
+            'themes_option'      => 'string',
             'plugin_folders'     => 'json_array',
+            'plugins_option'     => 'string',
+            'is_cli_migration'   => 'int',
             'nonce'              => 'key',
         );
 
         $state_data = Persistence::setPostData($key_rules, __METHOD__);
-
-        if (empty($state_data['folders'])) {
+        $current_option = $state_data[$state_data['stage']. '_option'];
+        if (empty($state_data['folders']) && $current_option !== 'except' ) {
             return $this->transfer_util->ajax_error(__('Error: empty folder list supplied.', 'wp-migrate-db'));
         }
 
@@ -186,7 +189,10 @@ class ThemePluginFilesLocal
 
         // @TODO this needs to be implemented for remotes on a pull
         $verified_folders = $this->verify_files_for_migration($files);
-        Util::enable_scandir_bottleneck();
+
+        if (empty($state_data['is_cli_migration'])) {
+            Util::enable_scandir_bottleneck();
+        }
 
         if ('pull' === $state_data['intent']) {
             // Set up local meta data
@@ -243,7 +249,9 @@ class ThemePluginFilesLocal
             'offset'             => 'numeric',
             'folders'            => 'json_array',
             'theme_folders'      => 'json_array',
+            'themes_option'      => 'string',
             'plugin_folders'     => 'json_array',
+            'plugins_option'     => 'string',
             'migration_state_id' => 'key',
             'nonce'              => 'key',
         );

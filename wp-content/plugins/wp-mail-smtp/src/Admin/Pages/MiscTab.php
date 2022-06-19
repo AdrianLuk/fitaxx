@@ -4,7 +4,6 @@ namespace WPMailSMTP\Admin\Pages;
 
 use WPMailSMTP\Admin\PageAbstract;
 use WPMailSMTP\Options;
-use WPMailSMTP\UsageTracking\UsageTracking;
 use WPMailSMTP\WP;
 
 /**
@@ -83,20 +82,16 @@ class MiscTab extends PageAbstract {
 						<br>
 						<?php
 						if ( $options->is_const_defined( 'general', 'do_not_send' ) ) {
-							echo $options->get_const_set_message( 'WPMS_DO_NOT_SEND' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							printf( /* translators: %1$s - constant that was used; %2$s - file where it was used. */
+								esc_html__( 'The value of this field was set using a constant %1$s most likely inside %2$s of your WordPress installation.', 'wp-mail-smtp' ),
+								'<code>WPMS_DO_NOT_SEND</code>',
+								'<code>wp-config.php</code>'
+							);
 						} else {
-							printf(
-								wp_kses( /* translators: %s - The URL to the constants support article. */
-									__( 'Please read this <a href="%s" target="_blank" rel="noopener noreferrer">support article</a> if you want to enable this option using constants.', 'wp-mail-smtp' ),
-									[
-										'a' => [
-											'href'   => [],
-											'target' => [],
-											'rel'    => [],
-										],
-									]
-								),
-								'https://wpmailsmtp.com/docs/how-to-secure-smtp-settings-by-using-constants/'
+							printf( /* translators: %1$s - constant to use; %2$s - file to put that constant in. */
+								esc_html__( 'If you want to disable using a constant, put %1$s in your %2$s file.', 'wp-mail-smtp' ),
+								'<code>define( \'WPMS_DO_NOT_SEND\', true );</code>',
+								'<code>wp-config.php</code>'
 							);
 						}
 						?>
@@ -170,24 +165,6 @@ class MiscTab extends PageAbstract {
 				</div>
 			</div>
 
-			<!-- Hide Dashboard Widget -->
-			<div id="wp-mail-smtp-setting-row-dashboard_widget_hidden" class="wp-mail-smtp-setting-row wp-mail-smtp-setting-row-checkbox wp-mail-smtp-clear">
-				<div class="wp-mail-smtp-setting-label">
-					<label for="wp-mail-smtp-setting-dashboard_widget_hidden">
-						<?php esc_html_e( 'Hide Dashboard Widget', 'wp-mail-smtp' ); ?>
-					</label>
-				</div>
-				<div class="wp-mail-smtp-setting-field">
-					<input name="wp-mail-smtp[general][dashboard_widget_hidden]" type="checkbox"
-						   value="true" <?php checked( true, $options->get( 'general', 'dashboard_widget_hidden' ) ); ?>
-						   id="wp-mail-smtp-setting-dashboard_widget_hidden"
-					>
-					<label for="wp-mail-smtp-setting-dashboard_widget_hidden">
-						<?php esc_html_e( 'Check this if you would like to hide the WP Mail SMTP Dashboard Widget.', 'wp-mail-smtp' ); ?>
-					</label>
-				</div>
-			</div>
-
 			<!-- Uninstall -->
 			<div id="wp-mail-smtp-setting-row-uninstall" class="wp-mail-smtp-setting-row wp-mail-smtp-setting-row-checkbox wp-mail-smtp-clear">
 				<div class="wp-mail-smtp-setting-label">
@@ -205,25 +182,6 @@ class MiscTab extends PageAbstract {
 				</div>
 			</div>
 
-			<?php if ( apply_filters( 'wp_mail_smtp_admin_pages_misc_tab_show_usage_tracking_setting', true ) ) : ?>
-				<!-- Usage Tracking -->
-				<div id="wp-mail-smtp-setting-row-usage-tracking" class="wp-mail-smtp-setting-row wp-mail-smtp-setting-row-checkbox wp-mail-smtp-clear">
-					<div class="wp-mail-smtp-setting-label">
-						<label for="wp-mail-smtp-setting-usage-tracking">
-							<?php esc_html_e( 'Allow Usage Tracking', 'wp-mail-smtp' ); ?>
-						</label>
-					</div>
-					<div class="wp-mail-smtp-setting-field">
-						<input name="wp-mail-smtp[general][<?php echo esc_attr( UsageTracking::SETTINGS_SLUG ); ?>]" type="checkbox"
-							value="true" <?php checked( true, $options->get( 'general', UsageTracking::SETTINGS_SLUG ) ); ?>
-							id="wp-mail-smtp-setting-usage-tracking">
-						<label for="wp-mail-smtp-setting-usage-tracking">
-							<?php esc_html_e( 'By allowing us to track usage data we can better help you because we know with which WordPress configurations, themes and plugins we should test.', 'wp-mail-smtp' ); ?>
-						</label>
-					</div>
-				</div>
-			<?php endif; ?>
-
 			<?php $this->display_save_btn(); ?>
 
 		</form>
@@ -232,12 +190,7 @@ class MiscTab extends PageAbstract {
 	}
 
 	/**
-	 * Process tab form submission ($_POST).
-	 *
-	 * @since 1.0.0
-	 * @since 2.2.0 Fixed checkbox saving and use the correct merge to prevent breaking other 'general' checkboxes.
-	 *
-	 * @param array $data Tab data specific for the plugin ($_POST).
+	 * @inheritdoc
 	 */
 	public function process_post( $data ) {
 
@@ -246,27 +199,17 @@ class MiscTab extends PageAbstract {
 		$options = new Options();
 
 		// Unchecked checkboxes doesn't exist in $_POST, so we need to ensure we actually have them in data to save.
-		if ( empty( $data['general']['do_not_send'] ) ) {
-			$data['general']['do_not_send'] = false;
-		}
 		if ( empty( $data['general']['am_notifications_hidden'] ) ) {
 			$data['general']['am_notifications_hidden'] = false;
-		}
-		if ( empty( $data['general']['email_delivery_errors_hidden'] ) ) {
-			$data['general']['email_delivery_errors_hidden'] = false;
-		}
-		if ( empty( $data['general']['dashboard_widget_hidden'] ) ) {
-			$data['general']['dashboard_widget_hidden'] = false;
 		}
 		if ( empty( $data['general']['uninstall'] ) ) {
 			$data['general']['uninstall'] = false;
 		}
-		if ( empty( $data['general'][ UsageTracking::SETTINGS_SLUG ] ) ) {
-			$data['general'][ UsageTracking::SETTINGS_SLUG ] = false;
-		}
+
+		$to_save = array_merge( $options->get_all(), $data );
 
 		// All the sanitization is done there.
-		$options->set( $data, false, false );
+		$options->set( $to_save );
 
 		WP::add_admin_notice(
 			esc_html__( 'Settings were successfully saved.', 'wp-mail-smtp' ),

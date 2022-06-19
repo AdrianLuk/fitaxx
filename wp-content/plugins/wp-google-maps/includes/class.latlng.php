@@ -8,7 +8,7 @@ if(!defined('ABSPATH'))
 /**
  * This class represents a latitude and longitude coordinate pair, provides type consistency for latitude and longitude, and some utility functions
  */
-class LatLng implements \JsonSerializable
+class LatLng
 {
 	/**
 	 * @const A regular expression to match a coordinate pair from a string. The latitdue and longitude will be in matches 1 and 3 respectively.
@@ -35,8 +35,7 @@ class LatLng implements \JsonSerializable
 		{
 			if(is_string($arg))
 			{
-				$str = $arg;
-				$str = trim($str, '() ');
+				$str = trim($arg, '() ');
 				
 				if(!preg_match(LatLng::REGEXP, $str, $m))
 					throw new \Exception('Invalid LatLng string');
@@ -115,13 +114,5 @@ class LatLng implements \JsonSerializable
 	public function __toString()
 	{
 		return "{$this->_lat}, {$this->_lng}";
-	}
-	
-	public function jsonSerialize()
-	{
-		return array(
-			'lat'	=> $this->_lat,
-			'lng'	=> $this->_lng
-		);
 	}
 }

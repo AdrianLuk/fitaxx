@@ -29,11 +29,19 @@ $max-tablet: "screen and (max-width: 768px)";
 	}
 }
 .cptui-table {
+	#excerpt {
+		display: inline-block;
+		height: 16px;
+		margin: 12px 4px 12px 0;
+		width: auto;
+	}
 	td.outer {
 		vertical-align: top;
 		width: 50%;
 	}
-	input[type="text"] {
+	input[type="text"],
+	.cptui-new & textarea,
+	.cptui-edit & textarea {
 		width: 75%;
 	}
 	.question:hover {
@@ -52,6 +60,15 @@ $max-tablet: "screen and (max-width: 768px)";
 		font-weight: bold;
 		&.hidemessage {
 			display: none;
+		}
+	}
+}
+.cpt-ui_page_cptui_tools {
+	.cptui-table {
+		.outer {
+			p {
+				padding: 0 4px;
+			}
 		}
 	}
 }
@@ -100,6 +117,7 @@ $max-tablet: "screen and (max-width: 768px)";
 .cptui_tax_get_code {
 	height: 300px;
 	resize: vertical;
+	width: 100%;
 }
 .about-wrap {
 	.cptui-feature {
@@ -156,6 +174,20 @@ $max-tablet: "screen and (max-width: 768px)";
 		}
 	}
 }
+.rtl {
+	.about-wrap {
+		.feature-rest div {
+			padding-left: 100px;
+		}
+		.feature-rest div.last-feature {
+			padding-right: 100px;
+			padding-left: 0;
+		}
+		.feature-rest div.icon:before {
+			margin: 0 -100px 0 0;
+		}
+	}
+}
 .about-wrap {
 	.about-integrations {
 		background: #fff;
@@ -169,23 +201,19 @@ $max-tablet: "screen and (max-width: 768px)";
   	}
 	.cptui-about-text {
 		margin-bottom: 1em !important;
-		margin-right: 0;
-		max-width: calc(100% - 173px);
+	}
+	.cptui-badge {
+		position: absolute;
+	    top: 0;
+	    right: 0;
 	}
 }
-.email-octopus-form-row {
-	input::placeholder {
-		color: #cccccc;
+#togglelabels {
+	display: none;
+	.js & {
+		display: inline-block;
 	}
 }
-.email-octopus-form-row-hp {
-	visibility: hidden;
-}
-.cptui-intro-devblock{
-    display: flex;
-    flex-direction: row;
-}
-
 .cptui-help {
 	color: #424242;
 	margin-left: 4px;
@@ -204,17 +232,13 @@ $max-tablet: "screen and (max-width: 768px)";
 		box-shadow: none;
 	}
 }
-#menu_icon_preview {
-	float: right;
-	padding-left: 8px;
-
+#toplevel_page_cptui_main_menu {
 	img {
-		display: block;
 		height: 20px;
+		margin-top: -2px;
 		width: 20px;
 	}
 }
-
 .visuallyhidden {
 	position: absolute;
 	left: -10000px;
@@ -223,31 +247,41 @@ $max-tablet: "screen and (max-width: 768px)";
 	height: 1px;
 	overflow: hidden;
 }
+.cptui-section {
+	fieldset {
+		border: solid rgb(204, 204, 204) 1px;
+		display: block;
+		margin-bottom: 30px;
+		padding: 10px;
+		overflow: hidden;
+		.js &.toggledclosed {
+			height: 1px;
+		}
+	}
+	legend {
+		border: solid rgb(204, 204, 204) 1px;
+		border-bottom: 0;
+		font-size: 14px;
+		font-weight: bold;
+		padding: 5px;
+	}
+}
 .cptui-spacer {
 	display: block;
 	margin-top: 25px;
 }
-
-.email-octopus-form-wrapper {
-	background: #fff;
-	margin-bottom: 10px;
-	padding: 20px;
-	label {
-		margin-bottom: 10px;
-	}
-}
-
-.wdsoctosignup {
-	h2 {
-		text-align:left;
-	}
-}
-
 .wdspromos {
 	float: right;
 	margin-left: 20px;
 	margin-top: 10px;
 	width: 275px;
+
+	#mc_embed_signup {
+		background: #fff;
+		border: solid rgb(204, 204, 204) 1px;
+		clear: left;
+		margin-bottom: 10px;
+	}
 }
 .wdspromos-about {
 	display: -ms-flexbox;
@@ -263,6 +297,7 @@ $max-tablet: "screen and (max-width: 768px)";
 	-ms-flex-pack: justify;
 	justify-content: space-between;
 	-webkit-align-content: stretch;
+	-ms-flex-line-pack: stretch;
 	align-content: stretch;
 	-webkit-align-items: flex-start;
 	-ms-flex-align: start;
@@ -270,41 +305,47 @@ $max-tablet: "screen and (max-width: 768px)";
 	margin: 20px 0;
 
 	a:nth-child(1) {
+		-webkit-order: 0;
 		-ms-flex-order: 0;
 		order: 0;
 		-webkit-flex: 0 1 auto;
 		-ms-flex: 0 1 auto;
 		flex: 0 1 auto;
 		-webkit-align-self: auto;
+		-ms-flex-item-align: auto;
 		align-self: auto;
 	}
 
 	a:nth-child(2) {
+		-webkit-order: 0;
 		-ms-flex-order: 0;
 		order: 0;
 		-webkit-flex: 0 1 auto;
 		-ms-flex: 0 1 auto;
 		flex: 0 1 auto;
 		-webkit-align-self: auto;
+		-ms-flex-item-align: auto;
 		align-self: auto;
 	}
 
 	a:nth-child(3) {
+		-webkit-order: 0;
 		-ms-flex-order: 0;
 		order: 0;
 		-webkit-flex: 0 1 auto;
 		-ms-flex: 0 1 auto;
 		flex: 0 1 auto;
 		-webkit-align-self: auto;
+		-ms-flex-item-align: auto;
 		align-self: auto;
 	}
 	p {
 	  padding: 0 5px;
 	  &:nth-child(1) {
-		padding-left: 0;
+		padding-left: 0px;
 	  }
 	  &:nth-child(4) {
-		padding-right: 0;
+		padding-right: 0px;
 	  }
 	}
 }
@@ -334,14 +375,14 @@ $max-tablet: "screen and (max-width: 768px)";
 
 @media #{$min-tablet} {
 	.cptui-badge {
-		margin-top: -42px;
-	    height: 173px;
+	    padding-top: 142px;
+	    height: 50px;
 	    width: 173px;
 	    color: #fafafa;
 	    font-weight: bold;
 	    font-size: 14px;
 	    text-align: center;
-	    margin-bottom: 10px;
+	    margin: 0 -5px;
 	    background: url(../images/cptui-icon-173x173.png) no-repeat;
 	}
 }
@@ -369,7 +410,7 @@ $max-tablet: "screen and (max-width: 768px)";
 	  width: 100%;
 	}
   }
-
+  #cptui-audit-textarea,
   #cptui_debug_info_email {
 	width: 100%;
   }

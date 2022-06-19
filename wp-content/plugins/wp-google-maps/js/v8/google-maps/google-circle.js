@@ -22,13 +22,6 @@ jQuery(function($) {
 		if(googleCircle)
 		{
 			this.googleCircle = googleCircle;
-			
-			if(options)
-			{
-
-				options.center = WPGMZA.LatLng.fromGoogleLatLng( googleCircle.getCenter() );
-				options.radius = googleCircle.getRadius() / 1000; // Meters to kilometers
-			}
 		}
 		else
 		{
@@ -36,23 +29,16 @@ jQuery(function($) {
 			this.googleCircle.wpgmzaCircle = this;
 		}
 		
-		this.googleFeature = this.googleCircle;
-		
-		if(options)
-			this.setOptions(options);
-		
 		google.maps.event.addListener(this.googleCircle, "click", function() {
 			self.dispatchEvent({type: "click"});
 		});
+		
+		if(options)
+			this.setOptions(options);
 	}
 	
 	WPGMZA.GoogleCircle.prototype = Object.create(WPGMZA.Circle.prototype);
 	WPGMZA.GoogleCircle.prototype.constructor = WPGMZA.GoogleCircle;
-	
-	WPGMZA.GoogleCircle.prototype.getCenter = function()
-	{
-		return WPGMZA.LatLng.fromGoogleLatLng( this.googleCircle.getCenter() );
-	}
 	
 	WPGMZA.GoogleCircle.prototype.setCenter = function(center)
 	{
@@ -61,16 +47,11 @@ jQuery(function($) {
 		this.googleCircle.setCenter(center);
 	}
 	
-	WPGMZA.GoogleCircle.prototype.getRadius = function()
-	{
-		return this.googleCircle.getRadius() / 1000; // Meters to kilometers
-	}
-	
 	WPGMZA.GoogleCircle.prototype.setRadius = function(radius)
 	{
 		WPGMZA.Circle.prototype.setRadius.apply(this, arguments);
 		
-		this.googleCircle.setRadius(parseFloat(radius) * 1000); // Kilometers to meters
+		this.googleCircle.setRadius(parseFloat(radius) * 1000);
 	}
 	
 	WPGMZA.GoogleCircle.prototype.setVisible = function(visible)
@@ -78,52 +59,35 @@ jQuery(function($) {
 		this.googleCircle.setVisible(visible ? true : false);
 	}
 	
-	WPGMZA.GoogleCircle.prototype.setDraggable = function(value)
-	{
-		this.googleCircle.setDraggable(value ? true : false);
-	}
-	
-	WPGMZA.GoogleCircle.prototype.setEditable = function(value)
-	{
-		var self = this;
-		
-		this.googleCircle.setOptions({editable: value});
-		
-		if(value)
-		{
-			google.maps.event.addListener(this.googleCircle, "center_changed", function(event) {
-				
-				self.center = WPGMZA.LatLng.fromGoogleLatLng(self.googleCircle.getCenter());
-				self.trigger("change");
-				
-			});
-			
-			google.maps.event.addListener(this.googleCircle, "radius_changed", function(event) {
-				
-				self.radius = self.googleCircle.getRadius() / 1000; // Meters to kilometers
-				self.trigger("change");
-				
-			});
-		}
-	}
-	
 	WPGMZA.GoogleCircle.prototype.setOptions = function(options)
 	{
-		WPGMZA.Circle.prototype.setOptions.apply(this, arguments);
+		var googleOptions = {};
+		
+		googleOptions = $.extend({}, options);
+		delete googleOptions.map;
+		delete googleOptions.center;
 		
 		if(options.center)
-			this.center = new WPGMZA.LatLng(options.center);
-	}
-	
-	WPGMZA.GoogleCircle.prototype.updateNativeFeature = function()
-	{
-		var googleOptions = this.getScalarProperties();
-		var center = new WPGMZA.LatLng(this.center); // In case center is a lat lng literal, this should really happen though
+			googleOptions.center = new google.maps.LatLng({
+				lat: parseFloat(options.center.lat),
+				lng: parseFloat(options.center.lng)
+			});
+			
+		if(options.radius)
+			googleOptions.radius = parseFloat(options.radius);
 		
-		googleOptions.radius *= 1000; // Kilometers to meters
-		googleOptions.center = center.toGoogleLatLng();
+		if(options.color)
+			googleOptions.fillColor = options.color;
+		
+		if(options.opacity)
+			googleOptions.fillOpacity = parseFloat(options.opacity);
+		
+		googleOptions.strokeOpacity = 0;
 		
 		this.googleCircle.setOptions(googleOptions);
+		
+		if(options.map)
+			options.map.addCircle(this);
 	}
 	
 });

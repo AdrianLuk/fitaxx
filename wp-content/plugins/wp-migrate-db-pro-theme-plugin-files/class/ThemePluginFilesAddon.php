@@ -261,20 +261,46 @@ class ThemePluginFilesAddon extends AddonAbstract
     }
 
     /**
+     * Gets all active themes, including parents
+     *
+     * @return array stylesheet strings
+     */
+    private function get_active_themes()
+    {
+        $active_themes = [];
+        if (is_multisite()) {
+            $sites = get_sites();
+            foreach($sites as $site) {
+                $site_stylesheet = get_blog_option($site->blog_id, 'stylesheet');
+                if (!in_array($site_stylesheet, $active_themes)) {
+                    $active_themes[] = $site_stylesheet;
+                }
+                $site_template = get_blog_option($site->blog_id, 'template');
+                if (!in_array($site_template, $active_themes)) {
+                    $active_themes[] = $site_template;
+                }
+            } 
+            return $active_themes;
+        }
+
+        $active_themes[] = get_option('stylesheet');
+        $site_template   = get_option('template');
+        if (!in_array($site_template, $active_themes)) {
+            $active_themes[] = $site_template;
+        }
+        return $active_themes;
+    }
+
+    /**
      * @return array
      */
     public function get_local_themes()
     {
-        $themes       = wp_get_themes();
-        $active_theme = wp_get_theme();
-        $set_active   = false;
-        $theme_list   = [];
-
+        $theme_list    = [];
+        $themes        = wp_get_themes();
+        $active_themes = $this->get_active_themes();
         foreach ($themes as $key => $theme) {
-            if (!is_multisite()) {
-                $set_active = ($key == $active_theme->stylesheet);
-            }
-
+            $set_active = in_array($key, $active_themes);
             $theme_list[$key] = [
                 [
                     'name'   => html_entity_decode($theme->Name),
@@ -323,42 +349,6 @@ class ThemePluginFilesAddon extends AddonAbstract
     }
 
     /**
-     * @return array
-     */
-    // @TODO Refactor to use core version - used for Compatibility Mode
-    public function get_local_plugins()
-    {
-        $plugins      = get_plugins();
-        $plugin_paths = $this->get_plugin_paths();
-
-        // @TODO get MU plugins in the list as well
-        $active_plugins = $this->get_active_plugins();
-
-        $plugin_list = [];
-
-        foreach ($plugins as $key => $plugin) {
-            $base_folder = preg_replace('/\/(.*)\.php/i', '', $key);
-
-            $plugin_excluded = $this->check_plugin_exclusions($base_folder);
-
-            if ($plugin_excluded) {
-                continue;
-            }
-
-            $plugin_path       = array_key_exists($base_folder, $plugin_paths) ? $plugin_paths[$base_folder] : false;
-            $plugin_list[$key] = [
-                [
-                    'name'   => $plugin['Name'],
-                    'active' => in_array($key, $active_plugins),
-                    'path'   => $plugin_path,
-                ],
-            ];
-        }
-
-        return $plugin_list;
-    }
-
-    /**
      * @param string $plugin
      *
      * @return bool
@@ -378,26 +368,6 @@ class ThemePluginFilesAddon extends AddonAbstract
     }
 
     /**
-     * @return array|bool|mixed|void
-     */
-    // @TODO Refactor to use core version - used for Compatibility Mode
-    protected function get_active_plugins()
-    {
-        $active_plugins = get_option('active_plugins');
-
-        if (is_multisite()) {
-            // get active plugins for the network
-            $network_plugins = get_site_option('active_sitewide_plugins');
-            if ($network_plugins) {
-                $network_plugins = array_keys($network_plugins);
-                $active_plugins  = array_merge($active_plugins, $network_plugins);
-            }
-        }
-
-        return $active_plugins;
-    }
-
-    /**
      * @param $site_details
      *
      * @return mixed
@@ -414,7 +384,7 @@ class ThemePluginFilesAddon extends AddonAbstract
 
         $folder_writable = $this->receiver->is_tmp_folder_writable('themes');
 
-        $site_details['plugins']                   = $this->get_local_plugins();
+        $site_details['plugins']                   = $this->filesystem->get_local_plugins();
         $site_details['plugins_path']              = $this->filesystem->slash_one_direction(WP_PLUGIN_DIR);
         $site_details['themes']                    = $this->get_local_themes();
         $site_details['themes_path']               = $this->filesystem->slash_one_direction(WP_CONTENT_DIR) . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR;

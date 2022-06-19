@@ -1,18 +1,6 @@
 <?php
 
 /**
- * Custom Post Type UI WP-CLI.
- *
- * @package    CPTUI
- * @subpackage WP-CLI
- * @author     WebDevStudios
- * @since      1.6.0
- * @license    GPL-2.0+
- */
-
-// phpcs:disable WebDevStudios.All.RequireAuthor
-
-/**
  * Imports and exports Custom Post Type UI setting data.
  */
 class CPTUI_Import_JSON extends WP_CLI_Command {
@@ -23,7 +11,7 @@ class CPTUI_Import_JSON extends WP_CLI_Command {
 
 	public $type;
 
-	public $data = [];
+	public $data = array();
 
 	/**
 	 * Imports and parses JSON into CPTUI settings.

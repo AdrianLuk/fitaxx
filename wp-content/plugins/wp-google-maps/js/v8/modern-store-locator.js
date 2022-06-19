@@ -34,25 +34,25 @@ jQuery(function($) {
 		
 		var inner = $(this.element).find(".wpgmza-inner");
 		
+		var titleSearch = $(original).find("[id='nameInput_" + map_id + "']");
+		if(titleSearch.length)
+		{
+			var placeholder = wpgmaps_localize[map_id].other_settings.store_locator_name_string;
+			if(placeholder && placeholder.length)
+				titleSearch.attr("placeholder", placeholder);
+			inner.append(titleSearch);
+		}
+		
 		var addressInput;
 		if(WPGMZA.isProVersion())
 			addressInput = $(original).find(".addressInput");
 		else
 			addressInput = $(original).find("#addressInput");
 		
-		if(map.settings.store_locator_query_string && map.settings.store_locator_query_string.length)
-			addressInput.attr("placeholder", map.settings.store_locator_query_string);
+		if(wpgmaps_localize[map_id].other_settings.store_locator_query_string && wpgmaps_localize[map_id].other_settings.store_locator_query_string.length)
+			addressInput.attr("placeholder", wpgmaps_localize[map_id].other_settings.store_locator_query_string);
 		
 		inner.append(addressInput);
-		
-		var titleSearch = $(original).find("[id='nameInput_" + map_id + "']");
-		if(titleSearch.length)
-		{
-			var placeholder = map.settings.store_locator_name_string;
-			if(placeholder && placeholder.length)
-				titleSearch.attr("placeholder", placeholder);
-			inner.append(titleSearch);
-		}
 		
 		var button;
 		if(button = $(original).find("button.wpgmza-use-my-location"))
@@ -189,41 +189,6 @@ jQuery(function($) {
 		$(this.element).find("input, select").on("blur", function() {
 			$(inner).removeClass("active");
 		});
-		
-		$(this.element).on("mouseover", "li.wpgmza_cat_checkbox_item_holder", function(event) {
-			self.onMouseOverCategory(event);
-		});
-		
-		$(this.element).on("mouseleave", "li.wpgmza_cat_checkbox_item_holder", function(event) {
-			self.onMouseLeaveCategory(event);
-		});
-		
-		$('body').on('click', '.wpgmza_store_locator_options_button', function(event) {
-			setTimeout(function(){
-
-				if ($('.wpgmza_cat_checkbox_holder').hasClass('wpgmza-open')) {
-
-					var p_cat = $( ".wpgmza_cat_checkbox_holder" );
-					var position_cat = p_cat.position().top + p_cat.outerHeight(true) + $('.wpgmza-modern-store-locator').height();
-			
-					var $p_map = $('.wpgmza_map');  
-					var position_map = $p_map.position().top + $p_map.outerHeight(true); 
-
-					var cat_height = position_cat;
-
-					if (cat_height >= position_map) {
-			
-						$('.wpgmza_cat_ul').css('overflow', 'scroll ');
-					
-						$('.wpgmza_cat_ul').css('height', '100%');
-				
-						$('.wpgmza-modern-store-locator').css('height','100%');
-						$('.wpgmza_cat_checkbox_holder.wpgmza-open').css({'padding-bottom': '50px', 'height': '100%'});
-					}
-				}
-			}, 500);
-		});
-
 	}
 	
 	/**
@@ -233,8 +198,8 @@ jQuery(function($) {
 	 * @param {int} map_id The ID of the map this store locator belongs to
 	 * @return {WPGMZA.ModernStoreLocator} An instance of WPGMZA.ModernStoreLocator
 	 */
-	WPGMZA.ModernStoreLocator.createInstance = function(map_id) {
-		
+	WPGMZA.ModernStoreLocator.createInstance = function(map_id)
+	{
 		switch(WPGMZA.settings.engine)
 		{
 			case "open-layers":
@@ -245,21 +210,6 @@ jQuery(function($) {
 				return new WPGMZA.GoogleModernStoreLocator(map_id);
 				break;
 		}
-	}
-	
-	// TODO: Move these to a Pro module
-	WPGMZA.ModernStoreLocator.prototype.onMouseOverCategory = function(event)
-	{
-		var li = event.currentTarget;
-		
-		$(li).children("ul.wpgmza_cat_checkbox_item_holder").stop(true, false).fadeIn();
-	}
-	
-	WPGMZA.ModernStoreLocator.prototype.onMouseLeaveCategory = function(event)
-	{
-		var li = event.currentTarget;
-		
-		$(li).children("ul.wpgmza_cat_checkbox_item_holder").stop(true, false).fadeOut();
 	}
 	
 });

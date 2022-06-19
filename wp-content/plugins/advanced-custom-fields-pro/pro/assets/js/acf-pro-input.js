@@ -7,7 +7,6 @@
 		
 		events: {
 			'click a[data-event="add-row"]': 		'onClickAdd',
-			'click a[data-event="duplicate-row"]':	'onClickDuplicate',
 			'click a[data-event="remove-row"]': 	'onClickRemove',
 			'click a[data-event="collapse-row"]': 	'onClickCollapse',
 			'showField':							'onShow',
@@ -136,32 +135,19 @@
 				$(this).find('> .order > span').html( i+1 );
 			});
 			
-			// Extract vars.
-			var $controll = this.$control();
-			var $button = this.$button();
-			
 			// empty
 			if( this.val() == 0 ) {
-				$controll.addClass('-empty');
+				this.$control().addClass('-empty');
 			} else {
-				$controll.removeClass('-empty');
+				this.$control().removeClass('-empty');
 			}
 			
-			// Reached max rows.
-			if( !this.allowAdd() ) {
-				$controll.addClass('-max');
-				$button.addClass('disabled');
+			// max
+			if( this.allowAdd() ) {
+				this.$button().removeClass('disabled');
 			} else {
-				$controll.removeClass('-max');
-				$button.removeClass('disabled');
-			}
-			
-			// Reached min rows (not used).
-			//if( !this.allowRemove() ) {
-			//	$controll.addClass('-min');
-			//} else {
-			//	$controll.removeClass('-min');
-			//}	
+				this.$button().addClass('disabled');
+			}	
 		},
 		
 		validateAdd: function(){
@@ -249,65 +235,6 @@
 			return $el;
 		},
 		
-		onClickDuplicate: function( e, $el ){
-			
-			// Validate with warning.
-			if( !this.validateAdd() ) {
-				return false;
-			}
-			
-			// get layout and duplicate it.
-			var $row = $el.closest('.acf-row');
-			this.duplicateRow( $row );
-		},
-
-		duplicateRow: function( $row ){
-			
-			// Validate without warning.
-			if( !this.allowAdd() ) {
-				return false;
-			}
-			
-			// Vars.
-			var fieldKey = this.get('key');
-			
-			// Duplicate row.
-			var $el = acf.duplicate({
-				target: $row,
-				
-				// Provide a custom renaming callback to avoid renaming parent row attributes.
-				rename: function( name, value, search, replace ){
-					
-					// Rename id attributes from "field_1-search" to "field_1-replace".
-					if( name === 'id' ) {
-						return value.replace( fieldKey + '-' + search, fieldKey + '-' + replace );
-					
-					// Rename name and for attributes from "[field_1][search]" to "[field_1][replace]".
-					} else {
-						return value.replace( fieldKey + '][' + search, fieldKey + '][' + replace );
-					}
-				},
-				before: function( $el ){
-					acf.doAction('unmount', $el);
-				},
-				after: function( $el, $el2 ){
-					acf.doAction('remount', $el);
-				},
-			});
-			
-			// trigger change for validation errors
-			this.$input().trigger('change');
-			
-			// Update order numbers.
-			this.render();
-
-			// Focus on new row.
-			acf.focusAttention( $el );
-					
-			// Return new layout.
-			return $el;
-		},
-
 		validateRemove: function(){
 			
 			// return true if allowed
@@ -333,13 +260,10 @@
 		},
 		
 		onClickRemove: function( e, $el ){
+			
+			// vars
 			var $row = $el.closest('.acf-row');
 			
-			// Bypass confirmation when holding down "shift" key.
-			if( e.shiftKey ) {
-				return this.remove( $row );
-			}
-
 			// add class
 			$row.addClass('-hover');
 			
@@ -539,7 +463,6 @@
 		
 		events: {
 			'click [data-name="add-layout"]': 		'onClickAdd',
-			'click [data-name="duplicate-layout"]': 'onClickDuplicate',
 			'click [data-name="remove-layout"]': 	'onClickRemove',
 			'click [data-name="collapse-layout"]': 	'onClickCollapse',
 			'showField':							'onShow',
@@ -702,7 +625,7 @@
 				}
 			});
 		},
-
+		
 		addUnscopedEvents: function( self ){
 			
 			// invalidField
@@ -731,7 +654,6 @@
 			// update order number
 			this.$layouts().each(function( i ){
 				$(this).find('.acf-fc-layout-order:first').html( i+1 );
-				
 			});
 			
 			// empty
@@ -875,65 +797,6 @@
 			return $el;
 		},
 		
-		onClickDuplicate: function( e, $el ){
-			
-			// Validate with warning.
-			if( !this.validateAdd() ) {
-				return false;
-			}
-			
-			// get layout and duplicate it.
-			var $layout = $el.closest('.layout');
-			this.duplicateLayout( $layout );
-		},
-		
-		duplicateLayout: function( $layout ){
-			
-			// Validate without warning.
-			if( !this.allowAdd() ) {
-				return false;
-			}
-			
-			// Vars.
-			var fieldKey = this.get('key');
-			
-			// Duplicate layout.
-			var $el = acf.duplicate({
-				target: $layout,
-				
-				// Provide a custom renaming callback to avoid renaming parent row attributes.
-				rename: function( name, value, search, replace ){
-					
-					// Rename id attributes from "field_1-search" to "field_1-replace".
-					if( name === 'id' ) {
-						return value.replace( fieldKey + '-' + search, fieldKey + '-' + replace );
-					
-					// Rename name and for attributes from "[field_1][search]" to "[field_1][replace]".
-					} else {
-						return value.replace( fieldKey + '][' + search, fieldKey + '][' + replace );
-					}
-				},
-				before: function( $el ){
-					acf.doAction('unmount', $el);
-				},
-				after: function( $el, $el2 ){
-					acf.doAction('remount', $el);
-				},
-			});
-			
-			// trigger change for validation errors
-			this.$input().trigger('change');
-			
-			// Update order numbers.
-			this.render();
-			
-			// Draw focus to layout.
-			acf.focusAttention( $el );
-			
-			// Return new layout.
-			return $el;
-		},
-		
 		validateRemove: function(){
 			
 			// return true if allowed
@@ -962,13 +825,10 @@
 		},
 		
 		onClickRemove: function( e, $el ){
+			
+			// vars
 			var $layout = $el.closest('.layout');
 			
-			// Bypass confirmation when holding down "shift" key.
-			if( e.shiftKey ) {
-				return this.removeLayout( $layout );
-			}
-
 			// add class
 			$layout.addClass('-hover');
 			
@@ -1736,13 +1596,10 @@
 		
 		onChangeSort: function( e, $el ){
 			
-			// Bail early if is disabled.
-			if( $el.hasClass('disabled') ) {
-				return;
-			}
-			
-			// Get sort val.
+			// vars
 			var val = $el.val();
+			
+			// validate
 			if( !val ) {
 				return;
 			}
@@ -1752,7 +1609,6 @@
 			this.$attachments().each(function(){
 				ids.push( $(this).data('id') );
 			});
-			
 			
 			// step 1
 			var step1 = this.proxy(function(){

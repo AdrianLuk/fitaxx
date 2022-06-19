@@ -16,12 +16,11 @@ if ( ! defined( 'WPSEO_NAMESPACES' ) || ! WPSEO_NAMESPACES ) {
 	return;
 }
 ?>
-<p id="settings-import-desc">
+<p>
 	<?php
 	printf(
-		/* translators: 1: expands to Yoast SEO, 2: expands to Import settings. */
-		esc_html__( 'Import settings from another %1$s installation by pasting them here and clicking "%2$s".', 'wordpress-seo' ),
-		'Yoast SEO',
+		/* translators: 1: Import settings button string from below. */
+		esc_html__( 'Import settings by pasting the settings you copied from another site here and clicking "%s".', 'wordpress-seo' ),
 		esc_html__( 'Import settings', 'wordpress-seo' )
 	);
 	?>
@@ -32,15 +31,15 @@ if ( ! defined( 'WPSEO_NAMESPACES' ) || ! WPSEO_NAMESPACES ) {
 	method="post"
 	accept-charset="<?php echo esc_attr( get_bloginfo( 'charset' ) ); ?>">
 	<?php wp_nonce_field( WPSEO_Import_Settings::NONCE_ACTION ); ?>
-	<label class="yoast-inline-label" for="settings-import">
+	<label class="screen-reader-text" for="settings-import">
 		<?php
 		printf(
 			/* translators: %s expands to Yoast SEO */
-			esc_html__( '%s settings to import:', 'wordpress-seo' ),
+			esc_html__( 'Paste your settings from another %s installation.', 'wordpress-seo' ),
 			'Yoast SEO'
 		);
 		?>
-	</label><br />
-	<textarea id="settings-import" rows="10" cols="140" name="settings_import" aria-describedby="settings-import-desc"></textarea><br/>
+	</label>
+	<textarea id="settings-import" rows="10" cols="140" name="settings_import"></textarea><br/>
 	<input type="submit" class="button button-primary" value="<?php esc_attr_e( 'Import settings', 'wordpress-seo' ); ?>"/>
 </form>

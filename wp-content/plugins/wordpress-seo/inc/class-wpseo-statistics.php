@@ -20,32 +20,32 @@ class WPSEO_Statistics {
 	 * @return int
 	 */
 	public function get_post_count( $rank ) {
-		if ( $rank->get_rank() === WPSEO_Rank::NO_FOCUS ) {
-			$posts = [
-				'meta_query' => [
+		if ( WPSEO_Rank::NO_FOCUS === $rank->get_rank() ) {
+			$posts = array(
+				'meta_query' => array(
 					'relation' => 'OR',
-					[
+					array(
 						'key'     => WPSEO_Meta::$meta_prefix . 'focuskw',
 						'value'   => 'needs-a-value-anyway',
 						'compare' => 'NOT EXISTS',
-					],
-				],
-			];
+					),
+				),
+			);
 		}
-		elseif ( $rank->get_rank() === WPSEO_Rank::NO_INDEX ) {
-			$posts = [
+		elseif ( WPSEO_Rank::NO_INDEX === $rank->get_rank() ) {
+			$posts = array(
 				'meta_key'   => WPSEO_Meta::$meta_prefix . 'meta-robots-noindex',
 				'meta_value' => '1',
 				'compare'    => '=',
-			];
+			);
 		}
 		else {
-			$posts = [
+			$posts = array(
 				'meta_key'     => WPSEO_Meta::$meta_prefix . 'linkdex',
-				'meta_value'   => [ $rank->get_starting_score(), $rank->get_end_score() ],
+				'meta_value'   => array( $rank->get_starting_score(), $rank->get_end_score() ),
 				'meta_compare' => 'BETWEEN',
 				'meta_type'    => 'NUMERIC',
-			];
+			);
 		}
 
 		$posts['fields']      = 'ids';

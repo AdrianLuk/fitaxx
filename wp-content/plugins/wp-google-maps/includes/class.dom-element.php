@@ -38,10 +38,8 @@ class DOMElement extends \DOMElement
 	public function querySelector($query)
 	{
 		$results = $this->querySelectorAll($query);		
-		
 		if(empty($results))
 			return null;
-		
 		return $results[0];
 	}
 	
@@ -68,7 +66,7 @@ class DOMElement extends \DOMElement
 		if($sort)
 			usort($results, array('WPGMZA\DOMElement', 'sortByDOMPosition'));
 		
-		return new DOMQueryResults($results);
+		return $results;
 	}
 	
 	/** 
@@ -124,16 +122,6 @@ class DOMElement extends \DOMElement
 		}
 		
 		return null;
-	}
-	
-	/**
-	 * Wraps this element in the element passed in, then replaces this nodes original position
-	 * @param DOMElement The element to wrap this element in
-	 */
-	public function wrap($wrapper)
-	{
-		$this->parentNode->replaceChild($wrapper, $this);
-		$wrapper->appendChild($this);
 	}
 	
 	/**
@@ -277,12 +265,11 @@ class DOMElement extends \DOMElement
 				
 				$temp = new DOMDocument('1.0', 'UTF-8');
 				$str = "<div id='domdocument-import-payload___'>" . $html . "</div>";
-
-				if($wpgmza->isInDeveloperMode()){
+				
+				if($wpgmza->isInDeveloperMode())
 					$temp->loadHTML($str);
-				} else {
+				else
 					@$temp->loadHTML($str);
-				}
 				
 				$body = $temp->querySelector('#domdocument-import-payload___');
 				for($child = $body->firstChild; $child != null; $child = $child->nextSibling)
@@ -306,21 +293,14 @@ class DOMElement extends \DOMElement
 		
 		if($body = $node->querySelector("body"))
 		{
-			// TODO: I don't think a query selector is necessary here. Iterating over the bodies children should be more optimal
-			$results = $node->querySelectorAll("body>*");
-			
-			foreach($results as $child)
+			// TODO: I don't think a query selector is necessary here. Iterating over the bodies children should be more optimal.
+			foreach($node->querySelectorAll("body>*") as $child)
 				$this->appendChild($child);
-			
-			return $results;
 		}
 		else
-		{
 			$this->appendChild($node);
-			return $node;
-		}
 		
-		return null;
+		return $this;
 	}
 	
 	/**
@@ -550,9 +530,6 @@ class DOMElement extends \DOMElement
 			if(!$name)
 				continue;
 			
-			if(preg_match('/nonce/i', $name))
-				continue; // NB: Do not serialize nonce values
-			
 			switch($input->getAttribute('type'))
 			{
 				case 'checkbox':
@@ -625,14 +602,6 @@ class DOMElement extends \DOMElement
 	 */
 	public function setValue($value)
 	{
-		/*if($this->getAttribute("name") == "wpgmza_gdpr_require_consent_before_load")
-		{
-			
-			echo "<pre>";
-			debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-			exit;
-		}*/
-		
 		switch(strtolower($this->nodeName))
 		{
 			case 'textarea':
@@ -730,7 +699,6 @@ class DOMElement extends \DOMElement
 	 */
 	public function clear()
 	{
-
 		while($this->childNodes->length)
 			$this->removeChild($this->firstChild);
 		return $this;
@@ -748,3 +716,4 @@ class DOMElement extends \DOMElement
 	}
 }
 
+?>

@@ -2,11 +2,6 @@
 
 namespace WPMailSMTP\Providers\Sendinblue;
 
-use WPMailSMTP\Vendor\SendinBlue\Client\Api\AccountApi;
-use WPMailSMTP\Vendor\SendinBlue\Client\Api\SendersApi;
-use WPMailSMTP\Vendor\SendinBlue\Client\Api\TransactionalEmailsApi;
-use WPMailSMTP\Vendor\SendinBlue\Client\Configuration;
-
 /**
  * Class Api is a wrapper for Sendinblue library with handy methods.
  *
@@ -38,11 +33,11 @@ class Api {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @return Configuration
+	 * @return \SendinBlue\Client\Configuration
 	 */
 	protected function get_api_config() {
 
-		return Configuration::getDefaultConfiguration()->setApiKey( 'api-key', isset( $this->options['api_key'] ) ? $this->options['api_key'] : '' );
+		return \SendinBlue\Client\Configuration::getDefaultConfiguration()->setApiKey( 'api-key', isset( $this->options['api_key'] ) ? $this->options['api_key'] : '' );
 	}
 
 	/**
@@ -55,7 +50,7 @@ class Api {
 		// Include the library.
 		require_once wp_mail_smtp()->plugin_path . '/vendor/autoload.php';
 
-		return new AccountApi( null, $this->get_api_config() );
+		return new \SendinBlue\Client\Api\AccountApi( null, $this->get_api_config() );
 	}
 
 	/**
@@ -68,7 +63,7 @@ class Api {
 		// Include the library.
 		require_once wp_mail_smtp()->plugin_path . '/vendor/autoload.php';
 
-		return new SendersApi( null, $this->get_api_config() );
+		return new \SendinBlue\Client\Api\SendersApi( null, $this->get_api_config() );
 	}
 
 	/**
@@ -81,7 +76,7 @@ class Api {
 		// Include the library.
 		require_once wp_mail_smtp()->plugin_path . '/vendor/autoload.php';
 
-		return new TransactionalEmailsApi( null, $this->get_api_config() );
+		return new \SendinBlue\Client\Api\SMTPApi( null, $this->get_api_config() );
 	}
 
 	/**

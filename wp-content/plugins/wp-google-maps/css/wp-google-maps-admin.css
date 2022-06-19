@@ -28,8 +28,18 @@
     height: 250px;
 }
 
-.ui-tabs-nav li {
-    display: inline-block;
+#wpgmaps_tabs .ui-tabs-nav li,
+#wpgmaps_tabs_markers .ui-tabs-nav li
+{
+  padding: 0px !important;
+  display: inline-block !important;
+}
+
+#wpgmaps_tabs .ui-tabs-nav li > a,
+#wpgmaps_tabs_markers .ui-tabs-nav li > a
+{
+  display: inline-block !important;
+  padding: 10px 15px !important;
 }
 
 .ui-widget-header {
@@ -43,10 +53,11 @@
 }
 
 .ui-tabs-active {
-    background: #e4e4e4 !important;
+    background: #0073AA !important;
 }
+
 .ui-tabs-active a {
-    
+    color:white !important;
 }
 
 .ui-state-default{
@@ -60,8 +71,6 @@
     -webkit-transition: background 0.2s;
     -moz-transition: background 0.2s;
     -o-transition: background 0.2s;
-
-    margin-right: 3px;
 }
 
 .ui-state-default a{
@@ -72,7 +81,7 @@
 .ui-tabs-panel {
     background: white !important;
     margin-top: -19px !important;
-    padding: 13px;
+    padding: 13px !important;
 }
 
 .ui-slider {
@@ -400,36 +409,9 @@ input.cmn-toggle-yes-no:checked + label:after {
   line-height: 15px !important;
 }
 
-
-.update-att, .wpgmza-upsell
-{
-  border: 2px solid #FACE48;
-  border-radius: 5px;
-  background: #FACE48;
-  color: #fff;
-  /*margin: 10px;*/
-  box-sizing: border-box;
-  font-size: 13px;
-  /*border: 1px solid #ffba00;*/
-  color: #2b323c;
-  line-height: 1.4;
-  padding: 11px 15px;
-  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
-  display: inline-block;
-  margin-bottom: 10px;
+.update-att{
+   border: 1px solid #ffba00;
 }
-
-.update-att a, .wpgmza-upsell a
-{
-  color: #000;
-  opacity: .9;
-  font-weight: bold;
-}
-.update-att .fa, .wpgmza-upsell .fa
-{
-  margin-right: 10px;
-}
-
 
 .update-map-overlay {
     position: absolute;
@@ -470,113 +452,106 @@ input.cmn-toggle-yes-no:checked + label:after {
     display: block;
 }
 
-#wpgmza-gdpr-compliance fieldset,
-  #wpgmza-global-settings #gdpr-compliance fieldset,
+#wpgmza-gdpr-compliance fieldset
 {
-  margin-bottom: 0.3em;
+	margin-bottom: 0.3em;
 }
 
-#wpgmza-gdpr-compliance fieldset>*,
-  #wpgmza-global-settings #gdpr-compliance fieldset>*
+#wpgmza-gdpr-compliance fieldset>*
 {
-  display: inline-block;
-  vertical-align: top;
+	display: inline-block;
+	vertical-align: top;
 }
 
-#wpgmza-gdpr-compliance fieldset>label,
-  #wpgmza-global-settings #gdpr-compliance fieldset>label
+#wpgmza-gdpr-compliance fieldset>label
 {
-  width: 260px;
+	width: 260px;
 }
 
-#wpgmza-gdpr-compliance input[type='number'],
-  #wpgmza-global-settings #gdpr-compliance input[type='number']
+#wpgmza-gdpr-compliance input[type='number']
 {
-  width: 64px;
+	width: 64px;
 }
 
-#wpgmza-gdpr-compliance textarea,
-  #wpgmza-global-settings #gdpr-compliance textarea
+#wpgmza-gdpr-compliance textarea
 {
-  resize: both;
+	resize: both;
 }
 
 
-#wpgmza-gdpr-compliance label,
-  #wpgmza-global-settings #gdpr-compliance label
+#wpgmza-gdpr-compliance label
 {
-  cursor: auto;
+	cursor: auto;
 }
 
-#wpgmza-gdpr-compliance i,
-  #wpgmza-global-settings #gdpr-compliance i
+#wpgmza-gdpr-compliance i
 {
-  cursor: help !important;
+	cursor: help !important;
 }
 
 [name='wpgmza_gdpr_default_notice']
 {
-  width: 80%;
+	width: 80%;
 }
 
 [name='wpgmza_gdpr_default_notice']>p:first-child
 {
-  margin-top: 0px;
+	margin-top: 0px;
 }
 
 [name='wpgmza_gdpr_company_name'], [name='wpgmza_gdpr_retention_purpose']
 {
-  width: 50vw;
+	width: 50vw;
 }
 
 [name='wpgmza_gdpr_notice_override_text']
 {
-  width: 50vw;
-  height: 200px;
+	width: 50vw;
+	height: 200px;
 }
 
 #wpgmza-google-api-error-dialog
 {
-  width: 66vw;
+	width: 66vw;
 }
 
 #wpgmza-google-api-error-list,
-  #wpgmza-google-api-error-list *
+	#wpgmza-google-api-error-list *
 {
-  text-align: left;
+	text-align: left;
 }
 
 #wpgmza-google-api-error-list
 {
-  list-style: none;
+	list-style: none;
 }
 
 #wpgmza-google-api-error-list li
 {
-  background: ghostwhite;
-  padding: 0.5em;
-  margin: 0.5em;
+	background: ghostwhite;
+	padding: 0.5em;
+	margin: 0.5em;
 }
 
 #wpgmza-google-api-error-list li:before
 {
-  content: "\26D4";
-  color: red;
+	content: "\26D4";
+	color: red;
 }
 
 #wpgmza-google-api-error-dialog a
 {
-  color: blue;
+	color: blue;
 }
 
 #wpgmza-google-api-error-dialog .wpgmza-documentation-buttons
 {
-  float: right;
+	float: right;
 }
 
 #wpgmza-google-api-error-dialog .wpgmza-documentation-buttons a
 {
-  color: #444444;
+	color: #444444;
     background: #F3F3F3;
     border: 1px #DADADA solid;
     padding: 5px 10px;
@@ -599,13 +574,13 @@ input.cmn-toggle-yes-no:checked + label:after {
 
 #wpgmza-google-api-error-dialog .wpgmza-documentation-buttons a i
 {
-  font-weight: bold;
-  padding-right: 0.3em;
+	font-weight: bold;
+	padding-right: 0.3em;
 }
 
 [aria-controls="wpgmza-gdpr-compliance"]
 {
-  margin-left: 3px;
+	margin-left: 3px;
 }
 
 
@@ -724,15 +699,6 @@ box-shadow: 0 1px 6px rgba(0,0,0,0.12), 0 -1px 3px rgba(0,0,0,0.04);
   border-radius: 3px;
 }
 
-#DataTables_Table_0 th:first-child {
-    width: 10px !important;
-}
-.dataTables_wrapper {
-  background-color:#FFF;
-  padding-left:5px;
-  padding-right:5px;
-}
-
 .dataTables_length,
 .dataTables_filter,
 .wpgmza-marker-listing__actions,
@@ -745,33 +711,55 @@ box-shadow: 0 1px 6px rgba(0,0,0,0.12), 0 -1px 3px rgba(0,0,0,0.04);
   padding-bottom: 15px;
 }
 
-#DataTables_Table_0 th {
-  text-align: left;
+.button-primary,
+.ui-tabs-active,
+.wpgmza_general_btn,
+.wpgmza_file_select_btn{
+  background-color: #2B323C !important;
+  text-shadow: none;
+  border-radius: 2px !important;
+  transition: background .12s ease-in-out !important;
 }
 
-#wpgmza_map_list_id {
-  width:20px;
+.button-primary:hover,
+.ui-tabs-active:hover,
+.wpgmza_general_btn:hover,
+.wpgmza_file_select_btn:hover {
+  background-color: #616f82 !important;
 }
 
-
+.button-primary:active,
+.button-primary:focus,
+.ui-tabs-nav a:active,
+.ui-tabs-nav a:focus{
+  outline: none !important;
+  box-shadow: none !important;
+}
 
 
 body[class*="wp-google-maps"] .ui-tabs-nav {
-  /*overflow-x: scroll !important;*/
-  /*overflow-y: hidden !important;*/
-  /*white-space: nowrap !important;*/
+  overflow-x: scroll !important;
+  overflow-y: hidden !important;
+  white-space: nowrap !important;
   font-size: 0 !important;
 }
 
-
+body[class*="wp-google-maps"] .ui-tabs {
+   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.04);
+  background: #fff !important;
+  background: #f9f9f9 !important;
+  border-radius: 3px;
+  overflow: hidden;
+}
 
 body[class*="wp-google-maps"] .ui-tabs-nav li {
-    display: inline-block !important;
-    font-size: 12px;
-    margin-bottom: 0 !important;
-    /*border-right: 1px solid #eee;*/
-    border-radius: 0;
-    transition: background .13s ease-in-out;
+  display: inline-block !important;
+  font-size: 12px;
+  margin-bottom: 0 !important;
+  border-right: 1px solid #eee;
+ 
+  border-radius: 0;
+  transition: background .13s ease-in-out;
   
 
 }
@@ -779,19 +767,15 @@ body[class*="wp-google-maps"] .ui-tabs-nav li a {
 }
 
 body[class*="wp-google-maps"] .ui-tabs-panel {
-  
+  border: 1px solid #eee;
 }
 
 body[class*="wp-google-maps"] .ui-state-default {
-    background: #ebebeb;
-} 
-
-body[class*="wp-google-maps"] .ui-state-default.ui-tabs-active {
-  background: #fff !important;
+  background: #fff;
 }
 
 body[class*="wp-google-maps"] .ui-state-default:hover {
-  
+  background: #f9f9f9;
 }
 
 body[class*="wp-google-maps"] .ui-tabs-panel {
@@ -857,13 +841,10 @@ li[aria-controls="wpgmza-gdpr-compliance"] {
 }
 
 .wpgmza-nag {
-    border: 1px solid #eee;
+  border: 2px solid black;
   line-height: 12px;
   box-sizing: border-box;
-    background: #fff;
    border-radius: 4px !important;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.04);
-    font-size: 14px;
 }
 #wpgmaps_save_reminder {
   margin-top: 20px;
@@ -871,22 +852,20 @@ li[aria-controls="wpgmza-gdpr-compliance"] {
 
 .wpgmza.button,
 body[class*="wp-google-maps"] .button.button-secondary{
-  background: #efefef;
-  border: none;
-  /*border: 2px solid #2B323C;*/
+  background: transparent;
+  border: 2px solid #2B323C;
   box-sizing: border-box;
   line-height: 20px;
   box-shadow: none;
   outline: none;
   transition: background-color .1s ease-in-out;
-  /*box-sizing: content-box !important;*/
 }
 
 .wpgmza.button:hover,
 body[class*="wp-google-maps"] .button.button-secondary:hover{
   background: #2B323C;
   color: #fff;
-   /*border: 2px solid #2B323C;*/
+   border: 2px solid #2B323C;
 }
 
 .wpgmza.button:active,
@@ -938,9 +917,7 @@ body[class*="wp-google-maps"] .button.button-secondary:focus{
   outline: none !important;
 }
 
-#slider-range-max,
-#zoom-on-marker-click-slider,
-#override-users-location-zoom-levels-slider{
+#slider-range-max {
   background: #FACE48 !important;
   border: 1px solid #ccc !important;
   border-radius: 30px !important;
@@ -955,7 +932,7 @@ body[class*="wp-google-maps"] {
 }
 
 body[class*="wp-google-maps"] .ui-tabs {
-    background: transparent !important;
+    background: #efeff5 !important;
 }
 
 .update-att {
@@ -1015,8 +992,7 @@ max-height: 410px;
 body[class*="wp-google-maps"] .button.button-secondary,
 body[class*="wp-google-maps"] .button.button-primary{
   height: 26px;
-  /*box-sizing: content-box;*/
-  border-radius: 3px !important;
+  box-sizing: border-box;
 }
 
 body[class*="wp-google-maps"] .button.button-secondary {
@@ -1250,9 +1226,9 @@ background: #2b323c66 !important;
 
 
 body[class*="wp-google-maps"] input.cmn-toggle-yes-no + label:after {
-  background: #face48;
-    /*border: 1px solid #dcb02a !important;*/
-  color: #444444;
+	background: #face48;
+    border: 1px solid #dcb02a !important;
+	color: #444444;
 }
 
 body[class*="wp-google-maps"] input.cmn-toggle-yes-no + label {
@@ -1263,8 +1239,7 @@ body[class*="wp-google-maps"] input.cmn-toggle-yes-no + label {
 
 body[class*="wp-google-maps"] input.cmn-toggle-yes-no + label:before {
   background: #eee;
-  /*border: 1px solid #ccc;*/
-  border-radius: 3px;
+  border: 1px solid #ccc;
 }
 
 body[class*="wp-google-maps"] input[type=checkbox]:checked:before {
@@ -1287,6 +1262,7 @@ body[class*="wp-google-maps"] .ui-slider-handle:hover {
 
 body[class*="wp-google-maps"] input[type="text"],
 body[class*="wp-google-maps"] select {
+  padding: 6px 8px;
   box-shadow: none;
   border: 1px solid #ccc;
   border-radius: 2px;
@@ -1304,6 +1280,16 @@ body[class*="wp-google-maps"] input[type="text"]::placeholder {
   color: #ccc;
 }
 
+
+#wpgmaps_tabs_markers input:not([type="checkbox"]):not([type="button"]),
+#wpgmaps_tabs_markers select,
+#wpgmaps_tabs_markers textarea,
+#wpgmza_addmarker
+{
+  width: 100% !important;
+}
+
+
 #wpgmaps_tabs_markers td {
   padding-bottom: 10px;
 }
@@ -1319,26 +1305,44 @@ body[class*="wp-google-maps"] input[type="text"]::placeholder {
   margin-left: 10px;
 }
 
-:not(.wpgmza-no-flex) .wpgmza-flex
-{
+.wp-core-ui .button,
+.wp-core-ui .button-secondary,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current{
+  border: 2px solid #2B323C;
+  color: #2B323C !important;
+  font-weight: normal;
+  transition: all .12s ease-in-out;
+  background: transparent;
+  border-radius: 4px;
+}
+.wp-core-ui .button:hover,
+.wp-core-ui .button-secondary:hover,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover{
+  border: 2px solid #2B323C;
+  background: #2B323C;
+  color: #fff !important;
+  font-weight: normal;
+}
+
+.wpgmza-flex {
   display: flex;
-  align-items: center;
 }
 
 .wpgmza-flex a {
-  /* margin-right: 3px !important; */
+  margin-right: 3px !important;
 }
 
-
+body[class*="wp-google-maps"] .button-primary, body[class*="wp-google-maps"] .ui-tabs-active {
+  /* color: #fff !important; */
+}
 
 .button.button-secondary,
 .button.button-primary {
   color: #fff !important;
 }
 body[class*="wp-google-maps"] input[type="text"] {
-  /*border: none !important;*/
-  /*border-bottom: 2px solid #e8e8e8 !important;*/
-  /* removed by Nick 05 Feb 2020 */
+  border: none !important;
+  border-bottom: 2px solid #e8e8e8 !important;
 }
 body[class*="wp-google-maps"] input[type="text"]:active,
 body[class*="wp-google-maps"] input[type="text"]:focus,
@@ -1427,6 +1431,8 @@ input[type="radio"]
      position: relative;
      background-color: #fff;
      color: #333;
+     height: 15px;
+     width: 15px;
      border: 0;
      border-radius: 50%;
      cursor: pointer;     
@@ -1549,7 +1555,7 @@ select[id*="height"]{
 #wpgm_notice_message_addfirst_marker .update-nag{
   padding: 6px 15px !important;
   border: 2px solid #FACE48;
-  color: #333;
+  color: #FACE48;
   box-shadow: none;
   border-radius: 5px;
   width: 100%;
@@ -1654,7 +1660,8 @@ table.dataTable.hover tbody tr.odd:hover, table.dataTable.display tbody tr.odd:h
 
 .wpgmza-infowindow-picker__item .wpgmza-card {
   padding: 0;
-  min-width: 120px;
+  height: 170px;
+  min-width: 240px;
 }
 
 .wpgmza-infowindow-picker__item img {
@@ -1662,7 +1669,7 @@ table.dataTable.hover tbody tr.odd:hover, table.dataTable.display tbody tr.odd:h
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  height: 50px;
+  height: 100px;
   width: auto;
 }
 
@@ -1675,6 +1682,7 @@ table.dataTable.hover tbody tr.odd:hover, table.dataTable.display tbody tr.odd:h
 .notice-success, div.updated {
   padding: 10px;
   border: 2px solid #46b450;
+  color: #46b450;
   border-radius: 3px;
 }
 .wpgmza-card {
@@ -1714,7 +1722,7 @@ table.dataTable.hover tbody tr.odd:hover, table.dataTable.display tbody tr.odd:h
   box-sizing: border-box;
 }
 .wpgmza-infowindow-picker__item .wpgmza-card {
-  height: 180px;  
+  height: 220px;  
 }
 .wpgmza-infowindow-picker__item img {
   top: 45%;
@@ -1741,7 +1749,16 @@ a:hover {
   margin: 0;
   padding: 3px 0;
 }
-
+.wp-core-ui a.button-primary,
+a.button-primary,
+input.button-primary,
+.wp-core-ui .button-primary{
+  text-shadow: none !important;
+  padding: 10px 15px !important;
+  height: 37px !important;
+  line-height: 18px !important;
+  font-size: 13px;
+}
 .wrap > h1:first-of-type {
   margin-bottom: 10px;
   padding-top: 0;
@@ -1752,9 +1769,6 @@ textarea[name="wpgmza_custom_js"]{
   color: #fff !important;
   padding: 20px 25px;
   border-radius: 5px;
-  width: 500px;
-  max-width: 100%;
-  min-height: 250px;
 }
 body[class*="wp-google-maps"] input[type="text"]:hover,
 body[class*="wp-google-maps"] select:hover {
@@ -1789,6 +1803,34 @@ hr {
 .maps_page_wp-google-maps-menu-advanced h2 {
   margin-top: 0;
   margin-bottom: 15px;
+}
+
+input[type="text"] {
+  background: transparent !important;
+}
+
+input[type="number"],
+input[type="date"],
+input:not([type="checkbox"]){
+  border: 1px solid #ddd;
+  box-shadow: none;
+  padding: 4px 9px;
+  border-radius: 2px;
+  transition: border-color .12s ease-in-out;
+  background: #fff;
+}
+input[type="number"]:hover,
+input[type="number"]:active,
+input[type="number"]:focus,
+input[type="date"]:hover,
+input[type="date"]:focus,
+input[type="date"]:active,
+input:not([type="checkbox"]):hover,
+input:not([type="checkbox"]):active,
+input:not([type="checkbox"]):focus{
+  border-color: #2B323C;
+  outline: none;
+  box-shadow: none;
 }
 
 
@@ -1901,7 +1943,7 @@ body[class*="wp-google-maps"] .button.button-secondary:hover {
 }
 
 .wpgmza_general_btn {
-  padding: 3px 15px !important;
+  padding: 10px 15px !important;
 }
 .wpgmza-category-icon__btns {
   height: 40px;
@@ -2099,6 +2141,12 @@ button.wpgmza-delete-gallery-item {
   flex: 1;
 }
 
+.notice.notice-warning {
+  border: 2px solid #ffb900;
+  border-radius: 3px;
+  padding: 8px 15px;
+}
+
 .wpgmza-marker-icon-preview {
   border: none;
 }
@@ -2178,6 +2226,7 @@ input[id*="height"]{
 
 .notice.notice-error {
   border: 2px solid #dc3232;
+  color: #dc3232;
   box-shadow: none;
   padding: 10px 15px !important;
 }
@@ -2190,9 +2239,8 @@ select,
 textarea,
 input[type="number"],
 input[type="date"],
-input:not([type="checkbox"]):not(.wpgmza_general_btn):not(.button):not(.button-primary) {
-  /*border-width: 2px !important; */
-  /* removed by nick 05 Feb 2020 */
+input:not([type="checkbox"]):not(.wpgmza_general_btn):not(.button) {
+  border-width: 2px !important;
 }
 
 .wpgmza-label-amber {
@@ -2240,14 +2288,10 @@ input:not([type="checkbox"]):not(.wpgmza_general_btn):not(.button):not(.button-p
 
 #wpgm_premium {
   width: 100% !important;
-  text-align: center;
 }
-
-#wpgm_premium .wpgmza-flex
-{
+#wpgm_premium .wpgmza-flex  {
   flex-wrap: wrap;
   flex-basis: 20%;
-  align-items: stretch;
 }
 #wpgm_premium .wpgmza-flex .wpgm_premium_row {
   flex: 1;
@@ -2267,7 +2311,7 @@ input:not([type="checkbox"]):not(.wpgmza_general_btn):not(.button):not(.button-p
   height: 100%;
   width: 100%;
   overflow: hidden;
-  /*border: 2px solid ;*/
+  border: 2px solid ;
   border-radius: 3px;
   text-align: left;
 }
@@ -2304,42 +2348,6 @@ background-size: cover;
   top: 10px;
 }
 
-#WPGMFeeds h4 {
-    margin-top: 0;
-}
-#WPGMMapList {
-  width:100%;
-}
-#WPGMLatestNews, #WPGMFeatureRequests, #WPGMLatestTopics {
-  width:33%;
-  float:left;
-}
-#WPGMLatestNewsInner, #WPGMFeatureRequestsInner, #WPGMLatestTopicsInner {
-  padding:10px;
-  display:block;
-  overflow:auto;
-}
-span.wpgmTimeAgo {
-    padding: 2px;
-    font-size: 0.7em;
-    background-color: #f5f5f9;
-    border-radius: 5px;
-    padding-left: 5px;
-    padding-right: 5px;
-}
-@media(max-width: 1460px) {
-  #WPGMLatestNews {
-    width:100%;
-    margin-top:10px;
-  }
-  #WPGMLatestNewsInner {
-    margin-top: 5px;
-  }
-  #WPGMMapList {
-    width:100%;
-  }
-}
-
 @media(max-width: 1150px) {
   #wpgm_premium .wpgmza-flex .wpgm_premium_row {
     flex: 1;
@@ -2352,7 +2360,6 @@ span.wpgmTimeAgo {
     flex: 1;
     flex-basis: 50%;
   }
-
 }
 
 @media(max-width: 550px) {
@@ -2404,7 +2411,6 @@ span.wpgmTimeAgo {
   padding: 7px 16px;
   margin-left: 6px;
   font-size: 13px;
-  z-index: 99999999999;
   animation: 4s wpgmzaPopupNotification forwards;
 }
 
@@ -2429,8 +2435,7 @@ span.wpgmTimeAgo {
 }
 
 body[class*="wp-google-maps"] .wpgmza-listing {
-  /* border: none !important */
-  /* removed by Nick 05 Feb 2020 */
+  border: none !important
 }
 .wpgmza-listing a:active,
 .wpgmza-listing a:focus{
@@ -2501,6 +2506,14 @@ body[class*="wp-google-maps"] input.cmn-toggle-yes-no + label:hover:before{
   padding: 2px 0;
   border-bottom: 1px solid #eee;
 }
+body .button-primary,
+body .ui-tabs-active,
+body .wpgmza_general_btn,
+body .wpgmza_file_select_btn {
+  background-color: #2B323C !important;
+  text-shadow: none;
+    border-radius: 2px !important;
+}
 
 .wpgmza-label-amber {
   color: #2B323C;
@@ -2508,6 +2521,10 @@ body[class*="wp-google-maps"] input.cmn-toggle-yes-no + label:hover:before{
 
 input.cmn-toggle-yes-no + label:before, input.cmn-toggle-yes-no + label:after {
   color: #2B323C;
+}
+
+body[class*="wp-google-maps"] select {
+  padding: 0 5px;
 }
 
 .wpgmza-select-theme-preset, .wp-core-ui .wpgmza-select-theme-preset {
@@ -2525,26 +2542,24 @@ input.cmn-toggle-yes-no + label:before, input.cmn-toggle-yes-no + label:after {
 }
 .wp-core-ui .button-primary {
   box-shadow: none;
-  border-radius: 3px !important;
 }
 input[type="checkbox"] {
   color: #2B323C;
   border: 1px solid #ccc !important;
   box-shadow: none; 
-  width: auto;
 }
-/*input[type="checkbox"]:checked {
+input[type="checkbox"]:checked {
   background: #333;
   border-color: #2B323C !important;
-}*/
+}
 input[type="checkbox"]:before {
   color: #2B323C !important;
 }
-/*input[type="checkbox"]:before {
+input[type="checkbox"]:before {
   color: #2B323C !important;
 
   color: #fff !important;
-}*/
+}
 input[type="checkbox"]:active,
 input[type="checkbox"]:focus {
   outline: none;
@@ -2625,13 +2640,15 @@ textarea[name="wpgmza_custom_js"] {
   border-radius: 3px;
 }
 .button-border__green {
-    border-color: #909090;
-    opacity: 1.0;
-    border-width: 1px;
-}
-/*.button-border__green:hover {
+  border-color: #46b450;
+  color: #46b450;
+  opacity: .6;
+  background: #46b450;
   color: #fff;
-}*/
+}
+.button-border__green:hover {
+  color: #fff;
+}
 .wpgmza-form-group__multiple > div {
   flex: 1;
   display: flex;
@@ -2679,719 +2696,5 @@ textarea[name="wpgmza_custom_js"] {
 
 #wpfooter
 {
-  position: static !important;
-}
-
-
-#slider-range-max,
-#zoom-on-marker-click-slider,
-#override-users-location-zoom-levels-slider
-{
-  display: block;
-  width: 50%;
-}
-
-.wpgmza-feature-drawing-instructions,
-  .wpgmza-feature-editing-instructions
-{
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
-  padding: 0.5em;
-  background: white;
-  border-radius: 3px;
-  position: absolute;
-  bottom: 1em;
-  left: 1em;
-  max-width: 80%;
-}
-
-.wpgmza-feature-drawing-instructions ul,
-  .wpgmza-feature-editing-instructions ul
-{
-  list-style: outside;
-  padding-left: 2em;
-  padding-right: 2em;
-  margin: 0.3em 0;
-}
-
-.wpgmza-feature-drawing-instructions ul > li,
-  .wpgmza-feature-editing-instructions ul > li
-{
-  margin-bottom: 0;
-}
-
-
-div#wpgmaps_tabs_markers {
-    /*float: left;
-    width: 49%;*/
-  /* NB: Removed - this was causing the lower panels to only take up half the page */
-}
-
-/* NB: This should achieve what I believe you're trying to do here */
-.wpgmza-feature-panel-container {
-  width: 100%;
-}
-
-#wpgmza-global-settings .settings-group {
-  display: block;
-  float:left;
-  
-}
-#wpgmza-global-settings legend {
-  width:20%;
-  float: left;
-}
-
-#wpgmza-global-settings fieldset{
-  margin-bottom: 8px;
-}
-
-
-.wpgmza-feature-panel-container + h3
-{
-  clear: both;
-}
-
-[data-wpgmza-admin-marker-datatable] .dataTables_wrapper .dataTables_paginate .paginate_button.current, 
-[data-wpgmza-admin-marker-datatable] .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover,
-[data-wpgmza-admin-marker-datatable] .dataTables_wrapper .dataTables_paginate a.paginate_button.current, 
-[data-wpgmza-admin-marker-datatable] .dataTables_wrapper .dataTables_paginate a.paginate_button.current:hover,
-[data-wpgmza-admin-map-datatable] .dataTables_wrapper .dataTables_paginate .paginate_button.current, 
-[data-wpgmza-admin-map-datatable] .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover,
-[data-wpgmza-admin-map-datatable] .dataTables_wrapper .dataTables_paginate a.paginate_button.current, 
-[data-wpgmza-admin-map-datatable] .dataTables_wrapper .dataTables_paginate a.paginate_button.current:hover {
-    background: #f3f5f6!important;
-    background-color: #f3f5f6!important;
-    background: #f3f5f6!important;
-    color: #0071a1 !important;
-    border-color: #0071a1 !important;
-    border: 1px solid !important;
-    border-radius: 4px;
-}
-
-[data-wpgmza-admin-marker-datatable] .dataTables_wrapper .dataTables_paginate .paginate_button.current,
-[data-wpgmza-admin-map-datatable] .dataTables_wrapper .dataTables_paginate .paginate_button.current{
-    background-color: #f3f5f6!important;
-    color: #0071a1 !important;
-    border-color: #0071a1 !important;
-    border: 1px solid !important;
-}
-
-[data-wpgmza-admin-marker-datatable] .dataTables_wrapper .dataTables_paginate a.paginate_button:hover,
-[data-wpgmza-admin-map-datatable] .dataTables_wrapper .dataTables_paginate a.paginate_button:hover {
-    border-color: #01618a !important;
-    color: #01618a !important;
-    border-radius: 4px;
-    background: #e4e4e4 !important;
-}
-
-body[class*="wp-google-maps"] .ui-tabs-nav li{
-    padding: 0
-}
-
-body[class*="wp-google-maps"] .ui-tabs-nav li a{
-    display: block;
-    padding: 10px 15px;
-}
-
-body[class*="wp-google-maps"] .ui-tabs-nav li a:focus{
-    box-shadow: none;
-}
-
-div[name="wpgmza_gdpr_default_notice"] {
-    background: #f0f0f0;
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #e0e0e0;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    width: 100%;
-}
-
-.wpgmza_hidden{
-  display: none !important;
-}
-
-#wpgmza-open-advanced-theme-data {
-  margin-left: 15px;
-}
-
-.wpgmza_no_shadow {
-  box-shadow: none !important;
-}
-
-.highlight-item {
-   border : 1px solid black !important;    
-   -webkit-transition : border 500ms ease-out !important; 
-   -moz-transition : border 500ms ease-out !important;
-   -o-transition : border 500ms ease-out !important;
-}
-.highlight-item-step-2 {
-   border : 3px solid red !important;  
-   border-radius: 5px !important;  
-   
-}
-
-.wpgmza-feature-panel input[type="text"],
-.wpgmza-feature-panel input[type="number"],
-.wpgmza-feature-panel select,
-.wpgmza-feature-panel textarea{
-    width: 200px;
-    max-width: 100%;
-}
-
-input:not([type]):disabled,
-input[type=text]:disabled{
-    padding: 0 8px;
-    line-height: 2;
-    min-height: 30px;
-    border:  1px solid #ccc;
-    border-radius: 3px;   
-}
-
-#advanced-markers .wpgmza-feature-editing-instructions,
-#advanced-markers .wpgmza-save-feature-container{
-  display: none;
-}
-
-#advanced-markers #wp-wpgmza-description-editor-wrap:after {
-    content: "";
-    display: block;
-    border: 1px solid #ccc;
-    float: left;
-    border-radius: 3px;
-    margin-bottom: 10px;
-    width: 300px;
-    height: 80px;
-}
-
-#advanced-markers #wp-wpgmza-description-editor-wrap > div{
-    display: none;
-}
-
-#advanced-markers fieldset{
-    opacity: 0.6;
-}
-
-#wpgmaps_tabs .notice{
-    padding: 10px;
-    border-radius: 3px;
-    border-top: none;
-    border-bottom: none;
-    border-right: none;
-    box-shadow: 0 1px 5px 0px rgba(0, 0, 0, 0.1);
-}
-
-h3.separate:before {
-    content: "";
-    display: block; 
-    background: #f5f5f9;
-    height: 30px;
-    margin-left: -15px;
-    margin-right: -15px;
-    margin-bottom: 15px;
-}
-
-.wpgmza-save-feature-container{
-    margin-top: 10px;
-}
-
-.wpgmza-save-feature-container button{
-    height: 40px !important;
-}
-
-input[type="number"] {
-    padding-right: 0;
-}
-
-button.wpgmza-retina {
-    background: transparent;
-    border: none;
-}
-
-.wpgmza-category-picker-container {
-    clear: left;
-    
-}
-
-#wp-wpgmza-description-editor-wrap.html-active #qt_wpgmza-description-editor_toolbar {
-  display: block;
-}
-#wp-wpgmza-description-editor-wrap #qt_wpgmza-description-editor_toolbar {
-    display: none;
-}
-
-.wpgmza_file_select_btn {
-    border: 1px solid #eee;
-    padding: 11px 35px;
-    font-size: 15px;
-    border-radius: 3px;
-}
-
-.wpgmza.button.select_all_maps,
-.wpgmza.button.bulk_delete_maps {
-    border: 2px solid #2B323C;
-    color: #333;
-}
-
-.wpgmza-listing-wizard-1{
-    min-width: 300px;
-    padding: 20px;
-    text-align: center;
-    transition: color 0.2s ease;
-}
-
-.wpgmza-listing-wizard-1:hover{
-  cursor: pointer;
-  color: #007cba;
-}
-
-.wpgmza-listing-wizard-1 i {
-    font-size: 30px;
-}
-
-.wpgmza-listing-wizard-1 h2 {
-    margin-bottom: 0
-}
-
-#wpgmza-wizard-options .wpgmza-listing-wizard{
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important
-}
-
-#wpgmza-wizard-options{
-  flex-wrap: wrap;
-}
-
-.wpgmza-listing-wizard-2 {
-    min-width: 340px;
-    position: relative;
-    padding-bottom: 40px;
-}
-
-.wpgmza-table-container tr td:first-child{
-    text-align:center;
-}
-
-.wpgmze_cc_footer_image {
-    margin-left: 3px;
-    max-height: 8px;
-}
-
-.wpgmza-missing-key-notice {
-    z-index: 4;
-    float: right !important;
-    box-sizing: border-box;
-    position: relative;
-}
-
-.wpgmza-hidden{
-  display: none !important;
-}
-
-div#wpgmza_autoc_disabled {
-    position: absolute;
-    bottom: 30px;
-    font-size: 0.8em;
-    right: 0;
-    width: 100%;
-    text-align: right;
-}
-
-
-#wpgmaps_tabs_markers input:not([type="checkbox"]):not([type="button"]):not([type="radio"]):not([type="checkbox"]), #wpgmaps_tabs_markers select, #wpgmaps_tabs_markers textarea, #wpgmza_addmarker {
-    width: 100%;
-}
-
-.wpgmza-feature-panel-container fieldset {
-    margin-bottom: 16px;
-}
-
-#wp-wpgmza-description-editor-wrap {
-    width: 100%;
-    display: block;
-}
-
-div#wpgmza_autocomplete_search_results {
-    width: auto;
-    overflow: auto;
-    position: absolute;
-    max-height: 200px;
-    top: 33px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    padding: 5px;
-    max-width: 96%;
-    min-width: 96%;
-}
-
-.wpgmza_ac_result {
-    height: fit-content;
-    border-bottom: 1px dashed #ccc;
-    margin-top: 8px;
-    font-weight: bold;
-    cursor:pointer;
-    width: 100%;
-    display: flex;
-}
-
-.wpgmza_ac_container {
-    width: 100%;
-}
-
-.wpgmza_ac_icon img {
-    width: 25px;
-    margin-right: 9px;
-}
-.wpgmza_ac_icon {
-    float: left;
-    width:10%;
-    text-align: center;
-}
-.wpgmza_ac_item {
-    display: block;
-    clear: right;
-    float: left;
-    width:90%;
-}
-span.wpgmza_item_name {
-    float: none;
-    clear: both;
-    display: block;
-}
-.wpgmza_item_address {
-    font-weight:normal;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-    display:block;
-}
-
-button.wpgmza-use-my-location.button-secondary {
-    margin-right: 3px;
-    margin-left: 2px;
-}
-
-#wpgmza-maps-engine-dialog
-{
-  text-align: left;
-}
-
-#wpgmza-maps-engine-dialog h1
-{
-  text-align: center;
-  margin-bottom: 1em;
-}
-
-#wpgmza-maps-engine-dialog img
-{
-  display: block;
-  margin: 0 auto;
-  width: 80%;
-  box-sizing: border-box;
-}
-
-#wpgmza-maps-engine-dialog .wpgmza-inner
-{
-  display: flex;
-}
-
-#wpgmza-maps-engine-dialog .wpgmza-inner>div,
-  #wpgmza-maps-engine-dialog .wpgmza-inner label
-{
-  flex: 1;
-  
-  display: flex;
-  flex-direction: column;
-}
-
-#wpgmza-maps-engine-dialog .wpgmza-inner>div>div,
-  #wpgmza-maps-engine-dialog .wpgmza-inner label>div
-{
-  flex-grow: 1;
-}
-
-#wpgmza-maps-engine-dialog ul
-{
-  list-style: none;
-  /* font-weight: bold; */
-}
-
-#wpgmza-maps-engine-dialog .wpgmza-pros>li:before
-{
-  content: "\2714";
-}
-
-#wpgmza-maps-engine-dialog .wpgmza-cons>li:before
-{
-  content: "\2718";
-}
-
-/* #wpgmza-maps-engine-dialog h2 */
-/* { */
-  /* width: 30%; */
-/* } */
-
-#wpgmza-maps-engine-dialog h2>img
-{
-  width: 100%;
-  height: auto;
-}
-
-#wpgmza-maps-engine-dialog footer
-{
-  margin: auto;
-  width: 20%;
-}
-
-#wpgmza-maps-engine-dialog footer>img
-{
-  width: 100%;
-  height: auto;
-}
-
-#wpgmza-maps-engine-dialog img.wpgmza-engine-logo
-{
-  width: 75%;
-  height: auto;
-}
-
-#wpgmza-maps-engine-dialog input[type='radio']
-{
-  display: none;
-}
-
-#wpgmza-maps-engine-dialog input[type='radio'] + label
-{
-  /* filter: url("data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\'&gt;&lt;filter id=\'grayscale\'&gt;&lt;feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/&gt;&lt;/filter&gt;&lt;/svg&gt;#grayscale"); /* Firefox 10+, Firefox on Android */
-    /* filter: gray; /* IE6-9 */
-  
-    -webkit-filter: grayscale(100%); /* Chrome 19+, Safari 6+, Safari 6+ iOS */
-  
-  transition: all 0.5s;
-}
-
-#wpgmza-maps-engine-dialog input[type='radio'] + label:hover,
-  #wpgmza-maps-engine-dialog input[type='radio']:checked + label
-{
-  /* filter: url("data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\'&gt;&lt;filter id=\'grayscale\'&gt;&lt;feColorMatrix type=\'matrix\' values=\'1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0\'/&gt;&lt;/filter&gt;&lt;/svg&gt;#grayscale");*/
-  
-  -webkit-filter: grayscale(0%);
-}
-
-#wpgmza-maps-engine-dialog .wpgmza-mock-radio
-{
-  position: relative;
-  
-  text-align: center;
-
-  left: -1.3em; /* Compensate for radio button */
-}
-
-.wpgmza-centered{
-  text-align: center;
-}
-
-#wpgmza-maps-engine-dialog .wpgmza-mock-radio-button
-{
-  display: inline-block;
-  box-sizing: border-box;
-  width: 2em;
-  height: 2em;
-  
-  margin-right: 0.5em;
-  
-  position: top;
-  top: -4px;
-  
-  border: 1px solid #ccc;
-  border-radius: 100%;
-}
-
-#wpgmza-maps-engine-dialog small
-{
-  display: block;
-  text-align: center;
-}
-
-#wpgmza-maps-engine-dialog input[type='radio']:checked + label .wpgmza-mock-radio-button
-{
-  /*width: calc(2em - 1px);
-  height: calc(2em - 1px);*/
-  
-  border: 4px solid white;
-  box-shadow: -1px -1px 0px #ccc,   /* top left */
-        -1px 0px 0px #ccc,    /* top */
-        1px -1px 0px #ccc,    /* top right */
-        1px 0px 0px #ccc,   /* right */
-        1px -1px 0px #ccc,    /* bottom right */
-        0px -1px 0px #ccc,    /* bottom */
-        -1px -1px 0px #ccc,   /* bottom left */
-        -1px 0px 0px #ccc;    /* left */
-  
-  background: #0073AA;
-}
-
-#wpgmza-maps-engine-dialog .wpgmza-mock-radio>*
-{
-  display: inline-block;
-  vertical-align: middle;
-}
-
-#wpgmza-maps-engine-dialog .wpgmza-mock-radio-label
-{
-  width: 50%;
-  height: auto;
-}
-
-#wpgmza-maps-engine-dialog ul
-{
-  text-align: center;
-}
-
-#wpgmza-maps-engine-dialog button
-{
-  font-size: 1.25em;
-}
-.wpgmza_edit_btn { cursor: pointer; }
-.wpgmza-chat-help {
-    position: fixed;
-    top: 45px;
-    right: 15px;
-    width: 162px;
-    height: 42px;
-    background-color: white;
-    cursor: pointer;
-    border-radius: 8px;
-    z-index: 9999;
-    background-image: url(../images/wpgoogle-maps-chat-help162x42v4.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    border: none !important;
-}
-a.wpgmza-chat-help:hover {
-    box-shadow: 0 1px 6px rgba(0,0,0,0.12), 0 -1px 3px rgba(0,0,0,0.04);
-}
-#wpgmzaCloseChat {
-  content: 'x';
-  color: #fff;
-  font-weight: 300;
-  font-family: Arial, sans-serif;
-}
-#wpgmzaCloseChat {
-  position: absolute;
-  right: 0px;
-  top: 4px;
-  width: 11px;
-  height: 11px;
-  opacity: 0.8;
-}
-#wpgmzaCloseChat:hover {
-  opacity: 1;
-}
-#wpgmzaCloseChat:before, #wpgmzaCloseChat:after {
-  position: absolute;
-  content: ' ';
-  height: 11px;
-  width: 2px;
-  background-color: #fff;
-}
-#wpgmzaCloseChat:before {
-  transform: rotate(45deg);
-}
-#wpgmzaCloseChat:after {
-  transform: rotate(-45deg);
-}
-  
-
-fieldset#wpgmza-destroy-data {
-    border: 1px solid red;
-    border-radius: 10px;
-}
-
-body[class*="wp-google-maps"] .button:focus{
-    line-height: inherit !important
-}
-
-.wpgmza-button-hint-small {
-    line-height: 30px;
-    margin-left: 15px;
-}
-
-.wpgmza-danger-zone button{
-    min-width: 140px;
-}
-
-.wpgmza-danger-zone > legend {
-  margin-left: 5px;
-}
-
-#wpgmza-map-edit-page input[type="color"]{
-    max-width: calc(100% - 38px);
-    min-height: 28px;
-    min-width: 28px !important;
-}
-
-.wpgmza-paste-color-btn {
-    width: 30px;
-    padding: 0 !important;
-    text-align: center;
-    box-sizing: border-box !important;
-    line-height: 28px !important;
-    max-height: 28px;
-    margin-left: 5px !important;
-}
-
-.wpgmza_import_log_container {
-    width: 100%;
-    max-width:100%;
-    min-width: 100%;
-    min-height: 300px;
-    background: #eee !important;
-    color: #000 !important;
-    padding: 10px;
-    border: 2px solid #ddd;
-}
-
-.wpgmza_import_log_container:hover {
-    border: 2px solid #ddd;
-}
-
-input[name="tile_server_url_override"] {
-    width: 350px;
-    max-width: 100%;
-}
-
-.wpgmza-table-container .wpgmza-custom-marker-icon,
-.wpgmza-table-container .wpgmza-category-marker-icon{
-    max-width: 50px;
-}
-
-.wpgmza-backup-item{
-    padding: 10px;
-    margin-top:10px;
-    border: 1px solid #dddd;
-}
-
-.wpgmza-backup-item:first-child {
-    margin-top:20px;
-}
-
-
-.wpgmza-backup-item > div{ 
-    margin-bottom: 5px;
-} 
-
-.wpgmza-backup-item > div.actions{
-    margin-bottom: 0;
-} 
-
-.wpgmza-backup-item div[data-name="title"]{
-    font-weight: 600;
-}
-
-.switch.switch-inline label {
-    display: inline-block;
+	position: static !important;
 }

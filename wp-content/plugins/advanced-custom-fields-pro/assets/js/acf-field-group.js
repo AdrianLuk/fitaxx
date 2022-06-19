@@ -641,24 +641,19 @@
 		
 		onClickDelete: function( e, $el ){
 			
-			// Bypass confirmation when holding down "shift" key.
-			if( e.shiftKey ) {
-				return this.delete();
-			}
-
 			// add class
 			this.$el.addClass('-hover');
 			
 			// add tooltip
+			var self = this;
 			var tooltip = acf.newTooltip({
 				confirmRemove: true,
 				target: $el,
-				context: this,
 				confirm: function(){
-					this.delete();
+					self.delete( true );
 				},
 				cancel: function(){
-					this.$el.removeClass('-hover');
+					self.$el.removeClass('-hover');
 				}
 			});
 		},
@@ -724,7 +719,7 @@
 			var copy = acf.__('copy');
 			
 			// increase suffix "1"
-			if( acf.isNumeric(end) ) {
+			if( $.isNumeric(end) ) {
 				var i = (end*1) + 1;
 				label = label.replace( end, i );
 				name = name.replace( end, i );
@@ -1439,7 +1434,7 @@
 			conditionTypes.map(function( model ){
 				choices.push({
 					id:		model.prototype.operator,
-					text:	model.prototype.label
+					text:	acf.strEscape(model.prototype.label)
 				});
 			});
 			

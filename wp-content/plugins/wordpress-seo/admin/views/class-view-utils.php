@@ -5,8 +5,6 @@
  * @package WPSEO\Admin\Views
  */
 
-use Yoast\WP\SEO\Presenters\Admin\Alert_Presenter;
-
 /**
  * Class Yoast_View_Utils.
  */
@@ -67,93 +65,51 @@ class Yoast_View_Utils {
 	}
 
 	/**
-	 * Generates the OpenGraph disabled alert, depending on whether the OpenGraph feature is disabled.
+	 * Shows the search appearance settings for a post type.
 	 *
-	 * @param string $type The type of message. Can be altered to homepage, taxonomies or archives. Empty string by default.
+	 * @param string|object $post_type   The post type to show the search appearance settings for.
+	 * @param bool          $paper_style Whether or not the paper style should be shown.
 	 *
-	 * @return string The alert. Returns an empty string if the setting is enabled.
+	 * @return void
 	 */
-	public function generate_opengraph_disabled_alert( $type = '' ) {
-		$is_enabled = WPSEO_Options::get( 'opengraph', true );
-
-		if ( $is_enabled ) {
-			return '';
+	public function show_post_type_settings( $post_type, $paper_style = false ) {
+		if ( ! is_object( $post_type ) ) {
+			$post_type = get_post_type_object( $post_type );
 		}
 
-		$message = $this->generate_opengraph_disabled_alert_text( $type );
+		$show_post_type_help = $this->search_results_setting_help( $post_type );
+		$noindex_option_name = 'noindex-' . $post_type->name;
 
-		if ( empty( $message ) ) {
-			return '';
-		}
-
-		$alert = new Alert_Presenter( $message, 'info' );
-
-		return sprintf(
-			'<div class="yoast-measure padded">%s</div>',
-			$alert->present()
+		$this->form->index_switch(
+			$noindex_option_name,
+			$post_type->labels->name,
+			$show_post_type_help->get_button_html() . $show_post_type_help->get_panel_html()
 		);
-	}
 
-	/**
-	 * Generates the OpenGraph disabled alert text.
-	 *
-	 * @param string $type The type of message. Can be altered to homepage, taxonomies or archives. Empty string by default.
-	 *
-	 * @return string The alert. Returns an empty string if the setting is enabled.
-	 */
-	private function generate_opengraph_disabled_alert_text( $type ) {
-		if ( $type === 'homepage' ) {
-			return sprintf(
-				/* translators: 1: link open tag; 2: link close tag. */
-				esc_html__(
-					'The social appearance settings for your homepage require Open Graph metadata (which is currently disabled). You can enable this in the %1$s‘Social’ settings under the ‘Facebook’ tab%2$s.',
-					'wordpress-seo'
-				),
-				'<a href="' . esc_url( admin_url( 'admin.php?page=wpseo_social#top#facebook' ) ) . '">',
-				'</a>'
-			);
-		}
+		$this->form->show_hide_switch(
+			'showdate-' . $post_type->name,
+			__( 'Date in Snippet Preview', 'wordpress-seo' )
+		);
 
-		if ( ! YoastSEO()->helpers->product->is_premium() ) {
-			return '';
-		}
+		$this->form->show_hide_switch(
+			'display-metabox-pt-' . $post_type->name,
+			/* translators: %1$s expands to Yoast SEO */
+			sprintf( __( '%1$s Meta Box', 'wordpress-seo' ), 'Yoast SEO' )
+		);
 
-		if ( $type === '' ) {
-			return sprintf(
-				/* translators: 1: link open tag; 2: link close tag. */
-				esc_html__(
-					'The social appearance settings for content types require Open Graph metadata (which is currently disabled). You can enable this in the %1$s‘Social’ settings under the ‘Facebook’ tab%2$s.',
-					'wordpress-seo'
-				),
-				'<a href="' . esc_url( admin_url( 'admin.php?page=wpseo_social#top#facebook' ) ) . '">',
-				'</a>'
-			);
-		}
+		$recommended_replace_vars     = new WPSEO_Admin_Recommended_Replace_Vars();
+		$editor_specific_replace_vars = new WPSEO_Admin_Editor_Specific_Replace_Vars();
 
-		if ( $type === 'taxonomies' ) {
-			return sprintf(
-				/* translators: 1: link open tag; 2: link close tag. */
-				esc_html__(
-					'The social appearance settings for taxonomies require Open Graph metadata (which is currently disabled). You can enable this in the %1$s‘Social’ settings under the ‘Facebook’ tab%2$s.',
-					'wordpress-seo'
-				),
-				'<a href="' . esc_url( admin_url( 'admin.php?page=wpseo_social#top#facebook' ) ) . '">',
-				'</a>'
-			);
-		}
-
-		if ( $type === 'archives' ) {
-			return sprintf(
-				/* translators: 1: link open tag; 2: link close tag. */
-				esc_html__(
-					'The social appearance settings for archives require Open Graph metadata (which is currently disabled). You can enable this in the %1$s‘Social’ settings under the ‘Facebook’ tab%2$s.',
-					'wordpress-seo'
-				),
-				'<a href="' . esc_url( admin_url( 'admin.php?page=wpseo_social#top#facebook' ) ) . '">',
-				'</a>'
-			);
-		}
-
-		return '';
+		$editor = new WPSEO_Replacevar_Editor(
+			$this->form,
+			array(
+				'title'                 => 'title-' . $post_type->name,
+				'description'           => 'metadesc-' . $post_type->name,
+				'page_type_recommended' => $recommended_replace_vars->determine_for_post_type( $post_type->name ),
+				'page_type_specific'    => $editor_specific_replace_vars->determine_for_post_type( $post_type->name ),
+				'paper_style'           => $paper_style,
+			)
+		);
+		$editor->render();
 	}
 }

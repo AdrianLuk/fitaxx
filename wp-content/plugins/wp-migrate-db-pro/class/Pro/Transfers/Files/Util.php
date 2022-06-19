@@ -77,7 +77,8 @@ class Util
         $data['folders']  = serialize($directories);
         $data['excludes'] = serialize($excludes);
         $data['stage']    = $state_data['stage'];
-        $data['sig'] = $this->http_helper->create_signature($data, $state_data['key']);
+        $data['is_cli_migration'] = isset($state_data['is_cli_migration']) ? (int)$state_data['is_cli_migration'] : 0;
+        $data['sig']              = $this->http_helper->create_signature($data, $state_data['key']);
 
         if (!is_null($date)) {
             $data['date'] = $date;
@@ -322,9 +323,10 @@ class Util
      */
     public function get_queue_status($stage, $migration_state_id)
     {
-        $filename = $this->get_queue_manifest_file_name($migration_state_id);
-        $tmp_path = $this->get_queue_tmp_path($stage);
-        $manifest = @file_get_contents($tmp_path . DIRECTORY_SEPARATOR . $filename);
+        $filename  = $this->get_queue_manifest_file_name($migration_state_id);
+        $tmp_path  = $this->get_queue_tmp_path($stage);
+        $file_path = $tmp_path . DIRECTORY_SEPARATOR . $filename;
+        $manifest  = is_file($file_path) ? @file_get_contents($file_path) : false;
 
         if (false !== $manifest) {
             return unserialize($manifest);

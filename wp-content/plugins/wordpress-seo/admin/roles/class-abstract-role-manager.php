@@ -15,22 +15,23 @@ abstract class WPSEO_Abstract_Role_Manager implements WPSEO_Role_Manager {
 	 *
 	 * @var array
 	 */
-	protected $roles = [];
+	protected $roles = array();
 
 	/**
 	 * Registers a role.
 	 *
 	 * @param string      $role         Role to register.
 	 * @param string      $display_name Display name to use.
-	 * @param string|null $template     Optional. Role to base the new role on.
+	 * @param null|string $template     Optional. Role to base the new role on.
 	 *
 	 * @return void
 	 */
 	public function register( $role, $display_name, $template = null ) {
-		$this->roles[ $role ] = (object) [
-			'display_name' => $display_name,
-			'template'     => $template,
-		];
+		$this->roles[ $role ] =
+			(object) array(
+				'display_name' => $display_name,
+				'template'     => $template,
+			);
 	}
 
 	/**
@@ -63,7 +64,7 @@ abstract class WPSEO_Abstract_Role_Manager implements WPSEO_Role_Manager {
 	 */
 	public function remove() {
 		$roles = array_keys( $this->roles );
-		array_map( [ $this, 'remove_role' ], $roles );
+		array_map( array( $this, 'remove_role' ), $roles );
 	}
 
 	/**
@@ -75,12 +76,12 @@ abstract class WPSEO_Abstract_Role_Manager implements WPSEO_Role_Manager {
 	 */
 	protected function get_capabilities( $role ) {
 		if ( ! is_string( $role ) || empty( $role ) ) {
-			return [];
+			return array();
 		}
 
 		$wp_role = get_role( $role );
 		if ( ! $wp_role ) {
-			return [];
+			return array();
 		}
 
 		return $wp_role->capabilities;
@@ -109,7 +110,7 @@ abstract class WPSEO_Abstract_Role_Manager implements WPSEO_Role_Manager {
 	 * @return array Capabilties that can be safely set.
 	 */
 	protected function filter_existing_capabilties( $role, array $capabilities ) {
-		if ( $capabilities === [] ) {
+		if ( $capabilities === array() ) {
 			return $capabilities;
 		}
 
@@ -136,7 +137,7 @@ abstract class WPSEO_Abstract_Role_Manager implements WPSEO_Role_Manager {
 	 *
 	 * @return void
 	 */
-	abstract protected function add_role( $role, $display_name, array $capabilities = [] );
+	abstract protected function add_role( $role, $display_name, array $capabilities = array() );
 
 	/**
 	 * Removes a role from the system.

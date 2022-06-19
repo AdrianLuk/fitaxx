@@ -79,8 +79,7 @@ class AutoLoader
 			for (;$i<count($tokens);$i++) {
 				if ($tokens[$i][0] === T_NAMESPACE) {
 					for ($j=$i+1;$j<count($tokens); $j++) {
-						/* We need to be sure 'T_NAME_QUALIFIED' is defined before testing it */
-						if ($tokens[$j][0] === T_STRING || (defined('T_NAME_QUALIFIED') && $tokens[$j][0] === T_NAME_QUALIFIED)) {
+						if ($tokens[$j][0] === T_STRING) {
 							 $namespace .= '\\'.$tokens[$j][1];
 						} else if ($tokens[$j] === '{' || $tokens[$j] === ';') {
 							 break;
@@ -116,46 +115,20 @@ class AutoLoader
 	 */
 	public function getClassesInPathByFilename($path)
 	{
+		// var_dump("Getting classes in $path");
+		
 		$results = array();
 		
 		$dir 	= new \RecursiveDirectoryIterator($path);
 		$iter 	= new \RecursiveIteratorIterator($dir);
 		$regex 	= new \RegexIterator($iter, '/^.+(\.php)$/i', \RecursiveRegexIterator::GET_MATCH);
 		
-		$phpVersionFiles = array();
 		foreach($regex as $m) {
 			$file = $m[0];
-			
-			$dir = basename(dirname($file));
-			$filename = basename($file);
-
-			if(strpos($dir, 'php') !== FALSE){
-				if(version_compare(phpversion(), str_replace('php', '', $dir), '>=')){
-					$phpVersionFiles[] = $filename;
-				} else {
-					/* Environment doesn't support this PHP version */
-					continue;
-				}
-			}
-
 			$classes = $this->getClassesInFile($file);
 			$results[$file] = $classes;
 		}
-
-		/* Unload any version dependent classes, example: below V8 PHP */
-		/* Note: There are definitely better ways to go about this, but for now, this will help users on V8 PHP */
-		if(!empty($phpVersionFiles)){
-			foreach($phpVersionFiles as $file){
-				foreach($results as $comparison => $class){
-					$dir = basename(dirname($comparison));
-					$filename = basename($comparison);
-					if($filename === $file && strpos($dir, 'php') === FALSE){
-						unset($results[$comparison]);
-					}
-				}
-			}
-		}
-
+		
 		return $results;
 	}
 	
@@ -207,9 +180,7 @@ class AutoLoader
 			wpgmza_require_once( $file );
 		else
 			try{
-				
 				wpgmza_require_once( $file );
-				
 			}catch(\Exception $e) {
 				
 				add_action('admin_notices', function() use ($e) {

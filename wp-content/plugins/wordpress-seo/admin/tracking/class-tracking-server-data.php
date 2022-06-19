@@ -16,9 +16,9 @@ class WPSEO_Tracking_Server_Data implements WPSEO_Collection {
 	 * @return array The collection data.
 	 */
 	public function get() {
-		return [
+		return array(
 			'server' => $this->get_server_data(),
-		];
+		);
 	}
 
 	/**
@@ -27,10 +27,10 @@ class WPSEO_Tracking_Server_Data implements WPSEO_Collection {
 	 * @return array Array with the value.
 	 */
 	protected function get_server_data() {
-		$server_data = [];
+		$server_data = array();
 
 		// Validate if the server address is a valid IP-address.
-		$ipaddress = isset( $_SERVER['SERVER_ADDR'] ) ? filter_var( wp_unslash( $_SERVER['SERVER_ADDR'] ), FILTER_VALIDATE_IP ) : '';
+		$ipaddress = filter_input( INPUT_SERVER, 'SERVER_ADDR', FILTER_VALIDATE_IP );
 		if ( $ipaddress ) {
 			$server_data['ip']       = $ipaddress;
 			$server_data['Hostname'] = gethostbyaddr( $ipaddress );
@@ -61,10 +61,10 @@ class WPSEO_Tracking_Server_Data implements WPSEO_Collection {
 			$ssl_support = false;
 		}
 
-		return [
+		return array(
 			'version'    => $curl['version'],
 			'sslSupport' => $ssl_support,
-		];
+		);
 	}
 
 	/**
@@ -73,13 +73,13 @@ class WPSEO_Tracking_Server_Data implements WPSEO_Collection {
 	 * @return array Returns the state of the php extensions.
 	 */
 	protected function get_php_extensions() {
-		return [
-			'imagick'   => extension_loaded( 'imagick' ),
-			'filter'    => extension_loaded( 'filter' ),
-			'bcmath'    => extension_loaded( 'bcmath' ),
-			'pcre'      => extension_loaded( 'pcre' ),
-			'xml'       => extension_loaded( 'xml' ),
-			'pdo_mysql' => extension_loaded( 'pdo_mysql' ),
-		];
+		return array(
+			'imagick' => extension_loaded( 'imagick' ),
+			'filter'  => extension_loaded( 'filter' ),
+			'bcmath'  => extension_loaded( 'bcmath' ),
+			'modXml'  => extension_loaded( 'modXml' ),
+			'pcre'    => extension_loaded( 'pcre' ),
+			'xml'     => extension_loaded( 'xml' ),
+		);
 	}
 }

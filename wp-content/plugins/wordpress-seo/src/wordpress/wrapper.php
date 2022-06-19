@@ -1,16 +1,14 @@
 <?php
+/**
+ * Yoast SEO Plugin File.
+ *
+ * @package Yoast\YoastSEO\WordPress
+ */
 
-namespace Yoast\WP\SEO\WordPress;
-
-use wpdb;
-use WPSEO_Admin_Asset_Manager;
-use WPSEO_Replace_Vars;
-use WPSEO_Addon_Manager;
-use WPSEO_Shortlinker;
+namespace Yoast\WP\Free\WordPress;
 
 /**
  * Wrapper class for WordPress globals.
- *
  * This consists of factory functions to inject WP globals into the dependency container.
  */
 class Wrapper {
@@ -18,7 +16,7 @@ class Wrapper {
 	/**
 	 * Wrapper method for returning the wpdb object for use in dependency injection.
 	 *
-	 * @return wpdb The wpdb global.
+	 * @return \wpdb The wpdb global.
 	 */
 	public static function get_wpdb() {
 		global $wpdb;
@@ -27,38 +25,13 @@ class Wrapper {
 	}
 
 	/**
-	 * Factory function for replace vars helper.
+	 * Wrapper method for returning the wp_query object for use in dependency injection.
 	 *
-	 * @return WPSEO_Replace_Vars The replace vars helper.
+	 * @return \WP_Query The wp_query global.
 	 */
-	public static function get_replace_vars() {
-		return new WPSEO_Replace_Vars();
-	}
+	public static function get_wp_query() {
+		global $wp_query;
 
-	/**
-	 * Factory function for the admin asset manager.
-	 *
-	 * @return WPSEO_Admin_Asset_Manager The admin asset manager.
-	 */
-	public static function get_admin_asset_manager() {
-		return new WPSEO_Admin_Asset_Manager();
-	}
-
-	/**
-	 * Factory function for the addon manager.
-	 *
-	 * @return WPSEO_Addon_Manager The addon manager.
-	 */
-	public static function get_addon_manager() {
-		return new WPSEO_Addon_Manager();
-	}
-
-	/**
-	 * Factory function for the shortlinker.
-	 *
-	 * @return WPSEO_Shortlinker
-	 */
-	public static function get_shortlinker() {
-		return new WPSEO_Shortlinker();
+		return $wp_query;
 	}
 }

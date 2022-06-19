@@ -5,10 +5,11 @@
  */
 jQuery(function($) {
 	
-	WPGMZA.GoogleModernStoreLocator = function(map_id) {
+	WPGMZA.GoogleModernStoreLocator = function(map_id)
+	{
 		var googleMap, self = this;
 		
-		var map = this.map = WPGMZA.getMapByID(map_id);
+		this.map = WPGMZA.getMapByID(map_id);
 		
 		WPGMZA.ModernStoreLocator.call(this, map_id);
 
@@ -16,7 +17,7 @@ jQuery(function($) {
 			fields: ["name", "formatted_address"],
 			types: ["geocode"]
 		};
-		var restrict = map.settings["wpgmza_store_locator_restrict"];
+		var restrict = wpgmaps_localize[map_id]["other_settings"]["wpgmza_store_locator_restrict"];
 		
 		this.addressInput = $(this.element).find(".addressInput, #addressInput")[0];
 		
@@ -27,10 +28,10 @@ jQuery(function($) {
 					country: restrict
 				};
 			
-			/*this.autoComplete = new google.maps.places.Autocomplete(
+			this.autoComplete = new google.maps.places.Autocomplete(
 				this.addressInput,
 				options
-			);*/
+			);
 		}
 		
 		// Positioning for Google

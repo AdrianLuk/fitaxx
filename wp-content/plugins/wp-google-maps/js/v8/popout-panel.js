@@ -11,9 +11,9 @@ jQuery(function($) {
 	 * @constructor WPGMZA.PopoutPanel
 	 * @memberof WPGMZA
 	 */
-	WPGMZA.PopoutPanel = function(element)
+	WPGMZA.PopoutPanel = function()
 	{
-		this.element = element;
+		
 	}
 	
 	/**
