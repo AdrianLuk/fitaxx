@@ -1,3 +1,230 @@
+### 5.13.0
+
+- Added support for WebP images in `[su_image_carousel]`
+- Minor updates to the codebase
+- Tested compatibility with WordPress 6.2.2
+- Fixed issue with swiper.js ([forum topic](https://wordpress.org/support/topic/theme-compability-3/))
+- Fixed issue with media taxonomies in `[su_custom_gallery]` ([forum topic](https://wordpress.org/support/topic/gallery-shortcode-source-taxonomy-still-not-solved/))
+
+
+### 5.12.11
+
+**Stability release**
+
+This update provides minor improvements to the plugin codebase and bugfixes
+
+
+### 5.12.10
+
+This update provides minor improvements to the plugin codebase and removes connectivity test upon activation
+It also fixes the fatal error introduced in version 5.12.9
+
+
+### 5.12.9
+
+This update provides minor improvements to the plugin codebase and removes connectivity test upon activation
+
+
+### 5.12.8
+
+**Security update**
+
+This update features security improvements and is recommended for all users
+
+
+### 5.12.7
+
+**Security update**
+
+This update features security improvements and is recommended for all users
+
+
+### 5.12.6
+
+* Improved PHP8 compatibility
+* Added missing Opt-Out dialog stylesheet
+* Fixed JS error at the About admin page
+* Minor improvements to the codebase
+* All images have been optimzed reducing the plugin size by 88kB
+* Updated the Block Editor icon. Thanks to [@andreslav](https://wordpress.org/support/topic/feedback-the-icon-is-fuzzy/)
+* Freemius SDK updated to version 2.5.3
+
+
+### 5.12.5
+
+* Added Freemius SDK
+* Fixed JS error introduced in the previous update. See [forum topic](https://wordpress.org/support/topic/su-tabs-and-other-shortcodes-no-longer-work-after-recent-update/).
+
+
+### 5.12.3
+
+* Tested compatibility with WordPress 6.1
+
+
+### 5.12.2
+
+* Fixed issue with Shortcode Generator Presets, introduced in the previous update
+* Tested compatibility with WordPress 6
+
+
+### 5.12.1
+
+**Security release**
+
+This update fixes a security vulnerability in the shortcode generator. Thanks to Dave John for discovering it.
+
+
+### 5.12.0
+
+**What's new**
+
+- New options `class` and `class_single` for the *Posts* shortcode. Use new options to specify custom CSS classes for the container and for a single post item respectively.
+- Tested compatibility with WordPress 5.9
+
+
+### 5.11.2
+
+**Fixed**
+
+- Fixed *Pro Tip* translation in shortcode generator. Thanks to (Pieterjan Deneys)[https://wordpress.org/support/topic/bug-untranslated-string/]
+
+
+### 5.11.1
+
+**What's new**
+
+- Updated ForkAwesome library, now it includes [52 new icons](https://forkaweso.me/Fork-Awesome/icons/)
+
+**Fixed**
+
+- Minor improvements to the plugin settings UX
+- Fixed some typos
+- Fixed issue in `[su_posts]` where posts with thumbnails were generating PHP warnings. Thanks to [@dimabr](https://wordpress.org/support/topic/su_posts/#post-14756135)
+
+
+### 5.11.0
+
+**What's changed**
+
+- *Available shortcodes* admin page have been disabled. Now you can find the most actual info about every shortcode at the plugin website under [Docs → Shortcodes](https://getshortcodes.com/docs-category/shortcodes/). This change will help me to maintain a single version of the plugin documentation and make it better for you.
+- New admin page *Shortcodes → About* which contains some useful links and a getting started video
+
+**Fixed**
+
+- Fixed issue with `[su_box]`'s `title` attribute, now it supports nested HTML tags again
+- Fixed issue with `[su_tooltip]`'s `z-index` CSS property, now it must be compatible with more themes
+- Fixed issue where `[su_qrcode align="center"]` wasn't working
+- Fixed issue when `su_animate` content wasn't properly indexed by search engines
+
+
+### 5.10.2
+
+**What's new**
+
+- Plugin security have been improved. You may see a new notification in the admin area. [Learn more](https://getshortcodes.com/docs/unsafe-features/)
+- Added new setting `Unsafe features` under `Shortcodes → Settings → Advanced settings`. [Learn more](https://getshortcodes.com/docs/unsafe-features/)
+- Improved accessibility of the plugin settings page
+
+**Fixed**
+
+- Fixed *This video is unavailable* in `su_youtube_advanced` shortcode
+- Fixed compatibility issue with SiteOrigin Page Builder. You can now turn on or off the old widget under `Shortcodes -> Settings Advanced settings`
+- Fixed issue in `[su_note]` when it was displaying empty id attribute
+- Fixed PHP warning at the new Widgets screen
+
+
+### 5.10.1
+
+**What's new**
+
+- `su_qrcode`'s data attribute now understands the following variables: `%CURRENT_URL%` for the current page URL, and `%PERMALINK%` for post permalink
+
+**Fixed**
+
+- Fixed `tax_relation` attribute of the `su_posts` shortcode. Thanks to [janeri2021](https://wordpress.org/support/topic/error-in-shortcode-posts/)
+- Fixed compatibility with Page Builder by SiteOrigin. [Details](https://github.com/siteorigin/so-widgets-bundle/issues/1247)
+- Fixed `BlockControls` console warning in the Block Editor
+- Added missing file `popper.min.js.map`
+- Fixed issue with invalid z-index value in the Tooltip shortcode
+- Fixed issue with the shortcode generator presets for the Tooltip shortcode
+
+
+### 5.10.0
+
+**What's new**
+
+- Major update to the `su_tooltip` shortcode, now it works without jQuery migrate and has more options
+- Fixed logic of the `su_user` shortcode
+
+
+### 5.9.8
+
+**What's new**
+
+- Improved handling of nested dynamic elements within Tabs
+- Improved handling of nested dynamic elements within Spoiler
+- Tested compatibility with WordPress 5.7
+
+
+### 5.9.7
+
+**What's new**
+
+- PHP8 support
+- New filter `su/shortcode/posts/wp_query_args` that can be used to modify `[su_posts]` query
+- New filter `su/shortcode/posts/allowed_template_locations` that can be used to add custom template paths in the `[su_posts]` shortcode
+- Improved handling of nested dynamic elements within Tabs
+
+
+### 5.9.6
+
+Added compatiblity with WordPress 5.6
+Minor improvements
+Fixed readme.txt information
+
+
+### 5.9.5
+
+Added compatiblity with WordPress 5.6
+Minor improvements
+Fixed readme.txt information
+
+
+### 5.9.4
+
+**Fixes**
+
+- Fixed PHP notice `A non-numeric value encountered` in `[su_dropcap]`
+- Fixed PHP notice `A non-numeric value encountered` in `[su_service]`
+- Updated in-plugin links
+
+
+### 5.9.3
+
+**What's new**
+
+- New option `anchor_in_url` for `[su_tabs]` and `[su_spoiler]`. This option specifies whether an anchor will be added to page URL after clicking a tab or a spoiler.
+- New option `random` for `[su_image_carousel]` which allows to shuffle carousel images
+
+**Fixes**
+
+- Fixed issue in `[su_image_carousel]` where images were hidden on some themes
+
+
+### 5.9.2
+
+**What's new**
+
+- `[su_qrcode]` now supports nested shortcodes in the `data` attribute
+- Improved performance by reducing the number of DB queries
+
+**Fixes**
+
+- Fixed issue in the Insert Shortcode tool with Taxonomy and Tax terms fields
+- Fixed error `Posts: invalid template name` on some installations
+- This update also fixes the plugin options issue present in 5.9.1
+
+
 ### 5.9.1
 
 **What's new**

@@ -21,8 +21,8 @@ class Shortcodes_Ultimate_Activator {
 	 */
 	public static function activate() {
 
-		self::$required_php = '5.3';
-		self::$required_wp  = '4.5';
+		self::$required_php = '5.4';
+		self::$required_wp  = '5.0';
 
 		self::check_php_version();
 		self::check_wp_version();
@@ -88,15 +88,17 @@ class Shortcodes_Ultimate_Activator {
 	 */
 	private static function setup_defaults() {
 
+		if ( ! function_exists( 'su_get_config' ) ) {
+			require_once 'functions-helpers.php';
+		}
+
 		$defaults = su_get_config( 'default-settings' );
 
 		foreach ( $defaults as $option => $value ) {
 
-			if ( get_option( $option, 0 ) !== 0 ) {
-				continue;
+			if ( get_option( $option, 0 ) === 0 ) {
+				add_option( $option, $value );
 			}
-
-			add_option( $option, $value );
 
 		}
 

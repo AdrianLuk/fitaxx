@@ -50,6 +50,7 @@ function su_get_gallery_slides( $atts ) {
 			: get_the_title( $post->ID );
 
 		$slide = array(
+			'post_id'       => $post->ID,
 			'attachment_id' => intval( $attachment_id ),
 			'caption'       => trim( $caption ),
 		);
@@ -84,6 +85,8 @@ function su_get_gallery_slides( $atts ) {
 
 	}
 
+	$slides = apply_filters( 'su/get_gallery_slides/slides', $slides, $atts );
+
 	return $slides;
 
 }
@@ -105,9 +108,9 @@ function su_get_gallery_slides_posts( $atts ) {
 
 	if ( 'media' === $source['type'] ) {
 
-		$query['post_mime_type'] = 'image/jpeg,image/gif,image/jpg,image/png';
+		$query['post_mime_type'] = 'image/jpeg,image/gif,image/jpg,image/png,image/webp';
 		$query['post_type']      = 'attachment';
-		$query['post_status']    = 'inherit';
+		$query['post_status']    = 'any';
 
 		if ( 'recent' === $source['ids'] ) {
 			$query['posts_per_page'] = $atts['limit'];
@@ -162,13 +165,18 @@ function su_get_gallery_slides_posts( $atts ) {
 
 		if ( su_is_media_taxonomy( $source['tax'] ) ) {
 
-			$query['post_mime_type'] = 'image/jpeg,image/gif,image/jpg,image/png';
+			$query['post_mime_type'] = 'image/jpeg,image/gif,image/jpg,image/png,image/webp';
 			$query['post_type']      = 'attachment';
-			$query['post_status']    = 'inherit';
+			$query['post_status']    = 'any';
 			$query['meta_key']       = null;
 
 		}
 
+	}
+
+	if ( 'yes' === $atts['random'] ) {
+		$query['orderby']             = 'rand';
+		$query['ignore_sticky_posts'] = true;
 	}
 
 	$query = apply_filters( 'su/get_gallery_slides_query', $query, $source, $atts );
@@ -398,6 +406,14 @@ function su_get_slides( $args ) {
 			),
 		);
 		$query['post_type'] = 'any';
+
+		if ( su_is_media_taxonomy( $args['source']['val'][0] ) ) {
+
+			$query['post_type']   = 'attachment';
+			$query['post_status'] = 'any';
+			$query['meta_key']    = null;
+
+		}
 
 	}
 

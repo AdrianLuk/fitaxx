@@ -73,11 +73,24 @@ function su_shortcode_csv_table( $atts = null, $content = null ) {
 		'table'
 	);
 
+	if ( ! su_is_unsafe_features_enabled() ) {
+
+		return su_error_message(
+			'CSV Table',
+			sprintf(
+				'%s.<br><a href="https://getshortcodes.com/docs/unsafe-features/" target="_blank">%s</a>',
+				__( 'This shortcode cannot be used while <b>Unsafe features</b> option is turned off', 'shortcodes-ultimate' ),
+				__( 'Learn more', 'shortcodes-ultimate' )
+			)
+		);
+
+	}
+
 	if ( filter_var( $atts['url'], FILTER_VALIDATE_URL ) === false ) {
 		return su_error_message( 'CSV Table', __( 'invalid URL', 'shortcodes-ultimate' ) );
 	}
 
-	$response = wp_remote_get( $atts['url'] );
+	$response = wp_safe_remote_get( $atts['url'] );
 
 	if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
 		return su_error_message( 'CSV Table', __( 'invalid URL', 'shortcodes-ultimate' ) );
@@ -104,6 +117,6 @@ function su_shortcode_csv_table( $atts = null, $content = null ) {
 
 	su_query_asset( 'css', 'su-shortcodes' );
 
-	return '<div class="su-table su-csv-table' . su_get_css_class( $atts ) . '">' . $html . '</div>';
+	return '<div class="su-table su-csv-table' . su_get_css_class( $atts ) . '">' . wp_kses_post( $html ) . '</div>';
 
 }

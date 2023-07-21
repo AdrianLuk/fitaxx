@@ -187,9 +187,21 @@ su_add_shortcode(
 				'default' => 'no',
 				'name'    => __( 'Ignore sticky', 'shortcodes-ultimate' ),
 				'desc'    => __(
-					'Select Yes to ignore posts that is sticked',
+					'Set to yes to prevent sticky posts from being moved to the start of the returned list of posts. They are still included, but appear in regular order.',
 					'shortcodes-ultimate'
 				),
+			),
+			'class'               => array(
+				'type'    => 'text',
+				'name'    => __( 'Container CSS class', 'shortcodes-ultimate' ),
+				'desc'    => __( 'Additional CSS class name(s) separated by space(s) for the container element', 'shortcodes-ultimate' ),
+				'default' => '',
+			),
+			'class_single'        => array(
+				'type'    => 'text',
+				'name'    => __( 'Single CSS class', 'shortcodes-ultimate' ),
+				'desc'    => __( 'Additional CSS class name(s) separated by space(s) for each individual post element', 'shortcodes-ultimate' ),
+				'default' => '',
 			),
 		),
 		'desc'     => __(
@@ -222,6 +234,8 @@ function su_shortcode_posts( $atts = null, $content = null ) {
 			'post_parent'         => false,
 			'post_status'         => 'publish',
 			'ignore_sticky_posts' => 'no',
+			'class'               => '',
+			'class_single'        => '',
 		),
 		$atts,
 		'posts'
@@ -289,7 +303,7 @@ function su_shortcode_posts( $atts = null, $content = null ) {
 		'any',
 	);
 	foreach ( $post_status as $unvalidated ) {
-		if ( in_array( $unvalidated, $available ) ) {
+		if ( in_array( $unvalidated, $available, true ) ) {
 			$validated[] = $unvalidated;
 		}
 	}
@@ -306,7 +320,7 @@ function su_shortcode_posts( $atts = null, $content = null ) {
 			array( 'IN', 'NOT IN', 'AND' ),
 			$tax_operator
 		);
-		if ( ! in_array( $tax_operator, array( 'IN', 'NOT IN', 'AND' ) ) ) {
+		if ( ! in_array( $tax_operator, array( 'IN', 'NOT IN', 'AND' ), true ) ) {
 			$tax_operator = 'IN';
 		}
 		$tax_args = array(
@@ -338,7 +352,7 @@ function su_shortcode_posts( $atts = null, $content = null ) {
 			$tax_operator            = isset( $original_atts[ 'tax_' . $count . '_operator' ] )
 				? $original_atts[ 'tax_' . $count . '_operator' ]
 				: 'IN';
-			$tax_operator            = in_array( $tax_operator, array( 'IN', 'NOT IN', 'AND' ) )
+			$tax_operator            = in_array( $tax_operator, array( 'IN', 'NOT IN', 'AND' ), true )
 				? $tax_operator
 				: 'IN';
 			$tax_args['tax_query'][] = array(
@@ -354,12 +368,12 @@ function su_shortcode_posts( $atts = null, $content = null ) {
 
 			if (
 				isset( $original_atts['tax_relation'] ) &&
-				in_array( $original_atts['tax_relation'], array( 'AND', 'OR' ) )
+				in_array( $original_atts['tax_relation'], array( 'AND', 'OR' ), true )
 			) {
 				$tax_relation = $original_atts['tax_relation'];
 			}
 
-			$args['tax_query']['relation'] = $tax_relation;
+			$tax_args['tax_query']['relation'] = $tax_relation;
 		}
 
 		$args = array_merge( $args, $tax_args );
@@ -367,7 +381,7 @@ function su_shortcode_posts( $atts = null, $content = null ) {
 
 	// If post parent attribute, set up parent
 	if ( $post_parent ) {
-		if ( 'current' == $post_parent ) {
+		if ( 'current' === $post_parent ) {
 			global $post;
 			$post_parent = $post->ID;
 		}
@@ -386,8 +400,15 @@ function su_shortcode_posts( $atts = null, $content = null ) {
 	}
 
 	// Save original posts
-	global $posts;
+	if ( isset( $GLOBALS['posts'] ) ) {
+		$posts = $GLOBALS['posts'];
+	}
+	if ( ! isset( $GLOBALS['posts'] ) ) {
+		global $posts;
+	}
 	$original_posts = $posts;
+	// Filter args
+	$args = apply_filters( 'su/shortcode/posts/wp_query_args', $args, $atts );
 	// Query posts
 	$posts = new WP_Query( $args );
 	// Load the template
@@ -415,13 +436,16 @@ function su_shortcode_posts_locate_template( $template ) {
 	$template = su_set_file_extension( $template, 'php' );
 	$template = ltrim( $template, '\\/' );
 
-	$locations = array(
-		get_stylesheet_directory(),
-		get_template_directory(),
-		path_join(
-			su_get_plugin_path(),
-			'includes/partials/shortcodes/posts'
-		),
+	$locations = apply_filters(
+		'su/shortcode/posts/allowed_template_locations',
+		array(
+			get_stylesheet_directory(),
+			get_template_directory(),
+			path_join(
+				su_get_plugin_path(),
+				'includes/partials/shortcodes/posts'
+			),
+		)
 	);
 
 	foreach ( $locations as $base ) {

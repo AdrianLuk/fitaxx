@@ -11,12 +11,10 @@ su_add_shortcode(
 		'atts'     => array(
 			'style' => array(
 				'type'    => 'select',
-				'values'  => array(
-					'default' => __( 'Default', 'shortcodes-ultimate' ),
-				),
+				'values'  => su_get_available_styles_for( 'quote' ),
 				'default' => 'default',
 				'name'    => __( 'Style', 'shortcodes-ultimate' ),
-				'desc'    => __( 'Choose style for this quote', 'shortcodes-ultimate' ) . '%su_skins_link%',
+				'desc'    => __( 'Choose style for this quote', 'shortcodes-ultimate' ),
 			),
 			'cite'  => array(
 				'default' => '',
@@ -56,7 +54,7 @@ function su_shortcode_quote( $atts = null, $content = null ) {
 	);
 
 	$cite_link = $atts['url'] && $atts['cite']
-		? '<a href="' . $atts['url'] . '" target="_blank">' . $atts['cite'] . '</a>'
+		? '<a href="' . esc_attr( $atts['url'] ) . '" target="_blank">' . $atts['cite'] . '</a>'
 		: $atts['cite'];
 
 	$cite = $atts['cite']
@@ -69,6 +67,6 @@ function su_shortcode_quote( $atts = null, $content = null ) {
 
 	su_query_asset( 'css', 'su-shortcodes' );
 
-	return '<div class="su-quote su-quote-style-' . $atts['style'] . $cite_class . su_get_css_class( $atts ) . '"><div class="su-quote-inner su-u-clearfix su-u-trim">' . su_do_nested_shortcodes( $content, 'quote' ) . su_do_attribute( $cite ) . '</div></div>';
+	return '<div class="su-quote su-quote-style-' . esc_attr( $atts['style'] ) . $cite_class . su_get_css_class( $atts ) . '"><div class="su-quote-inner su-u-clearfix su-u-trim">' . su_do_nested_shortcodes( $content, 'quote' ) . su_do_attribute( $cite ) . '</div></div>';
 
 }

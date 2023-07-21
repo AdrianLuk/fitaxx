@@ -54,6 +54,20 @@ function su_shortcode_table( $atts = null, $content = null ) {
 		'table'
 	);
 
+	if ( $atts['url'] && ! su_is_unsafe_features_enabled() ) {
+
+		return su_error_message(
+			'Table',
+			sprintf(
+				'%s.<br><a href="https://getshortcodes.com/docs/unsafe-features/" target="_blank">%s</a>',
+				// translators: do not translate the <b>url</b> part, the <b>Unsafe features</b> must be translated
+				__( 'The <b>url</b> attribute cannot be used while <b>Unsafe features</b> option is turned off', 'shortcodes-ultimate' ),
+				__( 'Learn more', 'shortcodes-ultimate' )
+			)
+		);
+
+	}
+
 	foreach ( array( 'responsive', 'alternate', 'fixed' ) as $feature ) {
 
 		if ( 'yes' === $atts[ $feature ] ) {
@@ -64,10 +78,21 @@ function su_shortcode_table( $atts = null, $content = null ) {
 
 	su_query_asset( 'css', 'su-shortcodes' );
 
-	$table = $atts['url']
-		? su_parse_csv( $atts['url'] )
-		: do_shortcode( $content );
+	$table = do_shortcode( $content );
 
-	return '<div class="su-table' . su_get_css_class( $atts ) . '">' . $table . '</div>';
+	if ( $atts['url'] ) {
+		$table = su_shortcode_csv_table(
+			array(
+				'url'        => $atts['url'],
+				'responsive' => $atts['responsive'],
+				'alternate'  => $atts['alternate'],
+				'fixed'      => $atts['fixed'],
+				'class'      => $atts['class'],
+				'delimiter'  => ';',
+			)
+		);
+	}
+
+	return '<div class="su-table' . su_get_css_class( $atts ) . '">' . wp_kses_post( $table ) . '</div>';
 
 }

@@ -9,6 +9,15 @@
  */
 
 /**
+ * Retrieves instance of the main plugin class.
+ *
+ * @since  5.0.4
+ */
+function shortcodes_ultimate() {
+	return Shortcodes_Ultimate::get_instance();
+}
+
+/**
  * Retrieve the URL of the plugin directory (with trailing slash).
  *
  * @since  5.0.5
@@ -80,7 +89,7 @@ function su_get_config( $key = null, $default = false ) {
  * @param string  $message Error message.
  * @return string          Error message markup.
  */
-function su_error_message( $title = '', $message = '' ) {
+function su_error_message( $title = '', $message = '', $echo = false ) {
 
 	if ( ! su_current_user_can_insert() ) {
 		return;
@@ -90,11 +99,19 @@ function su_error_message( $title = '', $message = '' ) {
 		$title = "<strong>${title}:</strong> ";
 	}
 
-	return sprintf(
-		'<p class="su-error" style="padding:5px 10px;color:#ff685e;border-left:3px solid #ff685e;background:#fff">%1$s%2$s</p>',
+	$output = sprintf(
+		'<p class="su-error" style="padding:5px 10px;color:#8f3a35;border-left:3px solid #8f3a35;background:#fff7f6;line-height:1.35">%1$s%2$s</p>',
 		$title,
 		$message
 	);
+
+	if ( $echo ) {
+		// phpcs:disable
+		echo $output;
+		// phpcs:enable
+	}
+
+	return $output;
 
 }
 
@@ -124,6 +141,27 @@ function su_current_user_can_insert() {
  */
 function su_is_filter_safe( $filter ) {
 	return is_string( $filter ) && false !== strpos( $filter, 'filter' );
+}
+
+/**
+ * Helper function to safely apply user defined filter to a given value
+ * @param  string $filter Filter function name
+ * @param  string $value  Filterable value
+ * @return string         A filtered value if the given filter is safe
+ */
+function su_safely_apply_user_filter( $filter = null, $value = null ) {
+
+	if (
+		is_string( $filter ) &&
+		is_string( $value ) &&
+		su_is_filter_safe( $filter ) &&
+		function_exists( $filter )
+	) {
+		$value = call_user_func( $filter, $value );
+	}
+
+	return $value;
+
 }
 
 /**
@@ -179,7 +217,7 @@ function su_parse_range( $string = '' ) {
 if ( ! function_exists( 'su_get_css_class' ) ) {
 
 	function su_get_css_class( $atts ) {
-		return $atts['class'] ? ' ' . trim( $atts['class'] ) : '';
+		return $atts['class'] ? ' ' . esc_attr( trim( $atts['class'] ) ) : '';
 	}
 
 }
@@ -265,13 +303,13 @@ function su_set_file_extension( $path, $extension ) {
  *
  * @since 5.6.1
  */
-function su_get_utm_link( $url, $utm ) {
+function su_get_utm_link( $url, $utm_campaign, $utm_medium, $utm_source ) {
 
 	return add_query_arg(
 		array(
-			'utm_source'   => $utm[0],
-			'utm_medium'   => $utm[1],
-			'utm_campaign' => $utm[2],
+			'utm_campaign' => $utm_campaign,
+			'utm_medium'   => $utm_medium,
+			'utm_source'   => $utm_source,
 		),
 		$url
 	);
@@ -324,4 +362,125 @@ function su_join_paths() {
 
 	return $path;
 
+}
+
+/**
+ * Helper function that adds CSS units to the supplied numeric value
+ * @param  mixed  $value The original value (String or Integer)
+ * @param  string $units CSS units to add
+ * @return string        Value with CSS units
+ */
+function su_maybe_add_css_units( $value = '', $units = '' ) {
+
+	if ( is_numeric( $value ) ) {
+		$value .= $units;
+	}
+
+	return $value;
+
+}
+
+/**
+ * Helper to get the current page URL
+ * @return string Current page URL
+ */
+function su_get_current_url() {
+
+	$protocol = is_ssl() ? 'https' : 'http';
+
+	return esc_url( "{$protocol}://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}" );
+
+}
+
+function su_is_unsafe_features_enabled() {
+	return 'on' === get_option( 'su_option_unsafe_features' );
+}
+
+/**
+ * Helper function to get contents of a template file and pass data to it
+ *
+ * Examples of use
+ *
+ * su_get_partial( 'includes/partials/partial.php' );
+ * su_get_partial( 'includes/partials/partial.php', [ 'foo' => 'bar' ] );
+ */
+function su_get_partial( $file, $data = array() ) {
+
+	$plugin_dir = plugin_dir_path( SU_PLUGIN_FILE );
+	$file       = realpath( $plugin_dir . $file );
+
+	if ( strpos( $file, $plugin_dir ) !== 0 ) {
+		return '';
+	}
+
+	if ( ! file_exists( $file ) ) {
+		return '';
+	}
+
+	ob_start();
+	include $file;
+	return ob_get_clean();
+
+}
+
+/**
+ * Helper function to display contents of a template file and pass data to it
+ *
+ * Examples of use
+ *
+ * su_partial( 'includes/partials/partial.php' );
+ * su_partial( 'includes/partials/partial.php', [ 'foo' => 'bar' ] );
+ */
+function su_partial( $file, $data = array() ) {
+	// phpcs:disable
+	echo su_get_partial( $file, $data );
+	// phpcs:enable
+}
+
+function su_has_active_addons() {
+
+	foreach ( array( 'skins', 'extra', 'maker' ) as $addon ) {
+
+		if ( function_exists( "run_shortcodes_ultimate_{$addon}" ) ) {
+			return true;
+		}
+	}
+
+	return false;
+
+}
+
+function su_has_all_active_addons() {
+
+	foreach ( array( 'skins', 'extra', 'maker' ) as $addon ) {
+
+		if ( ! function_exists( "run_shortcodes_ultimate_{$addon}" ) ) {
+			return false;
+		}
+	}
+
+	return true;
+
+}
+
+function su_load_textdomain() {
+
+	$domain    = 'shortcodes-ultimate';
+	$languages = plugin_dir_path( SU_PLUGIN_FILE ) . 'languages/';
+	$mofile    = $languages . $domain . '-' . determine_locale() . '.mo';
+
+	load_textdomain( $domain, $mofile );
+
+}
+
+function su_current_user_can_read_post( $post_id ) {
+	if ( post_password_required( $post_id ) ) {
+		return false;
+	}
+
+	if ( 'publish' !== get_post_status( $post_id ) && ! current_user_can( 'read_post', $post_id ) ) {
+		return false;
+	}
+
+	return true;
 }

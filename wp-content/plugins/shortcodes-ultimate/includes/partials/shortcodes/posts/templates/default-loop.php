@@ -12,13 +12,18 @@
  */
 ?>
 
-<div class="su-posts su-posts-default-loop">
+<div class="su-posts su-posts-default-loop <?php echo esc_attr( $atts['class'] ); ?>">
 
 	<?php if ( $posts->have_posts() ) : ?>
 
-		<?php while ( $posts->have_posts() ) : $posts->the_post(); ?>
+		<?php while ( $posts->have_posts() ) : ?>
+			<?php $posts->the_post(); ?>
 
-			<div id="su-post-<?php the_ID(); ?>" class="su-post">
+			<?php if ( ! su_current_user_can_read_post( get_the_ID() ) ) : ?>
+				<?php continue; ?>
+			<?php endif; ?>
+
+			<div id="su-post-<?php the_ID(); ?>" class="su-post <?php echo esc_attr( $atts['class_single'] ); ?>">
 
 				<?php if ( has_post_thumbnail( get_the_ID() ) ) : ?>
 					<a class="su-post-thumbnail" href="<?php the_permalink(); ?>"><?php the_post_thumbnail(); ?></a>
@@ -27,7 +32,7 @@
 				<h2 class="su-post-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 
 				<div class="su-post-meta">
-					<?php _e( 'Posted', 'shortcodes-ultimate' ); ?>: <?php the_time( get_option( 'date_format' ) ); ?>
+					<?php esc_html_e( 'Posted', 'shortcodes-ultimate' ); ?>: <?php the_time( get_option( 'date_format' ) ); ?>
 				</div>
 
 				<div class="su-post-excerpt">
@@ -43,7 +48,7 @@
 		<?php endwhile; ?>
 
 	<?php else : ?>
-		<h4><?php _e( 'Posts not found', 'shortcodes-ultimate' ); ?></h4>
+		<h4><?php esc_html_e( 'Posts not found', 'shortcodes-ultimate' ); ?></h4>
 	<?php endif; ?>
 
 </div>

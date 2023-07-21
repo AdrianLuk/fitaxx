@@ -1,19 +1,20 @@
 # WordPress Shortcodes Plugin — Shortcodes Ultimate
 Contributors: gn_themes
 License: GPLv3
-Donate link: https://paypal.me/anovladimir
-Tags: shortcode, toggle, columns, button, slider
-Requires at least: 4.6
-Tested up to: 5.5
-Requires PHP: 5.3
-Stable tag: 5.9.2
+Donate link: https://getshortcodes.com/pricing/
+Tags: posts, carousel, shortcode, toggle, columns
+Stable tag: 5.13.1
+Requires PHP: 5.4
+Requires at least: 5.0
+Tested up to: 6.2
+
 
 A comprehensive collection of visual components for your site
 
 
 ## Description
 
-[Shortcodes Ultimate](https://getshortcodes.com/?utm_campaign=wporg&utm_source=readme&utm_medium=description) is a comprehensive collection of various visual and functional elements, which you can use in the post editor, text widgets or even in template files. Using Shortcodes Ultimate you can easily create tabs, buttons, boxes, sliders and carousels, responsive videos and much, much more.
+[Shortcodes Ultimate](https://getshortcodes.com/?utm_campaign=wporg&utm_medium=readme&utm_source=description) is a comprehensive collection of various visual and functional elements, which you can use in the post editor, text widgets or even in template files. Using Shortcodes Ultimate you can easily create tabs, buttons, boxes, sliders and carousels, responsive videos and much, much more.
 
 
 ### Features
@@ -33,19 +34,11 @@ A comprehensive collection of visual components for your site
 
 ### Links
 
-- [Available Shortcodes](https://getshortcodes.com/shortcodes/?utm_campaign=wporg&utm_source=readme&utm_medium=available-shortcodes)
-- [Add-ons](https://getshortcodes.com/add-ons/?utm_campaign=wporg&utm_source=readme&utm_medium=add-ons)
-- [Documentation](https://getshortcodes.com/docs/?utm_campaign=wporg&utm_source=readme&utm_medium=docs)
-- [Support Forum](https://wordpress.org/support/plugin/shortcodes-ultimate)
-- [Premium Support](https://getshortcodes.com/support/?utm_campaign=wporg&utm_source=readme&utm_medium=support)
-
-
-### Check out premium add-ons!
-
-- [Extra Shortcodes](https://getshortcodes.com/add-ons/extra-shortcodes/?utm_campaign=wporg&utm_source=readme&utm_medium=extra-shortcodes) - 15+ additional shortcodes
-- [Additional Skins](https://getshortcodes.com/add-ons/additional-skins/?utm_campaign=wporg&utm_source=readme&utm_medium=additional-skins) - 60+ additional skins
-- [Shortcode Creator](https://getshortcodes.com/add-ons/shortcode-creator/?utm_campaign=wporg&utm_source=readme&utm_medium=shortcode-creator) - create your own custom shortcodes
-- **[Add-ons Bundle](https://getshortcodes.com/add-ons/add-ons-bundle/?utm_campaign=wporg&utm_source=readme&utm_medium=add-ons-bundle)** - All-in-one!
+- [Available Shortcodes](https://getshortcodes.com/docs-category/shortcodes/?utm_campaign=wporg&utm_medium=readme&utm_source=links-available-shortcodes)
+- [Documentation](https://getshortcodes.com/docs/?utm_campaign=wporg&utm_medium=readme&utm_source=links-docs)
+- [Community Support Forum](https://wordpress.org/support/plugin/shortcodes-ultimate)
+- [Upgrade to Pro](https://getshortcodes.com/pricing/?utm_campaign=wporg&utm_medium=readme&utm_source=links-available-shortcodes)
+- [Pro Support](https://getshortcodes.com/support/open-support-ticket/?utm_campaign=wporg&utm_medium=readme&utm_source=links-support)
 
 
 ### Available Shortcodes
@@ -120,7 +113,6 @@ Yes, you can remove default shortcodes using 'su/data/shortcodes' filter. Tutori
 ### Can I create custom shortcodes?
 
 Yes, you can create custom shortcodes using 'su/data/shortcodes' filter. Tutorial: [How to add custom shortcodes](https://getshortcodes.com/docs/registering-custom-shortcodes/).
-Alternatively, you can use [Shortcode Creator add-on](https://getshortcodes.com/add-ons/shortcode-creator/).
 
 
 ### Can I use shortcodes in template files?
@@ -140,25 +132,15 @@ Yes! Shortcodes Ultimate is designed to work with any theme, but your theme must
 
 ### Where can I get help?
 
-First, visit the [Help Center](https://getshortcodes.com/support/). If you get stuck, ask for help at the [official support forum](https://wordpress.org/support/plugin/shortcodes-ultimate). Also, you can get personal support from the developer by purchasing any of the [premium add-ons](https://getshortcodes.com/add-ons/).
+First, visit the [Help Center](https://getshortcodes.com/support/). If you get stuck, ask for help at the [community support forum](https://wordpress.org/support/plugin/shortcodes-ultimate).
 
 
 ## Changelog
 
+### 5.13.1
 
-### 5.9.2
-
-**What's new**
-
-- `[su_qrcode]` now supports nested shortcodes in the `data` attribute
-- Improved performance by reducing the number of DB queries
-
-**Fixes**
-
-- Fixed issue in the Insert Shortcode tool with Taxonomy and Tax terms fields
-- Fixed error `Posts: invalid template name` on some installations
-- This update also fixes the plugin options issue present in 5.9.1
+This update features security improvements and is recommended for all users
 
 
 ---
-[Older changelog entries](https://plugins.trac.wordpress.org/browser/shortcodes-ultimate/trunk/changelog.txt).
+[Version history →](https://plugins.trac.wordpress.org/browser/shortcodes-ultimate/trunk/changelog.txt)
