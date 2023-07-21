@@ -1,7 +1,10 @@
 <?php
-/*******************************************************************************
- * Copyright (c) 2019, Code Atlantic LLC
- ******************************************************************************/
+/**
+ * Site Popups
+ *
+ * @package   PUM
+ * @copyright Copyright (c) 2023, Code Atlantic LLC
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -56,14 +59,14 @@ class PUM_Site_Popups {
 	 *
 	 * @param bool|object|null $new_popup
 	 *
-	 * @return null|PUM_Popup
+	 * @return null|PUM_Model_Popup
 	 *
 	 * @deprecated 1.8.0
 	 */
 	public static function current_popup( $new_popup = false ) {
 		global $popup;
 
-		if ( $new_popup !== false ) {
+		if ( false !== $new_popup ) {
 			pum()->current_popup = $new_popup;
 			$popup               = $new_popup;
 		}
@@ -96,7 +99,7 @@ class PUM_Site_Popups {
 			return;
 		}
 
-		$popups = pum_get_all_popups();
+		$popups = pum_get_all_popups( [ 'post_status' => [ 'publish', 'private' ] ] );
 
 		if ( ! empty( $popups ) ) {
 

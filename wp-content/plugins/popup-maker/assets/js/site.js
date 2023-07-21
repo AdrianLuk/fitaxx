@@ -340,7 +340,7 @@ var PUM;
                 // If our opening sound setting is not set to None...
                 if ( settings.open_sound && 'none' !== settings.open_sound ) {
 					// ... then set up our audio. Once loaded, add to popup data.
-					var audio = 'custom' !== settings.open_sound ? new Audio( pum_vars.pm_dir_url + '/assets/sounds/' + settings.open_sound ) : new Audio( settings.custom_sound );
+					var audio = 'custom' !== settings.open_sound ? new Audio( pum_vars.pm_dir_url + 'assets/sounds/' + settings.open_sound ) : new Audio( settings.custom_sound );
 					audio.addEventListener('canplaythrough', function() {
 						$popup.data('popAudio', audio);
 					});
@@ -832,6 +832,7 @@ var PUM;
 
     window.PUM.init = function () {
         console.log('init popups ✔');
+        $(document).trigger('pumBeforeInit');
         $('.pum').popmake();
         $(document).trigger('pumInitialized');
 
@@ -963,13 +964,7 @@ var PUM_Accessibility;
 			// Accessibility: Sets the current modal for focus checks.
 			currentModal = $popup
 				// Accessibility: Trap tab key.
-				.on( 'keydown.pum_accessibility', PUM_Accessibility.trapTabKey )
-				.attr( 'aria-hidden', 'false' );
-
-			$top_level_elements = $( 'body > *' )
-				.filter( ':visible' )
-				.not( currentModal );
-			$top_level_elements.attr( 'aria-hidden', 'true' );
+				.on( 'keydown.pum_accessibility', PUM_Accessibility.trapTabKey );
 
 			// Accessibility: Add focus check first time focus changes after popup opens that prevents tabbing outside of modal.
 			$( document ).one(
@@ -995,18 +990,19 @@ var PUM_Accessibility;
 		} )
 		.on( 'pumBeforeOpen', selector, function() {} )
 		.on( 'pumAfterOpen', selector, PUM_Accessibility.initiateFocusLock )
+		.on( 'pumAfterOpen', selector, function() {
+			var $popup = PUM.getPopup( this );
+
+			// Accessibility: Sets the current modal as open.
+			currentModal = $popup.attr( 'aria-modal', 'true' );
+		})
 		.on( 'pumBeforeClose', selector, function() {} )
 		.on( 'pumAfterClose', selector, function() {
 			var $popup = PUM.getPopup( this );
 
 			$popup
 				.off( 'keydown.pum_accessibility' )
-				.attr( 'aria-hidden', 'true' );
-
-			if ( $top_level_elements ) {
-				$top_level_elements.attr( 'aria-hidden', 'false' );
-				$top_level_elements = null;
-			}
+				.attr( 'aria-modal', 'false' );
 
 			// Accessibility: Focus back on the previously focused element.
 			if ( previouslyFocused !== undefined && previouslyFocused.length ) {
@@ -1031,7 +1027,7 @@ var PUM_Accessibility;
  */
 
 var PUM_Analytics;
-( function( $ ) {
+( function ( $ ) {
 	'use strict';
 
 	$.fn.popmake.last_open_trigger = null;
@@ -1043,7 +1039,7 @@ var PUM_Analytics;
 	);
 
 	PUM_Analytics = {
-		beacon: function( data, callback ) {
+		beacon: function ( data, callback ) {
 			var beacon = new Image(),
 				url = rest_enabled ? pum_vars.analytics_api : pum_vars.ajaxurl,
 				opts = {
@@ -1066,7 +1062,7 @@ var PUM_Analytics;
 					callback:
 						typeof callback === 'function'
 							? callback
-							: function() {},
+							: function () {},
 				};
 
 			if ( ! rest_enabled ) {
@@ -1087,15 +1083,18 @@ var PUM_Analytics;
 	};
 
 	if (
-		typeof pum_vars.disable_tracking === 'undefined' ||
-		! pum_vars.disable_tracking
+		( typeof pum_vars.disable_tracking === 'undefined' ||
+			! pum_vars.disable_tracking ) &&
+		// Check for extensions disabling core tracking events.
+		( typeof pum_vars.disable_core_tracking === 'undefined' ||
+			! pum_vars.disable_core_tracking )
 	) {
 		// Only popups from the editor should fire analytics events.
 		$( document )
 			/**
 			 * Track opens for popups.
 			 */
-			.on( 'pumAfterOpen.core_analytics', '.pum', function() {
+			.on( 'pumAfterOpen.core_analytics', '.pum', function () {
 				var $popup = PUM.getPopup( this ),
 					data = {
 						pid:
@@ -1116,37 +1115,37 @@ var PUM_Analytics;
 		/**
 		 * Track form submission conversions
 		 */
-		$( function() {
-			PUM.hooks.addAction( 'pum.integration.form.success', function(
-				form,
-				args
-			) {
-				// If the submission has already been counted in the backend, we can bail early.
-				if ( args.ajax === false ) {
-					return;
-				}
+		$( function () {
+			PUM.hooks.addAction(
+				'pum.integration.form.success',
+				function ( form, args ) {
+					// If the submission has already been counted in the backend, we can bail early.
+					if ( args.ajax === false ) {
+						return;
+					}
 
-				// If no popup is included in the args, we can bail early since we only record conversions within popups.
-				if ( args.popup.length === 0 ) {
-					return;
-				}
-				var data = {
-					pid:
-						parseInt(
-							args.popup.popmake( 'getSettings' ).id,
-							10
-						) || null,
-					event: 'conversion',
-				};
+					// If no popup is included in the args, we can bail early since we only record conversions within popups.
+					if ( args.popup.length === 0 ) {
+						return;
+					}
+					var data = {
+						pid:
+							parseInt(
+								args.popup.popmake( 'getSettings' ).id,
+								10
+							) || null,
+						event: 'conversion',
+					};
 
-				// Shortcode popups use negative numbers, and single-popup (preview mode) shouldn't be tracked.
-				if (
-					data.pid > 0 &&
-					! $( 'body' ).hasClass( 'single-popup' )
-				) {
-					PUM_Analytics.beacon( data );
+					// Shortcode popups use negative numbers, and single-popup (preview mode) shouldn't be tracked.
+					if (
+						data.pid > 0 &&
+						! $( 'body' ).hasClass( 'single-popup' )
+					) {
+						PUM_Analytics.beacon( data );
+					}
 				}
-			} );
+			);
 		} );
 	}
 } )( jQuery );
@@ -1589,6 +1588,17 @@ var PUM_Analytics;
 
 					// At least one group condition must be true. Break this loop if any condition is true.
 					for ( c = 0; group.length > c; c++ ) {
+						// Handle preprocessed PHP conditions.
+						if ( typeof group[ c ] === 'boolean' ) {
+							if ( !! group[ c ] ) {
+
+								group_check = true;
+								break;
+							} else {
+								continue;
+							}
+						}
+
 						condition = $.extend(
 							{},
 							{
@@ -1654,7 +1664,7 @@ var PUM_Analytics;
 		},
 	} );
 
-	$.fn.popmake.conditions = {};
+	$.fn.popmake.conditions = $.fn.popmake.conditions || {};
 } )( jQuery, document );
 
 /**
@@ -1806,7 +1816,9 @@ var pm_cookie, pm_cookie_json, pm_remove_cookie;
 				[].slice.call( arguments )
 			);
 		};
-		api.defaults = {};
+		api.defaults = {
+			domain: pum_vars.cookie_domain ?  pum_vars.cookie_domain : '',
+		};
 
 		api.remove = function( key, attributes ) {
 			// Clears keys with current path.
@@ -2200,40 +2212,50 @@ var pum_debug_mode = false,
 				);
 			},
 			divider: function(heading) {
-				var totalWidth = 62,
+				try {
+                    var totalWidth = 62,
 					extraSpace = 62,
 					padding = 0,
-					line = " " + new Array(totalWidth + 1).join("-") + " ";
+					line = " " + new Array(totalWidth + 1).join("-") + " ",
+                    fitHeading = heading;
 
-				if (typeof heading === "string") {
-					extraSpace = totalWidth - heading.length;
-					padding = {
-						left: Math.floor(extraSpace / 2),
-						right: Math.floor(extraSpace / 2)
-					};
+				    if (typeof heading === "string") {
+                        // Check the heading length to avoid negative padding numbers.
+                        if (heading.length > totalWidth) {
+                            // Truncate the heading if it's longer than the max width.
+                            fitHeading = fitHeading.substring(0, totalWidth);
+                        }
+                        extraSpace = totalWidth - fitHeading.length;
+				    	padding = {
+				    		left: Math.floor(extraSpace / 2),
+				    		right: Math.floor(extraSpace / 2)
+				    	};
 
-					if (padding.left + padding.right === extraSpace - 1) {
-						padding.right++;
-					}
+				    	if (padding.left + padding.right === extraSpace - 1) {
+				    		padding.right++;
+				    	}
 
-					padding.left = new Array(padding.left + 1).join(" ");
-					padding.right = new Array(padding.right + 1).join(" ");
+                        padding.left = new Array(padding.left + 1).join(" ");
+                       	padding.right = new Array(padding.right + 1).join(" ");
 
-					console.log(
-						"" +
-							line +
-							"\n" +
-							"|" +
-							padding.left +
-							heading +
-							padding.right +
-							"|" +
-							"\n" +
-							line
-					);
-				} else {
-					console.log(line);
-				}
+				    	console.log(
+				    		"" +
+				    			line +
+				    			"\n" +
+				    			"|" +
+				    			padding.left +
+				    			fitHeading +
+				    			padding.right +
+				    			"|" +
+				    			"\n" +
+				    			line
+				    	);
+				    } else {
+				    	console.log(line);
+				    }
+                } catch (err) {
+                    console.error("Got a '" + err + "' when printing out the heading divider to the console.");
+                }
 			},
 			click_trigger: function($popup, trigger_settings) {
 				var settings = $popup.popmake("getSettings"),
