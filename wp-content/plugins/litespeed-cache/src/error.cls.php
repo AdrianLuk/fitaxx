@@ -48,8 +48,12 @@ class Error {
 					Doc::learn_more( admin_url( 'admin.php?page=litespeed-general' ), __( 'Click here to set.', 'litespeed-cache' ), true, false, true );
 				break;
 
-			case 'lack_of_quota':
-				$msg = __( 'You don\'t have enough quota for current service left this month.', 'litespeed-cache' );
+			case 'out_of_daily_quota':
+				$msg = __( 'You don\'t have enough daily quota left for current service today.', 'litespeed-cache' );
+				break;
+
+			case 'out_of_quota':
+				$msg = __( 'You don\'t have enough quota left for current service this month.', 'litespeed-cache' );
 				break;
 
 			case 'too_many_requested':
@@ -76,12 +80,24 @@ class Error {
 				$msg = sprintf( __( 'There is proceeding queue not pulled yet. Queue info: %s.', 'litespeed-cache' ), '<code>' . substr( $code, strlen( 'unfinished_queue ' ) ) . '</code>' );
 				break;
 
+			case 'err_alias':
+				$msg = __( 'The site is not a valid alias on QUIC.cloud.', 'litespeed-cache' );
+				break;
+
 			case 'site_not_registered':
 				$msg = __( 'The site is not registered on QUIC.cloud.', 'litespeed-cache' );
 				break;
 
 			case 'err_key':
 				$msg = __( 'The domain key is not correct. Please try to sync your domain key again.', 'litespeed-cache' );
+				break;
+
+			case 'heavy_load':
+				$msg = __( 'The current server is under heavy load.', 'litespeed-cache' );
+				break;
+
+			case 'redetect_node':
+				$msg = __( 'Online node needs to be redetected.', 'litespeed-cache' );
 				break;
 
 			case 'err_overdraw':
@@ -155,6 +171,10 @@ class Error {
 
 			case 'forbidden':
 				$msg = __( 'Your domain has been forbidden from using our services due to a previous policy violation.', 'litespeed-cache' );
+				break;
+
+			case 'err_dns_active':
+				$msg = __( 'You cannot remove this DNS zone, because it is still in use. Please update the domain\'s nameservers, then try to delete this zone again, otherwise your site will become inaccessible.', 'litespeed-cache' );
 				break;
 
 			default:

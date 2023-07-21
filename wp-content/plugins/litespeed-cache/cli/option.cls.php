@@ -3,11 +3,8 @@ namespace LiteSpeed\CLI;
 
 defined( 'WPINC' ) || exit;
 
-use LiteSpeed\Core;
-use LiteSpeed\Conf;
 use LiteSpeed\Base;
 use LiteSpeed\Admin_Settings;
-use LiteSpeed\Import;
 use LiteSpeed\Utility;
 use WP_CLI;
 
@@ -15,12 +12,6 @@ use WP_CLI;
  * LiteSpeed Cache option Interface
  */
 class Option extends Base {
-	private $__cfg;
-
-	public function __construct() {
-		$this->__cfg = Conf::get_instance();
-	}
-
 	/**
 	 * Set an individual LiteSpeed Cache option.
 	 *
@@ -37,6 +28,7 @@ class Option extends Base {
 	 *     # Set to not cache the login page
 	 *     $ wp litespeed-option set cache-priv false
 	 *     $ wp litespeed-option set 'cdn-mapping[url][0]' https://cdn.EXAMPLE.com
+	 *     $ wp litespeed-option set media-lqip_exc $'line1\nline2'
 	 *
 	 */
 	public function set( $args, $assoc_args ) {
@@ -64,6 +56,9 @@ class Option extends Base {
 		 * For Crawler cookies:
 		 * 		`set 'crawler-cookies[name][0]' my_currency`
 		 * 		`set 'crawler-cookies[vals][0]' "USD\nTWD"`
+		 *
+		 * For multi lines setting:
+		 * 		`set media-lqip_exc $'img1.jpg\nimg2.jpg'`
 		 */
 
 		// Build raw data
@@ -80,7 +75,7 @@ class Option extends Base {
 			$raw_data[ $key ] = $val;
 		}
 
-		Admin_Settings::get_instance()->save( $raw_data );
+		$this->cls( 'Admin_Settings' )->save( $raw_data );
 		WP_CLI::line( "$key:" );
 		$this->get( $args, $assoc_args );
 
@@ -99,7 +94,7 @@ class Option extends Base {
 	 *
 	 */
 	public function all( $args, $assoc_args ) {
-		$options = $this->__cfg->get_options();
+		$options = $this->get_options();
 
 		if ( ! empty( $assoc_args[ 'format' ] ) ) {
 			WP_CLI::print_value( $options, $assoc_args );
@@ -193,7 +188,7 @@ class Option extends Base {
 			return;
 		}
 
-		$v = Conf::val( $id );
+		$v = $this->conf( $id );
 		$default_v = self::$_default_options[ $id ];
 
 		/**
@@ -291,7 +286,7 @@ class Option extends Base {
 			return;
 		}
 
-		$data = Import::get_instance()->export( true );
+		$data = $this->cls( 'Import' )->export( true );
 
 		if ( file_put_contents( $file, $data ) === false ) {
 			WP_CLI::error( 'Failed to create file.' );
@@ -326,7 +321,7 @@ class Option extends Base {
 			WP_CLI::error('File does not exist or is not readable.');
 		}
 
-		$res = Import::get_instance()->import( $file );
+		$res = $this->cls( 'Import' )->import( $file );
 
 		if ( ! $res ) {
 			WP_CLI::error( 'Failed to parse serialized data from file.' );
@@ -334,6 +329,46 @@ class Option extends Base {
 
 		WP_CLI::success( 'Options imported. [File] ' . $file );
 	}
+
+	/**
+	 * Import plugin options from a remote file.
+	 *
+	 * The file must be formatted as such:
+	 * option_key=option_value
+	 * One per line.
+	 * A Semicolon at the beginning of the line indicates a comment and will be skipped.
+	 *
+	 * ## OPTIONS
+	 *
+	 * <url>
+	 * : The URL to import options from.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     # Import options from https://domain.com/options.txt
+	 *     $ wp litespeed-option import_remote https://domain.com/options.txt
+	 *
+	 */
+
+	public function import_remote( $args, $assoc_args ) {
+		$file = $args[0];
+	
+		$tmp_file = download_url( $file );
+
+		if ( is_wp_error( $tmp_file ) ) {
+			WP_CLI::error( 'Failed to download file.' );
+			return;
+		}
+
+		$res = $this->cls( 'Import' )->import( $tmp_file );
+
+		if ( ! $res ) {
+			WP_CLI::error( 'Failed to parse serialized data from file.' );
+		}
+
+		WP_CLI::success( 'Options imported. [File] ' . $file );
+	}
+
 
 	/**
 	 * Reset all options to default.
@@ -345,7 +380,7 @@ class Option extends Base {
 	 *
 	 */
 	public function reset() {
-		Import::get_instance()->reset();
+		$this->cls( 'Import' )->reset();
 	}
 
 }

@@ -11,6 +11,82 @@ defined( 'WPINC' ) || exit;
 use LiteSpeed\Debug2;
 use LiteSpeed\Conf;
 use LiteSpeed\Admin_Display;
+use LiteSpeed\File;
+
+/**
+ * Append webp/mobile to url_file
+ * @since 5.3
+ */
+function litespeed_update_5_3() {
+	global $wpdb;
+	Debug2::debug( "[Data] Upgrade url_file table" );
+	$tb_exists = $wpdb->get_var( 'SHOW TABLES LIKE "' . $wpdb->prefix . 'litespeed_url_file"' );
+	if ( $tb_exists ) {
+		$q = 'ALTER TABLE `' . $wpdb->prefix . 'litespeed_url_file`
+				ADD COLUMN `mobile` tinyint(4) NOT NULL COMMENT "mobile=1",
+				ADD COLUMN `webp` tinyint(4) NOT NULL COMMENT "webp=1"
+			';
+		$wpdb->query( $q );
+	}
+}
+
+/**
+ * Add expired to url_file table
+ * @since 4.4.4
+ */
+function litespeed_update_4_4_4() {
+	global $wpdb;
+	Debug2::debug( "[Data] Upgrade url_file table" );
+	$tb_exists = $wpdb->get_var( 'SHOW TABLES LIKE "' . $wpdb->prefix . 'litespeed_url_file"' );
+	if ( $tb_exists ) {
+		$q = 'ALTER TABLE `' . $wpdb->prefix . 'litespeed_url_file`
+				ADD COLUMN `expired` int(11) NOT NULL DEFAULT 0,
+				ADD KEY `filename_2` (`filename`,`expired`),
+				ADD KEY `url_id` (`url_id`,`expired`)
+			';
+		$wpdb->query( $q );
+	}
+}
+
+/**
+ * Drop cssjs table and rm cssjs folder
+ * @since 4.3
+ */
+function litespeed_update_4_3() {
+	if ( file_exists( LITESPEED_STATIC_DIR . '/ccsjs' ) ) {
+		File::rrmdir( LITESPEED_STATIC_DIR . '/ccsjs' );
+	}
+}
+
+/**
+ * Drop object cache data file
+ * @since 4.1
+ */
+function litespeed_update_4_1() {
+	if ( file_exists( WP_CONTENT_DIR . '/.object-cache.ini' ) ) {
+		unlink( WP_CONTENT_DIR . '/.object-cache.ini' );
+	}
+}
+
+/**
+ * Drop cssjs table and rm cssjs folder
+ * @since 4.0
+ */
+function litespeed_update_4() {
+	global $wpdb;
+	$tb = $wpdb->prefix . 'litespeed_cssjs';
+	$existed = $wpdb->get_var( "SHOW TABLES LIKE '$tb'" );
+	if ( ! $existed ) {
+		return;
+	}
+
+	$q = 'DROP TABLE IF EXISTS ' . $tb;
+	$wpdb->query( $q );
+
+	if ( file_exists( LITESPEED_STATIC_DIR . '/ccsjs' ) ) {
+		File::rrmdir( LITESPEED_STATIC_DIR . '/ccsjs' );
+	}
+}
 
 /**
  * Append jQuery to JS optm exclude list for max compatibility
@@ -19,10 +95,10 @@ use LiteSpeed\Admin_Display;
  * @since  3.5.1
  */
 function litespeed_update_3_5() {
-	$__conf = Conf::get_instance();
+	$__conf = Conf::cls();
 	// Excludes jQuery
 	foreach ( array( 'optm-js_exc', 'optm-js_defer_exc' ) as $v ) {
-		$curr_setting = Conf::val( $v );
+		$curr_setting = $__conf->conf( $v );
 		$curr_setting[] = 'jquery.js';
 		$curr_setting[] = 'jquery.min.js';
 		$__conf->update( $v, $curr_setting );
@@ -30,7 +106,7 @@ function litespeed_update_3_5() {
 	// Turn off JS Combine and defer
 	$show_msg = false;
 	foreach ( array( 'optm-js_comb', 'optm-js_defer', 'optm-js_inline_defer' ) as $v ) {
-		$curr_setting = Conf::val( $v );
+		$curr_setting = $__conf->conf( $v );
 		if ( ! $curr_setting ) {
 			continue;
 		}
@@ -317,37 +393,37 @@ function litespeed_update_3_0( $ver ) {
 		'media_placeholder_resp_color'	=> 'media-placeholder_resp_color',
 		'media_placeholder_resp_async'	=> 'media-placeholder_resp_async',
 		'media_iframe_lazy'				=> 'media-iframe_lazy',
-		'media_img_lazyjs_inline'		=> 'media-lazyjs_inline',
+		// 'media_img_lazyjs_inline'		=> 'media-lazyjs_inline',
 
 		'media_optm_auto'			=> 'img_optm-auto',
 		'media_optm_cron'			=> 'img_optm-cron',
 		'media_optm_ori'			=> 'img_optm-ori',
 		'media_rm_ori_bkup'			=> 'img_optm-rm_bkup',
-		'media_optm_webp'			=> 'img_optm-webp',
+		// 'media_optm_webp'			=> 'img_optm-webp',
+		'media_webp_replace'		=> 'img_optm-webp',
 		'media_optm_lossless'		=> 'img_optm-lossless',
 		'media_optm_exif'			=> 'img_optm-exif',
-		'media_webp_replace'		=> 'img_optm-webp_replace',
 		'media_webp_replace_srcset'	=> 'img_optm-webp_replace_srcset',
 
 		'css_minify'			=> 'optm-css_min',
 		// 'css_inline_minify'		=> 'optm-css_inline_min',
 		'css_combine'			=> 'optm-css_comb',
 		// 'css_combined_priority'	=> 'optm-css_comb_priority',
-		'css_http2'				=> 'optm-css_http2',
+		// 'css_http2'				=> 'optm-css_http2',
 		'css_exclude' 			=> 'optm-css_exc',
 		'js_minify'				=> 'optm-js_min',
 		// 'js_inline_minify'		=> 'optm-js_inline_min',
 		'js_combine'			=> 'optm-js_comb',
 		// 'js_combined_priority'	=> 'optm-js_comb_priority',
-		'js_http2'				=> 'optm-js_http2',
+		// 'js_http2'				=> 'optm-js_http2',
 		'js_exclude' 			=> 'optm-js_exc',
-		'optimize_ttl'			=> 'optm-ttl',
+		// 'optimize_ttl'			=> 'optm-ttl',
 		'html_minify'			=> 'optm-html_min',
 		'optm_qs_rm'			=> 'optm-qs_rm',
 		'optm_ggfonts_rm'		=> 'optm-ggfonts_rm',
 		'optm_css_async'		=> 'optm-css_async',
-		'optm_ccss_gen'			=> 'optm-ccss_gen',
-		'optm_ccss_async'		=> 'optm-ccss_async',
+		// 'optm_ccss_gen'			=> 'optm-ccss_gen',
+		// 'optm_ccss_async'		=> 'optm-ccss_async',
 		'optm_css_async_inline'	=> 'optm-css_async_inline',
 		'optm_js_defer'			=> 'optm-js_defer',
 		'optm_emoji_rm'			=> 'optm-emoji_rm',
@@ -512,7 +588,7 @@ function litespeed_update_3_0( $ver ) {
 				'cache_browser'				=> 'cache-browser',
 				'cache_browser_ttl'			=> 'cache-ttl_browser',
 
-				'media_webp_replace'		=> 'img_optm-webp_replace',
+				'media_webp_replace'		=> 'img_optm-webp',
 			) ;
 			foreach ( $data as $k => $v ) {
 				if ( ! isset( $previous_site_options[ $k ] ) ) {

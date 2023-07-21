@@ -40,7 +40,7 @@ var _litespeed_dots ;
 	jQuery(document).ready(function () {
 		/************** Common LiteSpeed JS **************/
 		// Link confirm
-		$('[data-litespeed-cfm]').click(function(event) {
+		$('[data-litespeed-cfm]').on( 'click', function(event) {
 			if(confirm($.trim($(this).data('litespeed-cfm')).replace(/\\n/g,"\n"))) {
 				return true ;
 			}
@@ -51,32 +51,85 @@ var _litespeed_dots ;
 
 		/************** LSWCP JS ****************/
 		// page tab switch functionality
-		if($('[data-litespeed-tab]').length > 0){
-			// display default tab
-			var litespeed_tab_current = document.cookie.replace(/(?:(?:^|.*;\s*)litespeed_tab\s*\=\s*([^;]*).*$)|^.*$/, "$1") ;
-			if(window.location.hash.substr(1)) {
-				litespeed_tab_current = window.location.hash.substr(1) ;
+		( function() {
+			var hash = window.location.hash.substr( 1 );
+			var $tabs = $( '[data-litespeed-tab]' );
+			var $subtabs = $( '[data-litespeed-subtab]' );
+
+			// Handle tab and subtab events
+			var tab_action = function( $elems, type ) {
+				type = litespeed_tab_type( type );
+				var data = 'litespeed-' + type;
+				$elems.on( 'click', function ( _event ) {
+					litespeed_display_tab( $( this ).data( data ), type );
+					document.cookie = 'litespeed_' + type + '=' + $( this ).data( data );
+					$( this ).blur();
+				} );
+			};
+			tab_action( $tabs );
+			tab_action( $subtabs, 'subtab' );
+
+			if ( ! $tabs.length > 0 ) {
+				// No tabs exist
+				return;
 			}
-			if(!litespeed_tab_current || !$('[data-litespeed-tab="'+litespeed_tab_current+'"]').length) {
-				litespeed_tab_current = $('[data-litespeed-tab]').first().data('litespeed-tab') ;
+
+			// Find hash in tabs and subtabs
+			var $hash_tab = $tabs
+				.filter( '[data-litespeed-tab="' + hash + '"]:first' );
+			var $hash_subtab = $subtabs
+				.filter( '[data-litespeed-subtab="' + hash + '"]:first' );
+
+			// Find tab name
+			var $subtab;
+			var $tab;
+			var tab_name;
+			if ( $hash_subtab.length > 0 ) {
+				// Hash is a subtab
+				$tab = $hash_subtab.closest( '[data-litespeed-layout]' );
+				if ( $tab.length > 0 ) {
+					$subtab = $hash_subtab;
+					tab_name = $tab.data( 'litespeed-layout' );
+				}
 			}
-			litespeed_display_tab(litespeed_tab_current) ;
-			// tab switch
-			$('[data-litespeed-tab]').click(function(event) {
-				litespeed_display_tab($(this).data('litespeed-tab')) ;
-				document.cookie = 'litespeed_tab='+$(this).data('litespeed-tab') ;
-				$(this).blur() ;
-			}) ;
-		}
+			if ( typeof( $tab ) === 'undefined' || $tab.length < 1 ) {
+				// Maybe hash is a tab
+				$tab = $hash_tab;
+				if ( $tab.length < 1 ) {
+					// Maybe tab cookie exists
+					$tab = litespeed_tab_cookie( $tabs );
+					if ( $tab.length < 1 ) {
+						// Use the first tab by default
+						$tab = $tabs.first();
+					}
+				}
+				if ( typeof( tab_name ) === 'undefined' ) {
+					tab_name = $tab.data( 'litespeed-tab' );
+				}
+			}
+
+			// Always display a tab
+			litespeed_display_tab( tab_name );
+
+			// Find subtab name
+			if ( typeof( $subtab ) === 'undefined' || $subtab.length < 1 ) {
+				$subtab = litespeed_tab_cookie( $subtabs, 'subtab' );
+			}
+			if ( $subtab.length > 0 ) {
+				var subtab_name = $subtab.data( 'litespeed-subtab' );
+				// Display a subtab
+				litespeed_display_tab( subtab_name, 'subtab' );
+			}
+		} )();
 
 		// Manage page -> purge by
-		$('[name=purgeby]').change(function(event) {
+		$('[name=purgeby]').on( 'change', function(event) {
 			$('[data-purgeby]').hide() ;
 			$('[data-purgeby='+this.value+']').show() ;
 		}) ;
 
 		/*************** crawler ******************/
-		$('#litespeed-crawl-url-btn').click(function () {
+		$('#litespeed-crawl-url-btn').on( 'click', function () {
 			if( ! $(this).data('url') ){
 				return false ;
 			}
@@ -87,7 +140,7 @@ var _litespeed_dots ;
 			$(this).hide() ;
 		}) ;
 
-		$('#litespeed_manual_trigger').click(function(event) {
+		$('#litespeed_manual_trigger').on( 'click', function(event) {
 			$('#litespeed-loading-dot').before('<li>Manually Started</li>') ;
 			_litespeed_shell_interval = _litespeed_shell_interval_range[0] ;
 			litespeed_fetch_meta() ;
@@ -127,11 +180,11 @@ var _litespeed_dots ;
 		}
 
 		/** Promo banner **/
-		$( '#litespeed-promo-done' ).click( function( event ) {
+		$( '#litespeed-promo-done' ).on( 'click', function( event ) {
 			$( '.litespeed-banner-promo-full' ).slideUp() ;
 			$.get( litespeed_data.ajax_url_promo + '&done=1' ) ;
 		} ) ;
-		$( '#litespeed-promo-later' ).click( function( event ) {
+		$( '#litespeed-promo-later' ).on( 'click', function( event ) {
 			$( '.litespeed-banner-promo-full' ).slideUp() ;
 			$.get( litespeed_data.ajax_url_promo ) ;
 		} ) ;
@@ -148,7 +201,7 @@ var _litespeed_dots ;
 				var txt = litespeed_readable_time( $input.val() ) ;
 				$( that ).html( txt ? '= ' + txt : '' ) ;
 
-				$input.keyup(function(event) {
+				$input.on( 'keyup', function(event) {
 					var txt = litespeed_readable_time( $( this ).val() ) ;
 					$( that ).html( txt ? '= ' + txt : '' ) ;
 				});
@@ -159,7 +212,7 @@ var _litespeed_dots ;
 		 * Get server IP
 		 * @since  3.0
 		 */
-		$( '#litespeed_get_ip' ).click( function( e ) {
+		$( '#litespeed_get_ip' ).on( 'click', function( e ) {
 			$.ajax( {
 				url: litespeed_data.ajax_url_getIP,
 				dataType: 'json',
@@ -167,16 +220,48 @@ var _litespeed_dots ;
 					xhr.setRequestHeader( 'X-WP-Nonce', litespeed_data.nonce ) ;
 				},
 				success: function( data ) {
+					console.log( '[litespeed] get server IP response: ' + data );
 					$( '#litespeed_server_ip' ).html( data ) ;
 				}
 			} ) ;
 		} ) ;
 
 		/**
+		 * Freeze or melt a specific crawler
+		 * @since  4.3
+		 */
+		if ( $( '[data-crawler-list] [data-litespeed_toggle_id]' ).length > 0 ) {
+			$( '[data-crawler-list] [data-litespeed_toggle_id]' ).on( 'click', function( e ) {
+				var crawler_id = $( this ).attr( "data-litespeed_toggle_id" );
+				var crawler_id = Number( crawler_id.split('-').pop() );
+				var that = this;
+				$.ajax( {
+					url: litespeed_data.ajax_url_crawler_switch,
+					dataType: 'json',
+					method: 'POST',
+					cache: false,
+					data:{ crawler_id: crawler_id },
+					beforeSend: function ( xhr ) {
+						xhr.setRequestHeader( 'X-WP-Nonce', litespeed_data.nonce ) ;
+					},
+					success: function( data ) {
+						$( that ).toggleClass( 'litespeed-toggle-btn-default litespeed-toggleoff' , data == 0 ).toggleClass( 'litespeed-toggle-btn-primary' , data == 1 );
+						console.log( 'litespeed-crawler-ajax: change Activate option' );
+					},
+					error: function( xhr, error ) {
+						console.log( xhr );
+	      				console.log( error );
+						console.log( 'litespeed-crawler-ajax: option failed to save due to some error' );
+					}
+				} ) ;
+			} ) ;
+		}
+
+		/**
 		 * Click only once
 		 */
 		if ( $( '[data-litespeed-onlyonce]' ).length > 0 ) {
-			$( '[data-litespeed-onlyonce]' ).click( function ( e ) {
+			$( '[data-litespeed-onlyonce]' ).on( 'click', function ( e ) {
 				if ( $( this ).hasClass( 'disabled' ) ) {
 					e.preventDefault();
 				}
@@ -237,11 +322,74 @@ function litespeed_keycode( num ) {
 	return false ;
 }
 
-function litespeed_display_tab(tab) {
-	jQuery('[data-litespeed-tab]').removeClass('nav-tab-active') ;
-	jQuery('[data-litespeed-tab="'+tab+'"]').addClass('nav-tab-active') ;
-	jQuery('[data-litespeed-layout]').hide() ;
-	jQuery('[data-litespeed-layout="'+tab+'"]').show() ;
+/**
+ * Normalize specified tab type
+ * @since  4.7
+ */
+function litespeed_tab_type( type ) {
+	return 'subtab' === type ? type : 'tab';
+}
+
+/**
+ * Sniff cookies for tab and subtab
+ * @since  4.7
+ */
+function litespeed_tab_cookie( $elems, type ) {
+	type = litespeed_tab_type( type );
+	var re = new RegExp(
+		'(?:^|.*;)\\s*litespeed_' + type + '\\s*=\\s*([^;]*).*$|^.*$',
+		'ms'
+	);
+	var name = document.cookie.replace( re, "$1" );
+	return $elems.filter( '[data-litespeed-' + type + '="' + name + '"]:first' );
+}
+
+function litespeed_display_tab( name, type ) {
+	type = litespeed_tab_type( type );
+	var $tabs;
+	var $layouts;
+	var classname;
+	var layout_type;
+	if ( 'subtab' === type ) {
+		classname = 'focus';
+		layout_type = 'sublayout';
+		$tabs = jQuery( '[data-litespeed-subtab="' + name + '"]' )
+			.siblings( '[data-litespeed-subtab]' )
+			.addBack();
+		$layouts = jQuery( '[data-litespeed-sublayout="' + name + '"]' )
+			.siblings( '[data-litespeed-sublayout]' )
+			.addBack();
+	}
+	else {
+		// Maybe handle subtabs
+		var $subtabs =
+			jQuery( '[data-litespeed-layout="' + name + '"] [data-litespeed-subtab]' );
+		if ( $subtabs.length > 0 ) {
+			// Find subtab name
+			var $subtab = litespeed_tab_cookie( $subtabs, 'subtab' );
+			if ( $subtab.length < 1 ) {
+				$subtab = jQuery(
+					'[data-litespeed-layout="' + name + '"] [data-litespeed-subtab]:first'
+				);
+			}
+			if ( $subtab.length > 0 ) {
+				var subtab_name = $subtab.data( 'litespeed-subtab' );
+				// Display a subtab
+				litespeed_display_tab( subtab_name, 'subtab' );
+			}
+		}
+		classname = 'nav-tab-active';
+		layout_type = 'layout';
+		$tabs = jQuery( '[data-litespeed-tab]' );
+		$layouts = jQuery( '[data-litespeed-layout]' );
+	}
+	$tabs.removeClass( classname );
+	$tabs
+		.filter( '[data-litespeed-' + type + '="' + name + '"]' )
+		.addClass( classname );
+	$layouts.hide();
+	$layouts.filter( '[data-litespeed-' + layout_type + '="' + name + '"]' )
+		.show();
 }
 
 function lscwpEsiEnabled(the_checkbox, esi_ids) {

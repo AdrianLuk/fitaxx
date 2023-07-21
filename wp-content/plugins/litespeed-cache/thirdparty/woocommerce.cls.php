@@ -14,19 +14,13 @@ defined( 'WPINC' ) || exit;
 
 use \LiteSpeed\API;
 use \LiteSpeed\Base;
-use \LiteSpeed\Instance;
 
-class WooCommerce extends Instance
-{
-	protected static $_instance ;
-
+class WooCommerce extends Base {
 	const O_CACHE_TTL_FRONTPAGE = Base::O_CACHE_TTL_FRONTPAGE;
 
 	const CACHETAG_SHOP = 'WC_S' ;
 	const CACHETAG_TERM = 'WC_T.' ;
 	const O_UPDATE_INTERVAL = 'wc_update_interval' ;
-	const O_SHOP_FRONT_TTL = 'wc_shop_use_front_ttl' ;
-	const O_WOO_CACHE_CART = 'woo_cache_cart' ;
 	const O_PQS_CS = 0 ; // flush product on quantity + stock change, categories on stock change
 	const O_PS_CS = 1 ; // flush product and categories on stock change
 	const O_PS_CN = 2 ; // flush product on stock change, categories no flush
@@ -38,8 +32,7 @@ class WooCommerce extends Instance
 	const ESI_PARAM_PATH = 'wc_path' ;
 	const ESI_PARAM_LOCATED = 'wc_located' ;
 
-	private $cache_cart ;
-	private $esi_eanbled ;
+	private $esi_enabled ;
 
 	/**
 	 * Detects if WooCommerce is installed.
@@ -53,7 +46,7 @@ class WooCommerce extends Instance
 			return ;
 		}
 
-		self::get_instance()->add_hooks() ;
+		self::cls()->add_hooks() ;
 
 	}
 
@@ -67,8 +60,7 @@ class WooCommerce extends Instance
 	{
 		$this->_option_append() ;
 
-		$this->cache_cart = apply_filters( 'litespeed_conf', self::O_WOO_CACHE_CART ) ;
-		$this->esi_eanbled = apply_filters( 'litespeed_esi_status', false );
+		$this->esi_enabled = apply_filters( 'litespeed_esi_status', false );
 
 		add_action( 'litespeed_control_finalize', array( $this, 'set_control' ) );
 		add_action( 'litespeed_tag_finalize', array( $this, 'set_tag' ) );
@@ -79,7 +71,7 @@ class WooCommerce extends Instance
 
 		add_action( 'comment_post', array( $this, 'add_review' ), 10, 3 ) ;
 
-		if ( $this->esi_eanbled ) {
+		if ( $this->esi_enabled ) {
 			if ( function_exists( 'is_shop' ) && ! is_shop() ) {
 				add_action( 'litespeed_tpl_normal', array( $this, 'set_block_template' ) );
 				// No need for add-to-cart button
@@ -93,14 +85,6 @@ class WooCommerce extends Instance
 				add_filter( 'litespeed_esi_params', array( $this, 'add_post_id' ), 10, 2 );
 			}
 
-			/**
-			 * Only when cart is not empty, give it an ESI with private cache
-			 * Call when template_include to make sure woo cart is initialized
-			 * @since  1.7.2
-			 */
-			add_action( 'template_include', array( $this, 'check_if_need_esi' ) );
-			add_filter( 'litespeed_vary', array( $this, 'vary_maintain' ) );
-
 		}
 
 		if ( is_admin() ) {
@@ -109,26 +93,6 @@ class WooCommerce extends Instance
 			add_action( 'litespeed_settings_tab', array( $this, 'settings_add_tab' ) );
 			add_action( 'litespeed_settings_content', array( $this, 'settings_add_content' ) );
 			add_filter( 'litespeed_widget_default_options', array( $this, 'wc_widget_default' ), 10, 2 );
-		}
-
-		// Purge cart if is ESI / Purge private if not enabled ESI
-		if ( $this->cache_cart ) {
-			$hooks_to_purge = array(
-				'woocommerce_add_to_cart', 'woocommerce_ajax_added_to_cart',
-				'woocommerce_remove_cart_item',
-				'woocommerce_restore_cart_item',
-				'woocommerce_after_cart_item_quantity_update',
-				'woocommerce_applied_coupon', 'woocommerce_removed_coupon',
-				'woocommerce_checkout_order_processed',
-			) ;
-			foreach ( $hooks_to_purge as $v ) {
-				if ( $this->esi_eanbled ) {
-					add_action( $v, array( $this, 'purge_esi' ) ) ;
-				}
-				else {
-					add_action( $v, array( $this, 'purge_private_all' ) ) ;
-				}
-			}
 		}
 
 	}
@@ -180,8 +144,7 @@ class WooCommerce extends Instance
 	 * @since  1.7.2
 	 * @access public
 	 */
-	public function vary_maintain( $vary )
-	{
+	public function vary_maintain( $vary ) {
 		if ( $this->vary_needed() ) {
 			do_action( 'litespeed_debug', 'API: 3rd woo added vary due to cart not empty' );
 			$vary[ 'woo_cart' ] = 1;
@@ -482,8 +445,8 @@ class WooCommerce extends Instance
 		}
 
 		// Check if product has a cache ttl limit or not
-		$sale_from = get_post_meta( $id, '_sale_price_dates_from', true ) ;
-		$sale_to = get_post_meta( $id, '_sale_price_dates_to', true ) ;
+		$sale_from = (int) get_post_meta( $id, '_sale_price_dates_from', true ) ;
+		$sale_to = (int) get_post_meta( $id, '_sale_price_dates_to', true ) ;
 		$now = current_time( 'timestamp' ) ;
 		$ttl = false ;
 		if ( $sale_from && $now < $sale_from ) {
@@ -502,10 +465,10 @@ class WooCommerce extends Instance
 		if ( function_exists( 'is_product_taxonomy' ) && ! is_product_taxonomy() ) {
 			return ;
 		}
-		if ( isset($GLOBALS['product_cat']) ) {
+		if ( isset($GLOBALS['product_cat']) && is_string( $GLOBALS['product_cat'] ) ) { // todo: need to check previous woo version to find if its from old woo versions or not!
 			$term = get_term_by('slug', $GLOBALS['product_cat'], 'product_cat') ;
 		}
-		elseif ( isset($GLOBALS['product_tag']) ) {
+		elseif ( isset($GLOBALS['product_tag']) && is_string( $GLOBALS['product_tag'] ) ) {
 			$term = get_term_by('slug', $GLOBALS['product_tag'], 'product_tag') ;
 		}
 		else {
@@ -548,15 +511,8 @@ class WooCommerce extends Instance
 		}
 
 		$woocom = WC() ;
-		if ( ! isset($woocom) ) {
+		if ( ! $woocom || empty( $woocom->session ) ) {
 			return ;
-		}
-
-		// Set TTL
-		if ( function_exists( 'is_shop' ) && is_shop() ) {
-			if ( apply_filters( 'litespeed_conf', self::O_SHOP_FRONT_TTL ) ) {
-				do_action( 'litespeed_control_set_ttl', apply_filters( 'litespeed_conf', self::O_CACHE_TTL_FRONTPAGE ) );
-			}
 		}
 
 		// For later versions, DONOTCACHEPAGE should be set.
@@ -580,33 +536,6 @@ class WooCommerce extends Instance
 				if ( isset( $_GET['download_file'] ) || isset( $_GET['add-to-cart'] ) || is_page( $page_ids ) ) {
 					$err = 'woo non cacheable pages' ;
 				}
-				elseif ( is_null($woocom->cart) ) {
-					$err = 'null cart' ;
-				}
-				elseif ( ! $this->esi_eanbled && $woocom->cart->get_cart_contents_count() !== 0 ) {
-					if ( $this->cache_cart ) {
-						do_action( 'litespeed_control_set_private', 'cache cart' );
-						/**
-						 * no rewrite rule to set no vary, so can't set no_vary otherwise it will always miss as can't match vary
-						 * @since 1.6.6.1
-						 */
-						// do_action( 'litespeed_vary_no' );
-						do_action( 'litespeed_tag_add_private_esi', 'storefront-cart-header' );
-					}
-					else {
-						$err = 'cart is not empty' ;
-					}
-				}
-				elseif ( $esi_id === 'storefront-cart-header' ) {
-					if ( $this->cache_cart ) {
-						do_action( 'litespeed_control_set_private', 'cache cart' );
-						do_action( 'litespeed_vary_no' );
-						do_action( 'litespeed_tag_add_private_esi', 'storefront-cart-header' );
-					}
-					else {
-						$err = 'ESI cart should be nocache' ;
-					}
-				}
 				elseif ( function_exists( 'wc_notice_count' ) && wc_notice_count() > 0 ) {
 					$err = 'has wc notice' ;
 				}
@@ -625,7 +554,7 @@ class WooCommerce extends Instance
 			return ;
 		}
 
-		if ( in_array($uri, array('cart/', 'checkout/', 'my-account/', 'addons/', 'logout/', 'lost-password/', 'product/')) ) {
+		if ( in_array($uri, array('cart/', 'checkout/', 'my-account/', 'addons/', 'logout/', 'lost-password/', 'product/')) ) { // why contains `product`?
 			do_action( 'litespeed_control_set_nocache', 'uri in cart/account/user pages' );
 			return ;
 		}
@@ -773,8 +702,6 @@ class WooCommerce extends Instance
 		do_action( 'litespeed_conf_multi_switch', self::O_UPDATE_INTERVAL, 3 ); // This need to be before conf_append
 
 		do_action( 'litespeed_conf_append', self::O_UPDATE_INTERVAL, false );
-		do_action( 'litespeed_conf_append', self::O_SHOP_FRONT_TTL, true );
-		do_action( 'litespeed_conf_append', self::O_WOO_CACHE_CART, true );
 	}
 
 	/**

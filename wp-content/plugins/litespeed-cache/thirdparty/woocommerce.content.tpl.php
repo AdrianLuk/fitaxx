@@ -6,6 +6,8 @@ defined( 'WPINC' ) || exit;
 use \LiteSpeed\API;
 use \LiteSpeed\Doc;
 use \LiteSpeed\Admin_Display;
+use \LiteSpeed\Lang;
+use \LiteSpeed\Base;
 ?>
 
 <div data-litespeed-layout='woocommerce'>
@@ -18,7 +20,8 @@ use \LiteSpeed\Admin_Display;
 <div class="litespeed-callout notice notice-warning inline">
 	<h4><?php echo __( 'NOTICE:', 'litespeed-cache' ); ?></h4>
 	<p><?php echo __( 'After verifying that the cache works in general, please test the cart.', 'litespeed-cache' ); ?></p>
-	<p><?php echo sprintf( __( 'To test the cart, visit the <a %s>FAQ</a>.', 'litespeed-cache' ), 'href="https://docs.litespeedtech.com/lscache/lscwp/installation/#testing" target="_blank"' ); ?></p>
+	<p><?php echo sprintf( __( 'To test the cart, visit the <a %s>FAQ</a>.', 'litespeed-cache' ), 'href="https://docs.litespeedtech.com/lscache/lscwp/installation/#non-cacheable-pages" target="_blank"' ); ?></p>
+	<p><?php echo __( 'By default, the My Account, Checkout, and Cart pages are automatically excluded from caching. Misconfiguration of page associations in WooCommerce settings may cause some pages to be erroneously excluded.', 'litespeed-cache' ); ?></p>
 </div>
 
 <table class="wp-list-table striped litespeed-table"><tbody>
@@ -47,33 +50,6 @@ use \LiteSpeed\Admin_Display;
 			<?php endforeach; ?>
 			<div class="litespeed-desc">
 				<?php echo __( 'Determines how changes in product quantity and product stock status affect product pages and their associated category pages.', 'litespeed-cache' ); ?>
-			</div>
-		</td>
-	</tr>
-
-	<tr>
-		<th>
-			<?php $id = self::O_SHOP_FRONT_TTL; ?>
-			<?php echo __( 'Use Front Page TTL for the Shop Page', 'litespeed-cache' ); ?>
-		</th>
-		<td>
-			<?php do_action( 'litespeed_build_switch', $id ); ?>
-			<div class="litespeed-desc">
-				<?php echo __( 'Checking this option will force the shop page to use the front page TTL setting.', 'litespeed-cache' ); ?>
-				<?php echo sprintf( __( 'For example, if the homepage for the site is located at %1$s, the shop page may be located at %2$s.', 'litespeed-cache' ), 'https://www.EXAMPLE.com', 'https://www.EXAMPLE.com/shop' ); ?>
-			</div>
-		</td>
-	</tr>
-
-	<tr>
-		<th>
-			<?php $id = self::O_WOO_CACHE_CART; ?>
-			<?php echo __( 'Privately Cache Cart', 'litespeed-cache' ); ?>
-		</th>
-		<td>
-			<?php do_action( 'litespeed_build_switch', $id ); ?>
-			<div class="litespeed-desc">
-				<?php echo __( 'Privately cache cart when not empty.', 'litespeed-cache' ); ?>
 			</div>
 		</td>
 	</tr>

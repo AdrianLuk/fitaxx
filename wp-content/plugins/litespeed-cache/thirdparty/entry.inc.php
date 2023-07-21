@@ -22,12 +22,13 @@ $third_cls = array(
 	'Beaver_Builder',
 	'Caldera_Forms',
 	'Divi_Theme_Builder',
-	'Elementor',
 	'Facetwp',
+	'LiteSpeed_Check',
 	'Theme_My_Login',
 	'User_Switching',
 	'WCML',
 	'WooCommerce',
+	'WC_PDF_Product_Vouchers',
 	'Woo_Paypal',
 	'Wp_Polls',
 	'WP_PostRatings',
@@ -48,3 +49,5 @@ add_action( 'litespeed_init', 'LiteSpeed\Thirdparty\WooCommerce::preload' );
 add_action( 'litespeed_init', 'LiteSpeed\Thirdparty\NextGenGallery::preload' );
 add_action( 'litespeed_init', 'LiteSpeed\Thirdparty\AMP::preload' );
 add_action( 'litespeed_init', 'LiteSpeed\Thirdparty\Elementor::preload' );
+add_action( 'litespeed_init', 'LiteSpeed\Thirdparty\Gravity_Forms::preload' );
+add_action( 'litespeed_init', 'LiteSpeed\Thirdparty\Perfmatters::preload' );

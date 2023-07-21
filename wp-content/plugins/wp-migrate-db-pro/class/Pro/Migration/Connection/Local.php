@@ -116,7 +116,9 @@ class Local
 		    return $this->http->end_ajax( new \WP_Error( 'invalid-license', $message ) );
 	    }
 
-	    $data = array(
+        do_action('wpmdb_before_verify_connection_to_remote_site', $state_data);
+
+        $data = array(
 		    'action'  => 'wpmdb_verify_connection_to_remote_site',
 		    'intent'  => $state_data['intent'],
 		    'referer' => $this->util->get_short_home_address_from_url( Util::home_url() ),
@@ -150,6 +152,10 @@ class Local
 			    $remote_response
 		    );
 	    }
+
+        if (isset($response['site_details']['wpe_cookie'])) {
+            Persistence::storeRemoteWPECookie($response['site_details']['wpe_cookie']);
+        }
 
         $data['scheme'] = $url_bits['scheme'];
 	    $data += $response;

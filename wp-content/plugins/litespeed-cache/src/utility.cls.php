@@ -9,8 +9,7 @@ namespace LiteSpeed;
 
 defined( 'WPINC' ) || exit;
 
-class Utility extends Instance {
-	protected static $_instance;
+class Utility extends Root {
 	private static $_internal_domains;
 
 	/**
@@ -22,20 +21,7 @@ class Utility extends Instance {
 	 * @return bool True for valid rules, false otherwise.
 	 */
 	public static function syntax_checker( $rules ) {
-		$success = true;
-
-		set_error_handler( 'litespeed_exception_handler' );
-
-		try {
-			preg_match( self::arr2regex( $rules ), null );
-		}
-		catch ( \ErrorException $e ) {
-			$success = false;
-		}
-
-		restore_error_handler();
-
-		return $success;
+		return preg_match( self::arr2regex( $rules ), '' ) !== false;
 	}
 
 	/**
@@ -305,9 +291,9 @@ class Utility extends Instance {
 	 */
 	public static function parse_attr( $str ) {
 		$attrs = array();
-		preg_match_all( '#([\w-]+)=["\']([^"\']*)["\']#isU', $str, $matches, PREG_SET_ORDER );
+		preg_match_all( '#([\w-]+)=(["\'])([^\2]*)\2#isU', $str, $matches, PREG_SET_ORDER );
 		foreach ( $matches as $match ) {
-			$attrs[ $match[ 1 ] ] = trim( $match[ 2 ] );
+			$attrs[ $match[ 1 ] ] = trim( $match[ 3 ] );
 		}
 		return $attrs;
 	}
@@ -324,6 +310,9 @@ class Utility extends Instance {
 	 * @return bool|string False if not found, otherwise return the matched string in haystack.
 	 */
 	public static function str_hit_array( $needle, $haystack, $has_ttl = false ) {
+		if ( ! $haystack ) {
+			return false;
+		}
 		/**
 		 * Safety check to avoid PHP warning
 		 * @see  https://github.com/litespeedtech/lscache_wp/pull/131/commits/45fc03af308c7d6b5583d1664fad68f75fb6d017
@@ -350,9 +339,16 @@ class Utility extends Instance {
 				$item = $item[ 0 ];
 			}
 
-			if ( substr( $item, -1 ) === '$' ) {
+			if ( substr( $item, 0, 1 ) === '^' && substr( $item, -1 ) === '$' ) {
 				// do exact match
-				if ( substr( $item, 0, -1 ) === $needle ) {
+				if ( substr( $item, 1, -1 ) === $needle ) {
+					$hit = $item;
+					break;
+				}
+			}
+			elseif ( substr( $item, -1 ) === '$' ) {
+				// match end
+				if ( substr( $item, 0, -1 ) === substr($needle, -strlen( $item ) + 1 ) ) {
 					$hit = $item;
 					break;
 				}
@@ -411,6 +407,30 @@ class Utility extends Instance {
 		}
 
 		return $url;
+	}
+
+	/**
+	 * Convert URL to basename (filename)
+	 *
+	 * @since  4.7
+	 */
+	public static function basename( $url ) {
+		$url = trim( $url );
+		$uri = @parse_url( $url, PHP_URL_PATH );
+		$basename = pathinfo( $uri, PATHINFO_BASENAME );
+
+		return $basename;
+	}
+
+	/**
+	 * Drop .webp if existed in filename
+	 *
+	 * @since  4.7
+	 */
+	public static function drop_webp( $filename ) {
+		if ( substr($filename, -5 ) === '.webp' ) $filename = substr( $filename, 0, -5 );
+
+		return $filename;
 	}
 
 	/**
@@ -506,6 +526,14 @@ class Utility extends Instance {
 	}
 
 	/**
+	 * Validate ip v4
+	 * @since 5.5
+	 */
+	public static function valid_ipv4($ip) {
+		return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
+	}
+
+	/**
 	 * Generate domain const
 	 *
 	 * This will generate http://www.example.com even there is a subfolder in home_url setting
@@ -533,9 +561,11 @@ class Utility extends Instance {
 	 * @access public
 	 * @param  string $content
 	 * @param  bool $type String handler type
-	 * @return string
+	 * @return string|array
 	 */
 	public static function sanitize_lines( $arr, $type = null ) {
+		$types = $type ? explode( ',', $type ) : array();
+
 		if ( ! $arr ) {
 			if ( $type === 'string' ) {
 				return '';
@@ -549,21 +579,34 @@ class Utility extends Instance {
 
 		$arr = array_map( 'trim', $arr );
 		$changed = false;
-		if ( $type === 'uri' ) {
+		if ( in_array( 'uri', $types ) ) {
 			$arr = array_map( __CLASS__ . '::url2uri', $arr );
 			$changed = true;
 		}
-		if ( $type === 'relative' ) {
+		if ( in_array( 'basename', $types ) ) {
+			$arr = array_map( __CLASS__ . '::basename', $arr );
+			$changed = true;
+		}
+		if ( in_array( 'drop_webp', $types ) ) {
+			$arr = array_map( __CLASS__ . '::drop_webp', $arr );
+			$changed = true;
+		}
+		if ( in_array( 'relative', $types ) ) {
 			$arr = array_map( __CLASS__ . '::make_relative', $arr );// Remove domain
 			$changed = true;
 		}
-		if ( $type === 'domain' ) {
+		if ( in_array( 'domain', $types ) ) {
 			$arr = array_map( __CLASS__ . '::parse_domain', $arr );// Only keep domain
 			$changed = true;
 		}
 
-		if ( $type === 'noprotocol' ) {
+		if ( in_array( 'noprotocol', $types ) ) {
 			$arr = array_map( __CLASS__ . '::noprotocol', $arr ); // Drop protocol, `https://example.com` -> `//example.com`
+			$changed = true;
+		}
+
+		if ( in_array( 'trailingslash', $types ) ) {
+			$arr = array_map( 'trailingslashit', $arr ); // Append trailing slach, `https://example.com` -> `https://example.com/`
 			$changed = true;
 		}
 
@@ -573,7 +616,7 @@ class Utility extends Instance {
 		$arr = array_unique( $arr );
 		$arr = array_filter( $arr );
 
-		if ( $type === 'string' ) {
+		if ( in_array( 'string', $types ) ) {
 			return implode( "\n", $arr );
 		}
 
@@ -871,8 +914,8 @@ class Utility extends Instance {
 		$page_links = paginate_links( array(
 			'base' => add_query_arg( 'pagenum', '%#%' ),
 			'format' => '',
-			'prev_text' => __( '&laquo;', 'text-domain' ),
-			'next_text' => __( '&raquo;', 'text-domain' ),
+			'prev_text' => '&laquo;',
+			'next_text' => '&raquo;',
 			'total' => $num_of_pages,
 			'current' => $pagenum,
 		) );
