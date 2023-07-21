@@ -20,13 +20,7 @@ class SnazzyMaps_Index {
 			if($active_tab == 0){ \SnazzyMaps\SnazzyMaps_Styles::admin_styles_head(0); }
 			if($active_tab == 1){ \SnazzyMaps\SnazzyMaps_Explore::admin_explore_head(1); }
 			if($active_tab == 2){ \SnazzyMaps\SnazzyMaps_Settings::admin_my_snazzymaps_head(2); }
-			if($active_tab == 3){ \SnazzyMaps\SnazzyMaps_Help::admin_help_head(3); }       
-			
-			//Redirect to the next page
-			if(!headers_sent()){
-				header('Location: '. $_SERVER['REQUEST_URI']);
-				exit();
-			}
+			if($active_tab == 3){ \SnazzyMaps\SnazzyMaps_Help::admin_help_head(3); }
 		}
 	}
 

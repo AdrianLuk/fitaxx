@@ -3,8 +3,8 @@ Contributors: atmistinc
 Donate link: https://snazzymaps.com/about
 Tags: google,maps,google maps,styled maps,styles,color,schemes,themes
 Requires at least: 3.0
-Tested up to: 4.9.7
-Stable tag: 1.1.5
+Tested up to: 5.7
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -97,6 +97,28 @@ If you happen to find any other map plugins that don't work please send us an em
 3. Your Google Map is now a Snazzy Map!
 
 == Changelog ==
+
+= 1.4.0 =
+Release Date: March 27th, 2021
+
+* Update: Minor changes to support PHP 8.
+* Update: Verified that the plugin works with newer versions of WordPress up to 5.7.
+
+= 1.3.0 =
+Release Date: October 4th, 2020
+
+* Update: Minor changes to ensure that the plugin works with newer versions of WordPress up to 5.5.1.
+
+= 1.2.1 =
+Release Date: November 27th, 2019
+
+* Update: Additional security fixes.
+
+= 1.2.0 =
+Release Date: November 26th, 2019
+
+* Update: Security fixes.
+* Update: Verified that the plugin works with newer versions of WordPress up to 5.3.
 
 = 1.1.5 =
 Release Date: August 1st, 2018

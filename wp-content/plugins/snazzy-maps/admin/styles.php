@@ -19,7 +19,7 @@ class SnazzyMaps_Styles {
     }
 
     public static function _styleAction(&$style, $action){
-        return \SnazzyMaps\SnazzyMaps_Helpers::esc_rel_url("?page=snazzy_maps&tab=0&action=$action&style=" . $style['id']);
+        return \SnazzyMaps\SnazzyMaps_Helpers::esc_rel_url("?page=snazzy_maps&tab=0&action=$action&style=" . $style['id'] . "&_wpnonce=" . wp_create_nonce($action . "_" . $style['id']));
     }
 
     public static function admin_styles_head($tab){   
@@ -37,7 +37,13 @@ class SnazzyMaps_Styles {
             if(!\SnazzyMaps\SnazzyMaps_Styles::_getStyle($styles, $newStyle['id'])){
                 $styles[] = $newStyle;
                 update_option('SnazzyMapStyles', $styles);
-            }            
+            }
+            
+			//Redirect to the next page
+			if(!headers_sent()){
+                wp_safe_redirect(\SnazzyMaps\SnazzyMaps_Helpers::esc_rel_url("?page=snazzy_maps&tab=0"));
+				exit();
+			}   
         }
     }
 
@@ -50,7 +56,7 @@ class SnazzyMaps_Styles {
                 
                 
         //Delete the specified style from the array
-        if(isset($_GET['action']) && sanitize_text_field($_GET['action']) == 'delete_style'){
+        if(isset($_GET['action']) && sanitize_text_field($_GET['action']) == 'delete_style' && wp_verify_nonce($_GET['_wpnonce'], 'delete_style_' . sanitize_text_field($_GET['style']))){
             $index = \SnazzyMaps\SnazzyMaps_Styles::_getStyleIndex($styles, sanitize_text_field($_GET['style']));
             $defaultStyle = get_option('SnazzyMapDefaultStyle', null);  
             if(!is_null($index)){                
@@ -66,7 +72,7 @@ class SnazzyMaps_Styles {
         }
         
         //Enable the specified style
-        if(isset($_GET['action']) && sanitize_text_field($_GET['action']) == 'enable_style'){
+        if(isset($_GET['action']) && sanitize_text_field($_GET['action']) == 'enable_style' && wp_verify_nonce($_GET['_wpnonce'], 'enable_style_' . sanitize_text_field($_GET['style']))){
             $index = \SnazzyMaps\SnazzyMaps_Styles::_getStyleIndex($styles, sanitize_text_field($_GET['style']));
             if(!is_null($index)){
                 update_option('SnazzyMapDefaultStyle', $styles[$index]);
@@ -74,7 +80,7 @@ class SnazzyMaps_Styles {
         }
         
         //Disable the specified style        
-        if(isset($_GET['action']) && sanitize_text_field($_GET['action']) == 'disable_style'){
+        if(isset($_GET['action']) && sanitize_text_field($_GET['action']) == 'disable_style' && wp_verify_nonce($_GET['_wpnonce'], 'disable_style_' . sanitize_text_field($_GET['style']))){
             $index = \SnazzyMaps\SnazzyMaps_Styles::_getStyleIndex($styles, sanitize_text_field($_GET['style']));
             $defaultStyle = get_option('SnazzyMapDefaultStyle', null);    
             if(!is_null($index) && !is_null($defaultStyle) 
@@ -85,11 +91,6 @@ class SnazzyMaps_Styles {
         
         
         $defaultStyle = get_option('SnazzyMapDefaultStyle', null);
-        
-        //Used during testing
-        if(isset($_GET['clear_styles'])){
-            delete_option('SnazzyMapStyles');
-        }
 ?>
             
         <?php if (count($styles) > 0) { ?>
