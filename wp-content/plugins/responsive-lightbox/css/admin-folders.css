@@ -55,12 +55,30 @@ body.upload-php #posts-filter {
     float: right;
     width: calc(100% - 272px);
 }
-.media-modal-content .media-frame select.attachment-filters {
-	max-width: 100%;
-	min-width: auto;
-	width: calc(33% - 12px) !important;
-}
 #rl_folders_upload_files {
     position: relative;
     z-index: 1;
+}
+.rl-media-tag-select2 {
+	display: none;
+}
+.rl-media-tag-select2-dropdown {
+	z-index: 999999;
+}
+.compat-field-rl_media_tag {
+	min-height: 48px;
+}
+.compat-item .compat-field-rl_media_folder select {
+	max-width: 100%;
+	margin-left: 0;
+}
+@media only screen and (min-width: 782px) {
+	.compat-field-rl_media_folder .label {
+		max-width: 30%;
+	}
+	.compat-field-rl_media_folder .label span {
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
 }
