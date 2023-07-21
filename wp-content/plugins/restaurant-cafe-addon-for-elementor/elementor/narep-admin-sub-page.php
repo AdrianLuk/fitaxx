@@ -1,131 +1,233 @@
 <?php
-if ( ! function_exists( 'rcafe_bw_settings_init' ) ) {
-  function rcafe_bw_settings_init() {
-
-    register_setting( 'narepBasicWidgets', 'rcafe_bw_settings' );
-
-    // Card Title - Basic Widgets
-    add_settings_section(
-      'rcafe_narepBasicWidgets_section',
-      __( 'Basic Widgets', 'restaurant-cafe-addon-for-elementor' ),
-      '',
-      'narepBasicWidgets'
-    );
-
-    $narep_basic_widgets['about_me'] = __( 'About Me', 'restaurant-cafe-addon-for-elementor' );
-    $narep_basic_widgets['about_us'] = __( 'About Us', 'restaurant-cafe-addon-for-elementor' );
-    $narep_basic_widgets['blog'] = __( 'Blog', 'restaurant-cafe-addon-for-elementor' );
-    $narep_basic_widgets['restaurant_button'] = __( 'Restaurant Button', 'restaurant-cafe-addon-for-elementor' );
-    $narep_basic_widgets['chart'] = __( 'Chart', 'restaurant-cafe-addon-for-elementor' );
-    $narep_basic_widgets['contact'] = __( 'Contact', 'restaurant-cafe-addon-for-elementor' );
-    $narep_basic_widgets['gallery'] = __( 'Gallery', 'restaurant-cafe-addon-for-elementor' );
-    $narep_basic_widgets['get_apps'] = __( 'Get Apps', 'restaurant-cafe-addon-for-elementor' );
-    $narep_basic_widgets['history'] = __( 'History', 'restaurant-cafe-addon-for-elementor' );
-    $narep_basic_widgets['image_compare'] = __( 'Image Compare', 'restaurant-cafe-addon-for-elementor' );
-    $narep_basic_widgets['process'] = __( 'Process', 'restaurant-cafe-addon-for-elementor' );
-    $narep_basic_widgets['section_title'] = __( 'Section Title', 'restaurant-cafe-addon-for-elementor' );
-    $narep_basic_widgets['separator'] = __( 'Separator', 'restaurant-cafe-addon-for-elementor' );
-    $narep_basic_widgets['services'] = __( 'Services', 'restaurant-cafe-addon-for-elementor' );
-    $narep_basic_widgets['slider'] = __( 'Slider', 'restaurant-cafe-addon-for-elementor' );
-    $narep_basic_widgets['subscribe_contact'] = __( 'Subscribe / Contact', 'restaurant-cafe-addon-for-elementor' );
-    $narep_basic_widgets['table'] = __( 'Table', 'restaurant-cafe-addon-for-elementor' );
-    $narep_basic_widgets['team_single'] = __( 'Team Single', 'restaurant-cafe-addon-for-elementor' );
-    $narep_basic_widgets['team'] = __( 'Team', 'restaurant-cafe-addon-for-elementor' );
-    $narep_basic_widgets['testimonials'] = __( 'Testimonials', 'restaurant-cafe-addon-for-elementor' );
-    $narep_basic_widgets['typewriter'] = __( 'Typewriter', 'restaurant-cafe-addon-for-elementor' );
-    $narep_basic_widgets['video'] = __( 'Video', 'restaurant-cafe-addon-for-elementor' );
-    foreach ($narep_basic_widgets as $key => $value) {
-      // Label
-      add_settings_field(
-        'nbeds_'. $key,
-        $value,
-        'nbeds_'. $key .'_render',
-        'narepBasicWidgets',
-        'rcafe_narepBasicWidgets_section',
-        array( 'label_for' => 'nbeds_'. $key .'-id' )
-      );
-    }
-
-  }
-}
-
-if ( ! function_exists( 'rcafe_uw_settings_init' ) ) {
-  function rcafe_uw_settings_init() {
-
-    register_setting( 'narepUniqueWidgets', 'rcafe_uw_settings' );
-
-    // Card Title - Unique Widgets
-    add_settings_section(
-      'rcafe_narepUniqueWidgets_section',
-      __( 'Unique Widgets', 'restaurant-cafe-addon-for-elementor' ),
-      '',
-      'narepUniqueWidgets'
-    );
-
-    $narep_unique_widgets['benefits'] = __( 'Benefits (Pro)', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['branches'] = __( 'Branches', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['branch_slider'] = __( 'Branch Slider (Pro)', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['chefs_recipe'] = __( 'Chefs Recipe', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['food_menu'] = __( 'Food Menu', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['food_tab'] = __( 'Food Tab', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['food_item'] = __( 'Food Item', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['gift_card'] = __( 'Gift Card (Pro)', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['ingredients'] = __( 'Ingredients', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['image_parallax'] = __( 'Image Parallax (Pro)', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['layered_image'] = __( 'Layered Image (Pro)', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['offers'] = __( 'Offers', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['open_table'] = __( 'Open Table (*Pro)', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['particular_recipe'] = __( 'Particular Recipe (Pro)', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['pricing'] = __( 'Pricing', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['pricing_content'] = __( 'Pricing Content (Pro)', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['pricing_tab'] = __( 'Pricing Tab (Pro)', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['products_addon_menu'] = __( 'Products Addon Menu (Pro)', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['products_filter'] = __( 'Products Filter (Pro)', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['products_food_item'] = __( 'Products Food Item (Pro)', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['products_food_menu'] = __( 'Products Food Menu (Pro)', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['food_banner'] = __( 'Food Banner (Pro)', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['restaurants'] = __( 'Restaurants', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['rooms'] = __( 'Rooms (*Pro)', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['specialties'] = __( 'Specialties', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['stats'] = __( 'Stats', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['tab'] = __( 'Tab (Pro)', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['valuable_box'] = __( 'Valuable Box', 'restaurant-cafe-addon-for-elementor' );
-    $narep_unique_widgets['working_hours'] = __( 'Working Hours', 'restaurant-cafe-addon-for-elementor' );
-    foreach ($narep_unique_widgets as $key => $value) {
-      // Label
-      add_settings_field(
-        'nbeds_'. $key,
-        $value,
-        'nbeds_'. $key .'_render',
-        'narepUniqueWidgets',
-        'rcafe_narepUniqueWidgets_section',
-        array( 'label_for' => 'nbeds_'. $key .'-id' )
-      );
-    }
-
-  }
-}
-
 // Output on Admin Page
 if ( ! function_exists( 'narep_admin_sub_page' ) ) {
   function narep_admin_sub_page() { ?>
-    <h2 class="title">Enable & Disable - Restaurant Elementor Widgets</h2>
-    <div class="card narep-fields-card narep-fields-basic">
-      <form action='options.php' method='post'>
-        <?php
-        settings_fields( 'narepBasicWidgets' );
-        do_settings_sections( 'narepBasicWidgets' );
-        submit_button(__( 'Save Basic Widgets Settings', 'restaurant-cafe-addon-for-elementor' ), 'basic-submit-class');
-        ?>
-      </form>
-    </div><div class="card narep-fields-card narep-fields-unique">
-      <form action='options.php' method='post'>
-        <?php
-        settings_fields( 'narepUniqueWidgets' );
-        do_settings_sections( 'narepUniqueWidgets' );
-        submit_button(__( 'Save Unique Widgets Settings', 'restaurant-cafe-addon-for-elementor' ), 'unique-submit-class');
-        ?>
-      </form>
+    <?php 
+      $rcafe_bw_settings  = get_option('rcafe_bw_settings') ? get_option('rcafe_bw_settings') : [];
+      $rcafe_uw_settings  = get_option('rcafe_uw_settings') ? get_option('rcafe_uw_settings') : [];
+      $rcafe_bw_toggle    = get_option('rcafe_bw_toggle') ? get_option('rcafe_bw_toggle') : 0;
+      $rcafe_uw_toggle    = get_option('rcafe_uw_toggle') ? get_option('rcafe_uw_toggle') : 0;
+    ?>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="//fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <div class="narep-admin-options narep-container">
+
+      <div class="mb-4 mt-4">
+        <h1>Welcome to the <strong>Restaurant &amp; Cafe Addon for Elementor</strong></h1>
+        <p class="lead">Restaurant & Cafe Addon for Elementor covers all the must-needed elements for creating a perfect Restaurant website using Elementor Page Builder. 35+ Unique & Basic Elementor widget covers all of the Restaurant elements.</p>
+      </div>
+
+      <div class="narep-row">
+        <div class="narep-col-8">
+          <div class="narep-row align-items-center">
+            <div class="narep-col-6">
+              <div class="d-flex align-items-center narep-logo-wrapper">
+                <img src="<?php echo NAREP_URL . 'assets/images/logo.png'; ?>" alt="logo" class="narep-logo">
+                <span>
+                  by <a href="https://nicheaddons.com/" target="_blank"><strong>Nichaddons</strong></a> / Version: <?php echo NAREP_VERSION; ?>
+                </span>
+              </div>
+            </div>
+            <div class="narep-col-6">
+              <div class="d-flex justify-content-end">
+                <div class="narep-search-widget-holder">
+                  <svg class="narep-search-widget-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20"><path d="M18.869 19.162l-5.943-6.484c1.339-1.401 2.075-3.233 2.075-5.178 0-2.003-0.78-3.887-2.197-5.303s-3.3-2.197-5.303-2.197-3.887 0.78-5.303 2.197-2.197 3.3-2.197 5.303 0.78 3.887 2.197 5.303 3.3 2.197 5.303 2.197c1.726 0 3.362-0.579 4.688-1.645l5.943 6.483c0.099 0.108 0.233 0.162 0.369 0.162 0.121 0 0.242-0.043 0.338-0.131 0.204-0.187 0.217-0.503 0.031-0.706zM1 7.5c0-3.584 2.916-6.5 6.5-6.5s6.5 2.916 6.5 6.5-2.916 6.5-6.5 6.5-6.5-2.916-6.5-6.5z"></path></svg>
+                  <input class="narep-search-widget-field narep-input" value="" placeholder="Search widgets">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Basic Widgets Area -->
+          <div class="narep-widgets-section">
+            <div class="narep-widgets-section-inner">
+              <div class="narep-widgets-section-title-holder">
+                <h3 class="narep-widgets-section-title"><?php esc_html_e('Basic Widgets', 'restaurant-cafe-addon-for-elementor'); ?></h3>
+                <div class="narep-checkbox-toggle narep-field">
+                  <h6 class="narep-checkbox-toggle-text"><?php esc_html_e('Activate All', 'restaurant-cafe-addon-for-elementor'); ?></h6>
+                  <label class="switch narep-checkbox-toggle-label">
+                    <input type="checkbox" <?php checked( $rcafe_bw_toggle, 1 ); ?> id="narep-checkbox-toggle-bw" value="1">
+                    <span class="narep-checkbox-toggle-bw-slider slider round" data-ajax-url="<?php echo admin_url('admin-ajax.php'); ?>"></span>
+                  </label>
+                  <button 
+                  class="button button-outline basic-submit-class rcafe-bw-settings-save" 
+                  ><?php esc_html_e('Save', 'restaurant-cafe-addon-for-elementor'); ?></button>
+                </div>
+              </div>
+              
+              <form method="post" class="rcafe-bw-settings-form" data-ajax-url="<?php echo admin_url('admin-ajax.php'); ?>">
+                <div class="narep-row">
+                  <?php foreach (rcafe_basic_widgets_settings_init() as $id => $option) { ?>
+                  <!-- Widgets start -->
+                  <div class="narep-col-6 narep-widget-col" data-widget-name="<?php echo strtolower( $option['title'] ); ?>"> 
+                    <div class="narep-widget-grid<?php if($option['is_premium']) { ?> narep-widget-premium<?php } ?>">
+                      <div class="narep-widget-grid-inner">
+                        <!-- Widget start -->
+                        <div class="narep-widgets-item narep-col-sm-12 narep-col-md-6">
+                          <div class="narep-widgets-item-top">
+                            <h4 class="narep-widgets-title">
+                              <span class="narep-widgets-title-inner">
+                                <?php echo esc_html($option['title']); ?>
+                                <?php if($option['is_premium']) { ?>
+                                  <sup class="narep-widgets-premium-label"><?php esc_html_e('premium', 'restaurant-cafe-addon-for-elementor'); ?></sup>
+                                <?php } ?>
+                              </span>
+                            </h4>
+                            <div class="narep-checkbox-toggle narep-field">
+                              <label class="switch">
+                                <input type="checkbox" <?php checked( $rcafe_bw_settings['nbeds_' . $id], 1 ); ?> name="nbeds_<?php echo esc_attr($id); ?>" id="nbeds_<?php echo esc_attr($id); ?>-id" value="1">
+                                <span class="slider round"></span>
+                              </label>
+                            </div>
+                          </div>
+                          <?php if($option['demo_url']) { ?>
+                            <a href="<?php echo $option['demo_url']; ?>" target="_blank"><?php esc_html_e('Demo', 'restaurant-cafe-addon-for-elementor'); ?></a>
+                          <?php } if($option['documentation_url']) { ?>
+                            <a href="<?php echo $option['documentation_url']; ?>" target="_blank"><?php esc_html_e('Documentation', 'restaurant-cafe-addon-for-elementor'); ?></a>
+                          <?php } if($option['video_url']) { ?>
+                            <a href="<?php echo $option['video_url']; ?>" target="_blank"><?php esc_html_e('Video', 'restaurant-cafe-addon-for-elementor'); ?></a>
+                          <?php } ?>
+                        </div>                  
+                      </div>  
+                    </div>
+                  </div><!-- Widgets end -->
+                  <?php } ?> 
+                </div>
+              </form>
+            </div>
+          </div><!-- Basic Widgets Area End -->
+
+          <!-- Unique Widgets Area -->
+          <div class="narep-widgets-section">
+            <div class="narep-widgets-section-inner">
+              <div class="narep-widgets-section-title-holder">
+                <h3 class="narep-widgets-section-title"><?php esc_html_e('Unique Widgets', 'restaurant-cafe-addon-for-elementor'); ?></h3>
+                <div class="narep-checkbox-toggle narep-field">
+                  <h6 class="narep-checkbox-toggle-text"><?php esc_html_e('Activate All', 'restaurant-cafe-addon-for-elementor'); ?></h6>
+                  <label class="switch narep-checkbox-toggle-label">
+                    <input type="checkbox" <?php checked( $rcafe_uw_toggle, 1 ); ?> id="narep-checkbox-toggle-uw" value="1">
+                    <span class="narep-checkbox-toggle-uw-slider slider round" data-ajax-url="<?php echo admin_url('admin-ajax.php'); ?>"></span>
+                  </label>
+                  <button 
+                  class="button button-outline basic-submit-class rcafe-uw-settings-save" 
+                  ><?php esc_html_e('Save', 'restaurant-cafe-addon-for-elementor'); ?></button>
+                </div>
+              </div>
+              
+              <form method="post" class="rcafe-uw-settings-form" data-ajax-url="<?php echo admin_url('admin-ajax.php'); ?>">
+                <div class="narep-row">
+                  <?php foreach (rcafe_unique_widgets_settings_init() as $id => $option) { ?>
+                  <!-- Widgets start -->
+                  <div class="narep-col-6 narep-widget-col" data-widget-name="<?php echo strtolower( $option['title'] ); ?>"> 
+                    <div class="narep-widget-grid <?php if($option['is_premium']) { ?>narep-widget-premium<?php } ?>">
+                      <div class="narep-widget-grid-inner">
+                        <!-- Widget start -->
+                        <div class="narep-widgets-item narep-col-sm-12 narep-col-md-6">
+                          <div class="narep-widgets-item-top">
+                            <h4 class="narep-widgets-title">
+                              <span class="narep-widgets-title-inner">
+                                <?php echo esc_html($option['title']); ?>
+                                <?php if($option['is_premium']) { ?>
+                                  <sup class="narep-widgets-premium-label"><?php esc_html_e('premium', 'restaurant-cafe-addon-for-elementor'); ?></sup>
+                                <?php } ?>
+                              </span>
+                            </h4>
+                            <div class="narep-checkbox-toggle narep-field">
+                              <?php if(rcafe_fs()->is_free_plan() && $option['is_premium']) { 
+                                $plan_class = 'free-plan'; 
+                              } else { 
+                                $plan_class = 'paid-plan'; 
+                              } ?>
+                              <img class="img-toggle <?php echo $plan_class; ?>" src="<?php echo NAREP_URL . 'assets/images/toggle.png'; ?>" alt="toggle">
+                              <label class="switch main-toggle <?php echo $plan_class; ?>">
+                                <input type="checkbox" <?php checked( $rcafe_uw_settings['nbeds_' . $id], 1 ); ?> name="nbeds_<?php echo esc_attr($id); ?>" id="nbeds_<?php echo esc_attr($id); ?>-id" value="1">
+                                <span class="slider round"></span>
+                              </label>
+                            </div>
+                          </div>
+                          <?php if($option['demo_url']) { ?>
+                            <a href="<?php echo $option['demo_url']; ?>" target="_blank"><?php esc_html_e('Demo', 'restaurant-cafe-addon-for-elementor'); ?></a>
+                          <?php } if($option['documentation_url']) { ?>
+                            <a href="<?php echo $option['documentation_url']; ?>" target="_blank"><?php esc_html_e('Documentation', 'restaurant-cafe-addon-for-elementor'); ?></a>
+                          <?php } if($option['video_url']) { ?>
+                            <a href="<?php echo $option['video_url']; ?>" target="_blank"><?php esc_html_e('Video', 'restaurant-cafe-addon-for-elementor'); ?></a>
+                          <?php } if(rcafe_fs()->is_free_plan() && $option['is_premium']) { ?>
+                            <a href="<?php echo admin_url('admin.php?page=narep_admin_page-pricing'); ?>" class="narep-update-pro" target="_blank"><?php esc_html_e('Upgrade', 'restaurant-cafe-addon-for-elementor'); ?></a>
+                          <?php } ?>
+                        </div>
+                      </div>  
+                    </div>
+                  </div><!-- Widgets end -->
+                  <?php } ?> 
+                </div>
+              </form>
+            </div>
+          </div><!-- Unique Widgets Area End -->
+
+        </div>
+        <!-- Advertisements start -->
+        <div class="narep-col-4">
+          <div class="nichads-wrapper ms-3">
+            <div class="single-nichads mb-4">
+              <a href="//nicheaddons.com">
+                <img src="//nicheaddons.com/wp-content/uploads/2023/07/420x250-nichbase.jpg" alt="nichbase">
+              </a>            
+            </div>
+            <div class="narep-row">
+              <div class="narep-col-6">
+                <div class="narep-info-box">
+                  <a href="//nicheaddons.com/demos/restaurant/" target="_blank">
+                    <span class="ti-blackboard"></span>
+                    <span>Live Demo</span>
+                  </a>
+                </div>
+              </div>
+              <div class="narep-col-6">
+                <div class="narep-info-box">
+                  <a href="//wordpress.org/plugins/restaurant-cafe-addon-for-elementor/" target="_blank">
+                    <span class="ti-world"></span>
+                    <span>Plugins Page</span>
+                  </a>
+                </div>
+              </div>
+              <div class="narep-col-6">
+                <div class="narep-info-box">
+                  <a href="//nicheaddons.com/docs/restaurant-cafe-addon-basic-elements/" target="_blank">
+                    <span class="ti-book"></span>
+                    <span>Documentation</span>
+                  </a>
+                </div>
+              </div>
+              <div class="narep-col-6">
+                <div class="narep-info-box">
+                  <a href="<?php echo admin_url('admin.php?page=narep_admin_page-contact') ?>" target="_blank">
+                    <span class="ti-headphone-alt"></span>
+                    <span>Support</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="single-nichads mb-4">
+              <a href="//nicheaddons.com/plugins/restaurant-addon/" target="_blank">
+                <img src="//nicheaddons.com/wp-content/uploads/2023/07/420x680-restaurant-pro.jpg" alt="restaurant-pro">
+              </a>               
+            </div>
+            <div class="single-nichads mb-4">
+              <a href="//nicheaddons.com/themes/nichebase/" target="_blank">
+                <img src="//nicheaddons.com/wp-content/uploads/2023/07/420x680-nichbase-2.jpg" alt="nichbase">
+              </a>               
+            </div>
+            <div class="single-nichads mb-4">
+              <a href="//nicheaddons.com/plugin/" target="_blank">
+                <img src="//nicheaddons.com/wp-content/uploads/2023/07/420x680-other-plugins.jpg" alt="other-plugins">
+              </a>               
+            </div>
+          </div>
+        </div><!-- Advertisements end -->
+      </div>
     </div>
     <?php
   }

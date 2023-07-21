@@ -6,11 +6,14 @@ Plugin URI: https://nicheaddons.com/demos/restaurant
 Description: Restaurant & Cafe Addon for Elementor covers all the must-needed elements for creating a perfect Restaurant website using Elementor Page Builder. 50+ Unique & Basic Elementor widget covers all of the Restaurant elements.
 Author: NicheAddons
 Author URI: https://nicheaddons.com/
-Version: 1.4.5
+Version: 1.5.0
 Text Domain: restaurant-cafe-addon-for-elementor
 */
 include_once ABSPATH . 'wp-admin/includes/plugin.php';
 // Pro Codes
+/* PLUGIN SELF PATH */
+define( 'NAREP_VERSION', '1.5.0' );
+define( 'NAREP_URL', plugins_url( '/', __FILE__ ) );
 
 if ( !function_exists( 'rcafe_fs' ) ) {
     // Create a helper function for easy SDK access.
@@ -70,8 +73,17 @@ if ( !function_exists( 'rcafe_fs' ) ) {
  */
 
 if ( !function_exists( 'narep_admin_scripts_styles' ) ) {
-    function narep_admin_scripts_styles()
+    function narep_admin_scripts_styles( $hook )
     {
+        if ( 'toplevel_page_narep_admin_page' == $hook ) {
+            wp_enqueue_style(
+                'linea',
+                plugins_url( '/', __FILE__ ) . 'assets/css/themify-icons.min.css',
+                array(),
+                '1.0.0',
+                'all'
+            );
+        }
         wp_enqueue_style( 'narep-admin-styles', plugins_url( '/', __FILE__ ) . 'assets/css/admin-styles.css', true );
         wp_enqueue_script(
             'repeatable-fields',
@@ -93,12 +105,11 @@ if ( !function_exists( 'narep_admin_scripts_styles' ) ) {
 }
 
 // Admin Pages
+require_once plugin_dir_path( __FILE__ ) . '/elementor/narep-admin-functions.php';
 require_once plugin_dir_path( __FILE__ ) . '/elementor/narep-admin-page.php';
 require_once plugin_dir_path( __FILE__ ) . '/elementor/narep-admin-sub-page.php';
 require_once plugin_dir_path( __FILE__ ) . '/elementor/narep-admin-basic-fields.php';
 require_once plugin_dir_path( __FILE__ ) . '/elementor/narep-admin-unique-fields.php';
-add_action( 'admin_init', 'rcafe_bw_settings_init' );
-add_action( 'admin_init', 'rcafe_uw_settings_init' );
 
 if ( !function_exists( 'narep_admin_menu' ) ) {
     add_action( 'admin_menu', 'narep_admin_menu' );
@@ -109,18 +120,18 @@ if ( !function_exists( 'narep_admin_menu' ) ) {
             'Restaurant Addon',
             'manage_options',
             'narep_admin_page',
-            'narep_admin_page',
-            'dashicons-carrot',
+            'narep_admin_sub_page',
+            NAREP_URL . 'assets/images/icon.png',
             80
         );
-        add_submenu_page(
-            'narep_admin_page',
-            'Enable & Disable',
-            'Enable & Disable',
-            'manage_options',
-            'narep_admin_sub_page',
-            'narep_admin_sub_page'
-        );
+        // add_submenu_page(
+        //     'narep_admin_page',
+        //     'Enable & Disable',
+        //     'Enable & Disable',
+        //     'manage_options',
+        //     'narep_admin_sub_page',
+        //     'narep_admin_sub_page'
+        // );
     }
 
 }

@@ -127,9 +127,9 @@ class Restaurant_Elementor_Addon_Table extends Widget_Base{
 					'label' => esc_html__( 'Text Style', 'restaurant-cafe-addon-for-elementor' ),
 					'type' => Controls_Manager::SELECT,
 					'options' => [
-						'text'          => esc_html__('Text', 'restaurant-cafe-addon-for-elementor'),
-	          'icon'          => esc_html__('Icon', 'restaurant-cafe-addon-for-elementor'),
-	          'button'          => esc_html__('Button', 'restaurant-cafe-addon-for-elementor'),
+						'text'   => esc_html__('Text', 'restaurant-cafe-addon-for-elementor'),
+	          			'icon'   => esc_html__('Icon', 'restaurant-cafe-addon-for-elementor'),
+	          			'button' => esc_html__('Button', 'restaurant-cafe-addon-for-elementor'),
 					],
 					'default' => 'text',
 				]
@@ -422,7 +422,7 @@ class Restaurant_Elementor_Addon_Table extends Widget_Base{
 					],
 
 				],
-				'fields' => $repeater->get_controls(),
+				'fields' => $repeaterOne->get_controls(),
 				'title_field' => '{{{ row_text1 }}}',
 			]
 		);
@@ -845,13 +845,13 @@ class Restaurant_Elementor_Addon_Table extends Widget_Base{
 						      <thead>
 						        <tr>';
 						        // Group Param Output
-										if ( is_array( $tableItems_title ) && !empty( $tableItems_title ) ){
-										  foreach ( $tableItems_title as $each_title ) {
-												$table_title = $each_title['table_title'] ? $each_title['table_title'] : '';
-											  $output .= '<th>'.$table_title.'</th>';
-										  }
-										}
-       	$output .= '</tr>
+								if ( is_array( $tableItems_title ) && !empty( $tableItems_title ) ){
+								  foreach ( $tableItems_title as $each_title ) {
+										$table_title = $each_title['table_title'] ? $each_title['table_title'] : '';
+									  $output .= '<th>'.$table_title.'</th>';
+								  }
+								}
+       							$output .= '</tr>
 						      </thead>
 						      <tbody>';
 						      	// Group Param Output

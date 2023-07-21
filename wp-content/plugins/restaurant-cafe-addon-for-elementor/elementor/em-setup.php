@@ -37,7 +37,107 @@ if ( !class_exists('Restaurant_Elementor_Addon_Core_Elementor_init') ){
 				wp_enqueue_script( 'narestaurant-elementor', plugins_url( '/', __FILE__ ) . '/js/narestaurant-elementor.js', [ 'jquery' ], false, true );
 			} );
 
+			add_action( 'elementor/editor/before_enqueue_scripts', function() {
+				wp_enqueue_style( 'narestaurant-elementor', plugins_url( '/', __FILE__ ) . '/css/narestaurant-elementor.css' );
+			} );
+
 		}
+
+		/**
+		 * Add a new dashboard widget.
+		 */
+		function dashboard_widget() {
+			wp_add_dashboard_widget( 'nichaddons_dashboard_widget', 'Nichaddons News', [ $this, 'dashboard_widget_ouput' ] );
+		}
+
+
+		/**
+		 * Output the contents of the dashboard widget
+		 */
+		function dashboard_widget_ouput( $post, $callback_args ) {
+			?>
+			<div class="nichaddons-dashboard-widget">
+				<div class="nichaddons-dw-header">
+					<div class="nichaddons-dw-logo">
+						<a href="//nicheaddons.com/?utm_source=dash&amp;utm_medium=wp&amp;utm_campaign=widget">
+							<img src="//nicheaddons.com/wp-content/uploads/2023/07/NicheAddons-Logo-SM.png" alt="Nicheaddons" height="32">
+							Nicheaddons		
+						</a>
+					</div>
+					<div class="nichaddons-dw-market-link">
+						<a href="//nicheaddons.com/plugin/?utm_source=dash&amp;utm_medium=wp&amp;utm_campaign=widget">
+							<span aria-hidden="true" class="dashicons dashicons-external"></span>
+							<?php esc_html_e( 'Check all plugins', 'restaurant-cafe-addon-for-elementor' ); ?>
+						</a>
+					</div>
+				</div>
+
+				<div class="nichaddons-dw-sticky-item nichaddons-dw-box">
+					<div class="nichaddons-dw-sticky-item-image">
+						<a href="//nicheaddons.com/?utm_source=dash&amp;utm_medium=wp&amp;utm_campaign=widget" target="_blank">
+							<img src="//nicheaddons.com/wp-content/uploads/2023/07/560x315-dashboard.jpg" alt="nichebase">
+						</a>
+					</div>
+					<div class="nichaddons-dw-sticky-item-text">
+						<h3><?php esc_html_e( 'Unlock the potential of NicheAddon’s Themes and Plugins to create your website rapidly and at zero cost. With a remarkable user base of over 20,000+ active websites, our expertise is undeniable.', 'restaurant-cafe-addon-for-elementor' ); ?></h3>
+						<p><a href="//nicheaddons.com/?utm_source=dash&amp;utm_medium=wp&amp;utm_campaign=widget" target="_blank"><?php esc_html_e( 'Checkout Our Themes & Plugins', 'restaurant-cafe-addon-for-elementor' ); ?></a></p>
+					</div>
+				</div>
+
+				<div class="nichaddons-dw-support nichaddons-dw-box">
+					<h2><?php esc_html_e( 'Restaurant Addon Support', 'restaurant-cafe-addon-for-elementor' ); ?></h2>
+					<p><?php esc_html_e( 'Our support team is always there to help you out with any questions or issues you may come across.', 'restaurant-cafe-addon-for-elementor' ); ?></p>
+					<div class="nichaddons-dw-support-links">
+						<div class="nichaddons-dw-support-row">
+							<div class="nichaddons-dw-support-cell">
+								<a href="//nicheaddons.com/docs/restaurant-cafe-addon-basic-elements/" target="_blank">
+									<span aria-hidden="true" class="dashicons dashicons-external"></span>
+									<?php esc_html_e( 'Basic Elements Doc', 'restaurant-cafe-addon-for-elementor' ); ?>
+								</a>
+							</div>
+							<div class="nichaddons-dw-support-cell">
+								<a href="//nicheaddons.com/docs/restaurant-cafe-addon-unique-elements/" target="_blank">
+									<span aria-hidden="true" class="dashicons dashicons-external"></span>
+									<?php esc_html_e( 'Unique Elements Doc', 'restaurant-cafe-addon-for-elementor' ); ?>
+								</a>
+							</div>
+						</div>
+						<div class="nichaddons-dw-support-row">
+							<div class="nichaddons-dw-support-cell">
+								<a href="//www.youtube.com/playlist?list=PLN8jAS2iQBQXYosU21wovpqj-xR_aT_Uz" target="_blank">
+									<span aria-hidden="true" class="dashicons dashicons-external"></span>
+									<?php esc_html_e( 'Video Tutorials', 'restaurant-cafe-addon-for-elementor' ); ?>
+								</a>
+							</div>
+							<div class="nichaddons-dw-support-cell">
+								<a href="<?php echo admin_url('admin.php?page=narep_admin_page-contact'); ?>" target="_blank">
+									<span aria-hidden="true" class="dashicons dashicons-external"></span>
+									<?php esc_html_e( 'Submit Ticket', 'restaurant-cafe-addon-for-elementor' ); ?>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="nichaddons-dw-social nichaddons-dw-box">
+					<div class="nichaddons-dw-social-inner">
+						<a href="https://www.facebook.com/NicheAddons/" target="_blank">
+							<span class="dashicons dashicons-facebook-alt"></span>
+							Facebook
+						</a>
+						<a href="https://twitter.com/NicheAddons/" target="_blank">
+							<span class="dashicons dashicons-twitter"></span>
+							Twitter
+						</a>
+						<a href="https://www.youtube.com/channel/UCnrZdL-p547L3ee8cwuOJRQ" target="_blank">
+							<span class="dashicons dashicons-youtube"></span>
+							Youtube
+						</a>
+					</div>
+				</div>								
+			</div>
+			<?php
+		}		
 
 		/*
 		 * Class instance
@@ -74,9 +174,10 @@ if ( !class_exists('Restaurant_Elementor_Addon_Core_Elementor_init') ){
 			add_action( 'elementor/elements/categories_registered', [ $this, 'narestaurant_unique_widget_categories' ] );
 
 			// Elementor Widgets Registered
-			 add_action( 'elementor/widgets/widgets_registered', [ $this, 'narestaurant_basic_widgets_registered' ] );
-			 add_action( 'elementor/widgets/widgets_registered', [ $this, 'narestaurant_unique_widgets_registered' ] );
+			add_action( 'elementor/widgets/widgets_registered', [ $this, 'narestaurant_basic_widgets_registered' ] );
+			add_action( 'elementor/widgets/widgets_registered', [ $this, 'narestaurant_unique_widgets_registered' ] );
 
+			add_action( 'wp_dashboard_setup', [ $this, 'dashboard_widget' ] );
 		}
 
 		/*

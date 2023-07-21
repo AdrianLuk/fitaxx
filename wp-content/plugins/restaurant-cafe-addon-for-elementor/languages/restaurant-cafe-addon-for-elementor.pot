@@ -1,16 +1,16 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Restaurant & Cafe Addon for Elementor\n"
-"POT-Creation-Date: 2022-01-06 11:23+0530\n"
-"PO-Revision-Date: 2022-01-06 11:23+0530\n"
+"POT-Creation-Date: 2023-07-19 09:16+0530\n"
+"PO-Revision-Date: 2023-07-19 09:16+0530\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.3\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"X-Generator: Poedit 3.3.2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: restaurant-cafe-addon-for-elementor.php\n"
@@ -21,33 +21,74 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
+#: elementor/em-setup.php:70
+msgid "Check all plugins"
+msgstr ""
+
+#: elementor/em-setup.php:82
+msgid ""
+"Unlock the potential of NicheAddon’s Themes and Plugins to create your "
+"website rapidly and at zero cost. With a remarkable user base of over "
+"20,000+ active websites, our expertise is undeniable."
+msgstr ""
+
+#: elementor/em-setup.php:83
+msgid "Checkout Our Themes & Plugins"
+msgstr ""
+
+#: elementor/em-setup.php:88
+msgid "Restaurant Addon Support"
+msgstr ""
+
+#: elementor/em-setup.php:89
+msgid ""
+"Our support team is always there to help you out with any questions or "
+"issues you may come across."
+msgstr ""
+
+#: elementor/em-setup.php:95
+msgid "Basic Elements Doc"
+msgstr ""
+
+#: elementor/em-setup.php:101
+msgid "Unique Elements Doc"
+msgstr ""
+
+#: elementor/em-setup.php:109
+msgid "Video Tutorials"
+msgstr ""
+
+#: elementor/em-setup.php:115
+msgid "Submit Ticket"
+msgstr ""
+
 #. translators: 1: Plugin name 2: Elementor 3: Required Elementor version
 #. translators: 1: Plugin name 2: PHP 3: Required PHP version
-#: elementor/em-setup.php:90 elementor/em-setup.php:106
+#: elementor/em-setup.php:191 elementor/em-setup.php:207
 #, php-format
 msgid "\"%1$s\" requires \"%2$s\" version %3$s or greater."
 msgstr ""
 
 #. Plugin Name of the plugin/theme
-#: elementor/em-setup.php:91 elementor/em-setup.php:107
-#: restaurant-cafe-addon-for-elementor.php:168
-#: restaurant-cafe-addon-for-elementor.php:187
+#: elementor/em-setup.php:192 elementor/em-setup.php:208
+#: restaurant-cafe-addon-for-elementor.php:223
+#: restaurant-cafe-addon-for-elementor.php:244
 msgid "Restaurant & Cafe Addon for Elementor"
 msgstr ""
 
-#: elementor/em-setup.php:92 restaurant-cafe-addon-for-elementor.php:169
+#: elementor/em-setup.php:193 restaurant-cafe-addon-for-elementor.php:224
 msgid "Elementor"
 msgstr ""
 
-#: elementor/em-setup.php:108
+#: elementor/em-setup.php:209
 msgid "PHP"
 msgstr ""
 
-#: elementor/em-setup.php:133
+#: elementor/em-setup.php:234
 msgid "Restaurant Basic Elements : By Niche Addons"
 msgstr ""
 
-#: elementor/em-setup.php:141
+#: elementor/em-setup.php:242
 msgid "Unique Restaurant Elements : By Niche Addons"
 msgstr ""
 
@@ -63,73 +104,69 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:10
-msgid "Basic Widgets"
-msgstr ""
-
-#: elementor/narep-admin-sub-page.php:15
+#: elementor/narep-admin-basic-fields.php:8
 #: elementor/widgets/basic/nabasic-about-me.php:26
 msgid "About Me"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:16
+#: elementor/narep-admin-basic-fields.php:15
 #: elementor/widgets/basic/nabasic-about-us.php:26
 #: elementor/widgets/basic/nabasic-about-us.php:164
 msgid "About Us"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:17
+#: elementor/narep-admin-basic-fields.php:22
 #: elementor/widgets/basic/nabasic-blog.php:26
 msgid "Blog"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:18
+#: elementor/narep-admin-basic-fields.php:29
 #: elementor/widgets/basic/nabasic-button.php:26
 msgid "Restaurant Button"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:19
+#: elementor/narep-admin-basic-fields.php:36
 #: elementor/widgets/basic/nabasic-chart.php:29
 #: elementor/widgets/basic/napro-chart.php:31
 msgid "Chart"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:20
+#: elementor/narep-admin-basic-fields.php:43
 #: elementor/widgets/basic/nabasic-contact.php:26
 #: elementor/widgets/restaurant-unique/narestaurant-unique-chefs-recipe.php:243
 #: elementor/widgets/restaurant-unique/narestaurant-unique-chefs-recipe.php:253
 msgid "Contact"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:21
+#: elementor/narep-admin-basic-fields.php:50
 #: elementor/widgets/basic/nabasic-gallery.php:26
 #: elementor/widgets/basic/nabasic-gallery.php:360
 msgid "Gallery"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:22
+#: elementor/narep-admin-basic-fields.php:57
 #: elementor/widgets/basic/nabasic-get-apps.php:26
 #: elementor/widgets/basic/nabasic-get-apps.php:81
 #: elementor/widgets/basic/nabasic-get-apps.php:214
 msgid "Get Apps"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:23
+#: elementor/narep-admin-basic-fields.php:64
 #: elementor/widgets/basic/nabasic-history.php:26
 msgid "History"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:24
+#: elementor/narep-admin-basic-fields.php:71
 #: elementor/widgets/basic/nabasic-image-compare.php:26
 msgid "Image Compare"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:25
+#: elementor/narep-admin-basic-fields.php:78
 #: elementor/widgets/basic/nabasic-process.php:26
 msgid "Process"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:26
+#: elementor/narep-admin-basic-fields.php:85
 #: elementor/widgets/basic/nabasic-section-title.php:26
 #: elementor/widgets/basic/nabasic-section-title.php:52
 #: elementor/widgets/basic/nabasic-section-title.php:58
@@ -148,104 +185,141 @@ msgstr ""
 msgid "Section Title"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:27
+#: elementor/narep-admin-basic-fields.php:92
 #: elementor/widgets/basic/nabasic-separator.php:26
 #: elementor/widgets/basic/nabasic-separator.php:116
 msgid "Separator"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:28
+#: elementor/narep-admin-basic-fields.php:99
 #: elementor/widgets/basic/nabasic-services.php:26
 msgid "Services"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:29
+#: elementor/narep-admin-basic-fields.php:106
 #: elementor/widgets/basic/nabasic-blog.php:73
 #: elementor/widgets/basic/nabasic-slider.php:26
 #: elementor/widgets/basic/nabasic-slider.php:456
 msgid "Slider"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:30
+#: elementor/narep-admin-basic-fields.php:113
 #: elementor/widgets/basic/nabasic-subscribe.php:26
 msgid "Subscribe / Contact"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:31
+#: elementor/narep-admin-basic-fields.php:120
 #: elementor/widgets/basic/nabasic-table.php:26
 #: elementor/widgets/basic/nabasic-table.php:435
 msgid "Table"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:32
+#: elementor/narep-admin-basic-fields.php:127
 #: elementor/widgets/basic/nabasic-team-single.php:26
 msgid "Team Single"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:33
+#: elementor/narep-admin-basic-fields.php:134
 #: elementor/widgets/basic/nabasic-team.php:26
 msgid "Team"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:34
+#: elementor/narep-admin-basic-fields.php:141
 #: elementor/widgets/basic/nabasic-testimonials.php:26
 msgid "Testimonials"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:35
+#: elementor/narep-admin-basic-fields.php:148
 #: elementor/widgets/basic/nabasic-typewriter.php:26
 msgid "Typewriter"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:36
+#: elementor/narep-admin-basic-fields.php:155
+#: elementor/narep-admin-sub-page.php:91 elementor/narep-admin-sub-page.php:156
 #: elementor/widgets/basic/nabasic-video.php:26
 msgid "Video"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:60
+#: elementor/narep-admin-sub-page.php:48
+msgid "Basic Widgets"
+msgstr ""
+
+#: elementor/narep-admin-sub-page.php:50 elementor/narep-admin-sub-page.php:109
+msgid "Activate All"
+msgstr ""
+
+#: elementor/narep-admin-sub-page.php:57 elementor/narep-admin-sub-page.php:116
+msgid "Save"
+msgstr ""
+
+#: elementor/narep-admin-sub-page.php:75 elementor/narep-admin-sub-page.php:134
+msgid "premium"
+msgstr ""
+
+#: elementor/narep-admin-sub-page.php:87 elementor/narep-admin-sub-page.php:152
+msgid "Demo"
+msgstr ""
+
+#: elementor/narep-admin-sub-page.php:89 elementor/narep-admin-sub-page.php:154
+msgid "Documentation"
+msgstr ""
+
+#: elementor/narep-admin-sub-page.php:107
 msgid "Unique Widgets"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:65
-msgid "Benefits (Pro)"
+#: elementor/narep-admin-sub-page.php:158
+msgid "Upgrade"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:66
+#: elementor/narep-admin-unique-fields.php:7
+#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-benefits.php:31
+#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-benefits.php:125
+msgid "Benefits"
+msgstr ""
+
+#: elementor/narep-admin-unique-fields.php:14
 #: elementor/widgets/restaurant-unique/narestaurant-unique-branches.php:26
 #: elementor/widgets/restaurant-unique/narestaurant-unique-branches.php:52
 #: elementor/widgets/restaurant-unique/narestaurant-unique-branches.php:130
 msgid "Branches"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:67
-msgid "Branch Slider (Pro)"
+#: elementor/narep-admin-unique-fields.php:21
+#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-branch-slider.php:31
+msgid "Branch Slider"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:68
+#: elementor/narep-admin-unique-fields.php:28
 #: elementor/widgets/restaurant-unique/narestaurant-unique-chefs-recipe.php:26
 msgid "Chefs Recipe"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:69
+#: elementor/narep-admin-unique-fields.php:35
 #: elementor/widgets/restaurant-unique/narestaurant-unique-food-menu.php:25
 msgid "Food Menu"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:70
+#: elementor/narep-admin-unique-fields.php:42
 #: elementor/widgets/restaurant-unique/narestaurant-unique-food-tab.php:26
 msgid "Food Tab"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:71
+#: elementor/narep-admin-unique-fields.php:49
 #: elementor/widgets/restaurant-unique/narestaurant-unique-food-item.php:26
 msgid "Food Item"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:72
-msgid "Gift Card (Pro)"
+#: elementor/narep-admin-unique-fields.php:56
+#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-gift-card.php:31
+#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-gift-card.php:95
+#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-gift-card.php:538
+#: elementor/woocommerce/gift-card.php:14
+#: elementor/woocommerce/gift-card.php:145
+msgid "Gift Card"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:73
+#: elementor/narep-admin-unique-fields.php:63
 #: elementor/widgets/restaurant-unique/narestaurant-pro-unique-particular-recipe.php:244
 #: elementor/widgets/restaurant-unique/narestaurant-pro-unique-particular-recipe.php:303
 #: elementor/widgets/restaurant-unique/narestaurant-pro-unique-particular-recipe.php:586
@@ -255,71 +329,85 @@ msgstr ""
 msgid "Ingredients"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:74
-msgid "Image Parallax (Pro)"
+#: elementor/narep-admin-unique-fields.php:70
+#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-parallax.php:31
+msgid "Image Parallax"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:75
-msgid "Layered Image (Pro)"
+#: elementor/narep-admin-unique-fields.php:77
+#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-layered-image.php:31
+msgid "Layered Image"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:76
+#: elementor/narep-admin-unique-fields.php:84
 #: elementor/widgets/restaurant-unique/narestaurant-unique-offers.php:26
 #: elementor/widgets/restaurant-unique/narestaurant-unique-offers.php:222
 msgid "Offers"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:77
-msgid "Open Table (*Pro)"
+#: elementor/narep-admin-unique-fields.php:91
+#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-open-table.php:31
+#: elementor/widgets/restaurant-unique/narestaurant-unique-open-table.php:29
+msgid "Open Table"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:78
-msgid "Particular Recipe (Pro)"
+#: elementor/narep-admin-unique-fields.php:98
+#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-particular-recipe.php:31
+msgid "Particular Recipe"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:79
+#: elementor/narep-admin-unique-fields.php:105
 #: elementor/widgets/restaurant-unique/narestaurant-unique-pricing.php:26
 msgid "Pricing"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:80
-msgid "Pricing Content (Pro)"
+#: elementor/narep-admin-unique-fields.php:112
+#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-pricing-content.php:31
+msgid "Pricing Content"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:81
-msgid "Pricing Tab (Pro)"
+#: elementor/narep-admin-unique-fields.php:119
+#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-pricing-tab.php:31
+#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-pricing-tab.php:240
+msgid "Pricing Tab"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:82
-msgid "Products Addon Menu (Pro)"
+#: elementor/narep-admin-unique-fields.php:126
+msgid "Products Addon Menu"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:83
-msgid "Products Filter (Pro)"
+#: elementor/narep-admin-unique-fields.php:133
+#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-products-filter.php:33
+msgid "Products Filter"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:84
-msgid "Products Food Item (Pro)"
+#: elementor/narep-admin-unique-fields.php:140
+msgid "Products Food Item"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:85
-msgid "Products Food Menu (Pro)"
+#: elementor/narep-admin-unique-fields.php:147
+msgid "Products Food Menu"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:86
-msgid "Food Banner (Pro)"
+#: elementor/narep-admin-unique-fields.php:154
+#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-food-banner.php:31
+#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-food-banner.php:86
+#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-food-banner.php:106
+msgid "Food Banner"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:87
+#: elementor/narep-admin-unique-fields.php:161
 #: elementor/widgets/restaurant-unique/narestaurant-unique-restaurants.php:26
 msgid "Restaurants"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:88
-msgid "Rooms (*Pro)"
+#: elementor/narep-admin-unique-fields.php:168
+#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-rooms.php:31
+#: elementor/widgets/restaurant-unique/narestaurant-unique-rooms.php:29
+msgid "Rooms"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:89
+#: elementor/narep-admin-unique-fields.php:175
 #: elementor/widgets/restaurant-unique/narestaurant-unique-specialties.php:26
 #: elementor/widgets/restaurant-unique/narestaurant-unique-specialties.php:72
 #: elementor/widgets/restaurant-unique/narestaurant-unique-specialties.php:105
@@ -327,31 +415,25 @@ msgstr ""
 msgid "Specialties"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:90
+#: elementor/narep-admin-unique-fields.php:182
 #: elementor/widgets/restaurant-unique/narestaurant-unique-stats.php:26
 msgid "Stats"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:91
-msgid "Tab (Pro)"
+#: elementor/narep-admin-unique-fields.php:189
+#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-tab.php:31
+#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-tab.php:202
+msgid "Tab"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:92
+#: elementor/narep-admin-unique-fields.php:196
 #: elementor/widgets/restaurant-unique/narestaurant-unique-valuable-box.php:26
 msgid "Valuable Box"
 msgstr ""
 
-#: elementor/narep-admin-sub-page.php:93
+#: elementor/narep-admin-unique-fields.php:203
 #: elementor/widgets/restaurant-unique/narestaurant-unique-working-hours.php:26
 msgid "Working Hours"
-msgstr ""
-
-#: elementor/narep-admin-sub-page.php:118
-msgid "Save Basic Widgets Settings"
-msgstr ""
-
-#: elementor/narep-admin-sub-page.php:126
-msgid "Save Unique Widgets Settings"
 msgstr ""
 
 #: elementor/widgets/basic/nabasic-about-me.php:52
@@ -5836,11 +5918,6 @@ msgstr ""
 msgid "Polar"
 msgstr ""
 
-#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-benefits.php:31
-#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-benefits.php:125
-msgid "Benefits"
-msgstr ""
-
 #: elementor/widgets/restaurant-unique/narestaurant-pro-unique-benefits.php:57
 msgid "Benefits Options"
 msgstr ""
@@ -5893,10 +5970,6 @@ msgstr ""
 
 #: elementor/widgets/restaurant-unique/narestaurant-pro-unique-benefits.php:426
 msgid "Department Content"
-msgstr ""
-
-#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-branch-slider.php:31
-msgid "Branch Slider"
 msgstr ""
 
 #: elementor/widgets/restaurant-unique/narestaurant-pro-unique-branch-slider.php:60
@@ -6048,22 +6121,8 @@ msgstr ""
 msgid "/5 ratings"
 msgstr ""
 
-#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-food-banner.php:31
-#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-food-banner.php:86
-#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-food-banner.php:106
-msgid "Food Banner"
-msgstr ""
-
 #: elementor/widgets/restaurant-unique/narestaurant-pro-unique-food-banner.php:57
 msgid "Food Banner Options"
-msgstr ""
-
-#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-gift-card.php:31
-#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-gift-card.php:95
-#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-gift-card.php:538
-#: elementor/woocommerce/gift-card.php:14
-#: elementor/woocommerce/gift-card.php:145
-msgid "Gift Card"
 msgstr ""
 
 #: elementor/widgets/restaurant-unique/narestaurant-pro-unique-gift-card.php:85
@@ -6223,21 +6282,12 @@ msgstr ""
 msgid "Enter Your Message..."
 msgstr ""
 
-#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-layered-image.php:31
-msgid "Layered Image"
-msgstr ""
-
 #: elementor/widgets/restaurant-unique/narestaurant-pro-unique-layered-image.php:57
 msgid "Layered Image Options"
 msgstr ""
 
 #: elementor/widgets/restaurant-unique/narestaurant-pro-unique-layered-image.php:86
 msgid "Images"
-msgstr ""
-
-#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-open-table.php:31
-#: elementor/widgets/restaurant-unique/narestaurant-unique-open-table.php:29
-msgid "Open Table"
 msgstr ""
 
 #: elementor/widgets/restaurant-unique/narestaurant-pro-unique-open-table.php:63
@@ -6311,8 +6361,8 @@ msgstr ""
 #: elementor/widgets/restaurant-unique/narestaurant-pro-unique-open-table.php:266
 #: elementor/widgets/restaurant-unique/narestaurant-unique-open-table.php:125
 msgid ""
-"Default Metro Id : 3401.<br/><a href=\"https://www.opentable.com/start/home"
-"\" target=\"_blank\">Know more about metro here.</a>."
+"Default Metro Id : 3401.<br/><a href=\"https://www.opentable.com/start/"
+"home\" target=\"_blank\">Know more about metro here.</a>."
 msgstr ""
 
 #: elementor/widgets/restaurant-unique/narestaurant-pro-unique-open-table.php:275
@@ -6323,8 +6373,8 @@ msgstr ""
 #: elementor/widgets/restaurant-unique/narestaurant-pro-unique-open-table.php:278
 #: elementor/widgets/restaurant-unique/narestaurant-unique-open-table.php:134
 msgid ""
-"Default Region Id : 9013.<br/><a href=\"https://www.opentable.com/start/home"
-"\" target=\"_blank\">Know more about region here.</a>."
+"Default Region Id : 9013.<br/><a href=\"https://www.opentable.com/start/"
+"home\" target=\"_blank\">Know more about region here.</a>."
 msgstr ""
 
 #: elementor/widgets/restaurant-unique/narestaurant-pro-unique-open-table.php:287
@@ -6350,10 +6400,6 @@ msgstr ""
 msgid "Book table"
 msgstr ""
 
-#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-parallax.php:31
-msgid "Image Parallax"
-msgstr ""
-
 #: elementor/widgets/restaurant-unique/narestaurant-pro-unique-parallax.php:57
 msgid "Image Parallax Options"
 msgstr ""
@@ -6372,10 +6418,6 @@ msgstr ""
 
 #: elementor/widgets/restaurant-unique/narestaurant-pro-unique-parallax.php:89
 msgid "Second Image"
-msgstr ""
-
-#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-particular-recipe.php:31
-msgid "Particular Recipe"
 msgstr ""
 
 #: elementor/widgets/restaurant-unique/narestaurant-pro-unique-particular-recipe.php:63
@@ -6520,10 +6562,6 @@ msgstr ""
 msgid "Content Color"
 msgstr ""
 
-#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-pricing-content.php:31
-msgid "Pricing Content"
-msgstr ""
-
 #: elementor/widgets/restaurant-unique/narestaurant-pro-unique-pricing-content.php:57
 msgid "Pricing Content Options"
 msgstr ""
@@ -6569,11 +6607,6 @@ msgstr ""
 
 #: elementor/widgets/restaurant-unique/narestaurant-pro-unique-pricing-content.php:199
 msgid "Price Image"
-msgstr ""
-
-#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-pricing-tab.php:31
-#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-pricing-tab.php:240
-msgid "Pricing Tab"
 msgstr ""
 
 #: elementor/widgets/restaurant-unique/narestaurant-pro-unique-pricing-tab.php:61
@@ -6784,10 +6817,6 @@ msgstr ""
 msgid "+ Added"
 msgstr ""
 
-#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-products-filter.php:33
-msgid "Products Filter"
-msgstr ""
-
 #: elementor/widgets/restaurant-unique/narestaurant-pro-unique-products-filter.php:69
 msgid "Listing"
 msgstr ""
@@ -6923,11 +6952,6 @@ msgstr ""
 msgid "Heighlighted Background Color"
 msgstr ""
 
-#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-rooms.php:31
-#: elementor/widgets/restaurant-unique/narestaurant-unique-rooms.php:29
-msgid "Rooms"
-msgstr ""
-
 #: elementor/widgets/restaurant-unique/narestaurant-pro-unique-rooms.php:57
 #: elementor/widgets/restaurant-unique/narestaurant-unique-rooms.php:55
 msgid "Rooms Options"
@@ -7055,11 +7079,6 @@ msgstr ""
 #: elementor/widgets/restaurant-unique/narestaurant-pro-unique-rooms.php:363
 #: elementor/widgets/restaurant-unique/narestaurant-unique-rooms.php:348
 msgid "Content Max Width"
-msgstr ""
-
-#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-tab.php:31
-#: elementor/widgets/restaurant-unique/narestaurant-pro-unique-tab.php:202
-msgid "Tab"
 msgstr ""
 
 #: elementor/widgets/restaurant-unique/narestaurant-pro-unique-tab.php:67
@@ -7909,18 +7928,18 @@ msgid "Your gift card balance is 0"
 msgstr ""
 
 #. translators: 1: Plugin name 2: Elementor
-#: restaurant-cafe-addon-for-elementor.php:167
+#: restaurant-cafe-addon-for-elementor.php:222
 #, php-format
 msgid "\"%1$s\" requires \"%2$s\" to be installed and activated."
 msgstr ""
 
 #. translators: 1: Plugin name
-#: restaurant-cafe-addon-for-elementor.php:186
+#: restaurant-cafe-addon-for-elementor.php:243
 #, php-format
 msgid "Please deactivate the free version of \"%1$s\"."
 msgstr ""
 
-#: restaurant-cafe-addon-for-elementor.php:199
+#: restaurant-cafe-addon-for-elementor.php:257
 msgid "Widgets Settings Saved."
 msgstr ""
 

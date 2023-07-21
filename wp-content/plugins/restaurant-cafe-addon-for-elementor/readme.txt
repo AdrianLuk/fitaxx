@@ -3,10 +3,10 @@ Contributors: nicheaddons, freemius
 Author URI: https://nicheaddons.com/
 Plugin URI: https://nicheaddons.com/demos/restaurant/
 Tags: restaurant, cafe, elementor, addons, table, elementor widget, elementor extensions, eatery, food, coffee, cafeteria, elements
-Requires PHP: 5.6
-Requires at least: 5.0
-Tested up to: 5.8
-Stable tag: 1.4.5
+Requires PHP: 7.0
+Requires at least: 6.0
+Tested up to: 6.2
+Stable tag: 1.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -138,6 +138,21 @@ No, it'll not work without Elementor Page Builder, it's an addon for Elementor.
 7. Benefits Widget
 
 == Changelog ==
+
+= 1.5.0
+
+* Option page updated
+* Minor php warning fixes
+* Translation
+
+= 1.4.8
+
+* Freemius Update 2.5.10
+* Translation
+
+= 1.4.6
+
+* Security Fixes and Improvements.
 
 = 1.4.5
 
