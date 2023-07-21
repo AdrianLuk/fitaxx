@@ -1,19 +1,24 @@
-=== WPZOOM Social Feed Widget ===
+=== WPZOOM Social Feed Widget & Block ===
 Contributors: WPZOOM, nvartolomei, ciorici
 Donate link: https://www.wpzoom.com/
-Tags: instagram, widget, timeline, social network, latest images, feed, instagram feed, story, stories, insta, instagram widget
-Requires at least: 4.3
-Tested up to: 5.4
-Requires PHP: 5.6
-Stable tag: trunk
+Tags: instagram, instagram feed, instagram gallery, instagram photos, instagram widget, instagram stories, widget, timeline, social network, latest images, feed, story, stories, insta
+Requires at least: 5.5
+Tested up to: 6.2
+Requires PHP: 7.4
+Stable tag: 2.1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Formerly known as "Instagram Widget by WPZOOM". Fully customisable and responsive widget for WordPress to display your Instagram feed.
+Formerly known as "Instagram Widget by WPZOOM". Simple and lightweight widget for WordPress to display your Instagram feed.
 
 == Description ==
 
-Formerly known as *Instagram Widget by WPZOOM*, **WPZOOM Social Feed Widget** is a fully customisable and responsive widget for WordPress to display your **Instagram feed**.
+⭐️ **[Instagram Widget & Block PRO](https://www.wpzoom.com/plugins/instagram-widget/?utm_source=wporg&utm_medium=website&utm_campaign=free_description)** *NOW AVAILABLE!* ⭐️
+
+
+**Showcase your Instagram Feeds on your WordPress site in seconds!**
+
+Formerly known as *Instagram Widget by WPZOOM*, **WPZOOM Social Feed Widget** is a customizable and responsive plugin, made to help you gain even more followers by showcasing your Instagram feed on your WordPress website.
 
 
 **[View Demo](https://demo.wpzoom.com/instagram-widget/)**
@@ -22,12 +27,33 @@ Formerly known as *Instagram Widget by WPZOOM*, **WPZOOM Social Feed Widget** is
 > Did you find this plugin helpful? Please consider [leaving a 5-star review](https://wordpress.org/support/view/plugin-reviews/instagram-widget-by-wpzoom).
 
 
-**WPZOOM Social Feed Widget** gives you a WordPress Widget that you can place anywhere you want and be able to fully customize it's design using CSS.
+**WPZOOM Social Feed Widget** gives you a WordPress Widget that you can place anywhere you want to display your Instagram Feed. Easy setup and configuration!
 
+[youtube https://www.youtube.com/watch?v=vlEk68RyBMA]
 
-= What's New in version 1.4? =
+= 📌 FEATURES =
 
-You can now display a public feed limited to 12 photos of any Instagram account you want. You are no longer limited to display just your own feed.
+* **Create Multiple Feeds** 🆕
+* **Gutenberg Block** 🆕
+* **Embed using Shortcode in Elementor and other page builders** 🆕
+* **Multiple Layouts** 🆕
+* **Lightbox**
+* Add your custom avatar and bio
+* Supports Lazy Loading
+* Works with the new WordPress 5.8 block-based widgets screen
+
+= ⭐️ PRO FEATURES ⭐️ =
+* **Connect Multiple Instagram Accounts - 🆕**
+* **Masonry Layout - 🆕**
+* **Carousel - 🆕**
+* **Highlight Items - 🆕**
+* **Responsive Columns - 🆕**
+* **Load More button - 🆕**
+* **Customize Colors - 🆕**
+* Premium Support
+* and many new features coming soon!
+
+⭐️ **[Get the PRO version!](https://www.wpzoom.com/plugins/instagram-widget/?utm_source=wporg&utm_medium=website&utm_campaign=free_description)** ⭐️
 
 
 = Where I can view a Demo? =
@@ -51,21 +77,175 @@ Once connected, go to the **Widgets** page and add the widget **Instagram Widget
 
 == Frequently Asked Questions ==
 
-= I just installed plugin and widget shows nothing =
+= How do I create a new Instagram feed? =
 
-Make sure to connect your Instagram account with the plugin. You can do that in the **Settings > Instagram Widget** page from the Dashboard.
+Go to the **Instagram Widget** section in the WordPress Dashboard and connect your Instagram account. After that, create a new Feed and embed it in your posts or pages using the available Block or shortcode.
+
+= Is there a Documentation available? =
+
+Yes, you can find the documentation for this plugin with more instructions on our website.
+
+[Go to Documentation](https://www.wpzoom.com/documentation/instagram-widget/)
 
 
 == Screenshots ==
 
-1. Examples of how the widget can be used
-2. More examples
-3. Perfect for Sidebar or Footer column
-4. Customized button using CSS
-5. Settings
+1. Creating a new feed
+2. Manage feeds
+3. Instagram Block for Gutenberg
+4. Customize
+5. Embed the shortcode in Elementor
 
 
 == Changelog ==
+
+= 2.1.6 =
+* Added a new option in the Settings page to enable Email notifications when an Access Token is about to expire
+
+= 2.1.5 =
+* Fixes issues in PHP 8.2
+* Fixed an issue with the expiration date in the Users section
+
+= 2.1.4 =
+* Fixed an issue with the Instagram API
+
+= 2.1.3 =
+* Fixed an issue related to Lazy Loading Images
+
+= 2.1.2 =
+* Minor bug fix with images not showing in the feed
+
+= 2.1.1 =
+* Minor improvements and bug fixes
+
+= 2.1.0 =
+* Numerous optimization improvements
+* Fixed issues related to Lazy Loading Images
+* Added "Full Size" image option for feeds
+
+= 2.0.14 =
+* Fixed an issue with the amount of items for legacy widget
+* Fixed the re-connect feature when using multiple Instagram accounts. [PRO]
+
+= 2.0.13 =
+* Fixed a bug with the "Hide Video Thumbnails" option not working
+* Minor bug fixes
+
+= 2.0.12 =
+* Improvements to the Full-width style
+* Alignment option now available in the Instagram Block
+
+= 2.0.11 =
+* Lightbox feature now supports videos
+* Minor bug fixes
+
+= 2.0.10 =
+* Minor improvements and bug fixes
+
+= 2.0.9 =
+* Fixed a bug in the Full-width style
+
+= 2.0.8 =
+* Minor bug fixes
+* Fixed a conflict with Elementor
+
+= 2.0.7 =
+* Added alt tag to images
+* Multiple fixes and visual improvements
+* Display date on items
+
+= 2.0.6 =
+* Added a new Settings page with a new option to load CSS and JS files everywhere
+
+= 2.0.5 =
+* Fixed a PHP error
+
+= 2.0.4 =
+* Fixed an issue with some feeds not showing new posts
+
+= 2.0.3 =
+* JS and CSS assets from the plugin will be loaded only on pages showing an Instagram feed
+* Minor bug fixes and improvements
+
+= 2.0.2 =
+* Fixing some issues with the legacy widget
+
+= 2.0.1 =
+* Minor bug fixes
+
+= 2.0.0 =
+* We've made our plugin better and more user-friendly!
+* New: Gutenberg block
+* New: Create multiple feeds with different configurations
+* New: Embed your Instagram feeds using a shortcode anywhere you want
+* New: Customize the colors
+* New: Full-width layout
+* New: Connect multiple Instagram accounts [PRO only]
+* New: Masonry Layout [PRO only]
+* New: Load More button [PRO only]
+
+= 1.9.5 =
+* Fixed a bug with the lightbox not working in specific themes, including Divi
+
+= 1.9.4 =
+* Minor improvements
+
+= 1.9.3 =
+* Bug fix with the lightbox in Safari
+
+= 1.9.2 =
+* Minor bug fixes and improvements with the lightbox
+
+= 1.9.1 =
+* Added support for album posts in the lightbox (showing multiple photos per slide)
+* Added swipe support in the lightbox
+* Multiple bug fixes
+
+= 1.9.0 =
+* Added a new Lightbox Feature
+
+= 1.8.3 =
+* Fixed error 400 Bad Request
+
+= 1.8.2 =
+* Fixed compatibility with upcoming WordPress 5.8
+* Fixed a bug with Beaver Builder
+
+= 1.8.1 =
+* Fixed a minor bug for PHP 8.0
+
+= 1.8.0 =
+* NEW: Automatically refresh Instagram access token before it expires
+* NOTE: There are limitations to refresh access token for Instagram private accounts! You will need to reauthorize manually after access token expires
+* Improved admin notices
+
+= 1.7.7 =
+* Load plugin text domain
+* Removed old .pot file from /languages
+
+= 1.7.6 =
+* Change textdomain to match with plugin slug
+
+= 1.7.5 =
+* Fixed strings text domain
+* Fixed dismiss url for admin notice
+* Added Text Domain and Domain Path to plugin description
+
+= 1.7.4 =
+* Added the "nofollow" parameter to all links from the widget.
+* Fixing issues with thumbnails that were deleted by third-party plugins.
+
+= 1.7.3 =
+* Multiple improvements and bug fixes
+
+= 1.7.2 =
+* Fixing issues with images not loading on specific websites
+
+= 1.7.1 =
+* Minor bug fixes
+
+= 1.7.0 =
+* Added support for the new Facebook oEmbed endpoints due to deprecation of the old Instagram oEmbed on October 24, 2020.
 
 = 1.6.4 =
 * Minor bug fixes for PHP 7.4
@@ -173,5 +353,5 @@ Make sure to connect your Instagram account with the plugin. You can do that in 
 
 == Upgrade Notice ==
 
-= 1.6.0 =
-⚠️ IMPORTANT: On June 29, Instagram will stop supporting its old API which will disrupt feeds created using the old API. If your Instagram account is connected in the plugin settings, you will need to reconnect it again using the new API.
+= 2.0.0 =
+⚠️ IMPORTANT: Version 2.0 includes major changes in the plugin. Existing Instagram widgets will not be affected, but we highly recommend creating a new feed in the new section "Instagram Widget" and embedding it using the new Gutenberg block or shortcode.
