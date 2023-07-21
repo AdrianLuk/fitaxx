@@ -8,11 +8,29 @@ jQuery(function($) {
 	
 	var Parent;
 	
-	WPGMZA.OLMarker = function(row)
+	WPGMZA.OLMarker = function(options)
 	{
 		var self = this;
 		
-		Parent.call(this, row);
+		Parent.call(this, options);
+		
+		var settings = {};
+		if(options)
+		{
+			for(var name in options)
+			{
+				if(options[name] instanceof WPGMZA.LatLng)
+				{
+					settings[name] = options[name].toLatLngLiteral();
+				}
+				else if(options[name] instanceof WPGMZA.Map)
+				{
+					// Do nothing (ignore)
+				}
+				else
+					settings[name] = options[name];
+			}
+		}
 
 		var origin = ol.proj.fromLonLat([
 			parseFloat(this.lng),
@@ -37,6 +55,10 @@ jQuery(function($) {
 			$(this.element).on("mouseover", function(event) {
 				self.dispatchEvent("mouseover");
 			});
+
+			$(this.element).on("mouseout", function(event) {
+				self.dispatchEvent("mouseout");
+			});
 			
 			this.overlay = new ol.Overlay({
 				element: this.element,
@@ -48,12 +70,12 @@ jQuery(function($) {
 			
 			if(this.animation)
 				this.setAnimation(this.animation);
+			else if(this.anim)	// NB: Code to support old name
+				this.setAnimation(this.anim);
 			
-			this.setLabel(this.settings.label);
-			
-			if(row)
+			if(options)
 			{
-				if(row.draggable)
+				if(options.draggable)
 					this.setDraggable(true);
 			}
 			
@@ -67,12 +89,16 @@ jQuery(function($) {
 			
 			this.feature.setStyle(this.getVectorLayerStyle());
 			this.feature.wpgmzaMarker = this;
+			this.feature.wpgmzaFeature = this;
 		}
 		else
 			throw new Error("Invalid marker render mode");
 		
+		this.setOptions(settings);
 		this.trigger("init");
 	}
+	
+	// NB: Does not presently inherit OLFeature, which it probably should
 	
 	if(WPGMZA.isProVersion())
 		Parent = WPGMZA.ProMarker;
@@ -107,10 +133,19 @@ jQuery(function($) {
 		return WPGMZA.OLMarker.defaultVectorLayerStyle;
 	}
 	
-	WPGMZA.OLMarker.prototype.updateElementHeight = function(height)
+	WPGMZA.OLMarker.prototype.updateElementHeight = function(height, calledOnFocus)
 	{
+		var self = this;
+		
 		if(!height)
 			height = $(this.element).find("img").height();
+		
+		if(height == 0 && !calledOnFocus)
+		{
+			$(window).one("focus", function(event) {
+				self.updateElementHeight(false, true);
+			});
+		}
 		
 		$(this.element).css({height: height + "px"});
 	}
@@ -269,10 +304,14 @@ jQuery(function($) {
 				};
 			}
 			
-			$(this.element).draggable(options);
-			this.jQueryDraggableInitialized = true;
-			
-			this.rebindClickListener();
+			try{
+				$(this.element).draggable(options);
+				this.jQueryDraggableInitialized = true;
+				
+				this.rebindClickListener();
+			} catch (ex){
+				/* Draggable not available */
+			}
 		}
 		else
 			$(this.element).draggable({disabled: true});
@@ -326,6 +365,8 @@ jQuery(function($) {
 		
 		this.isBeingDragged = false;
 		this.trigger({type: "dragend", latLng: latLngAfterDrag});
+
+		this.trigger("change");
 		
 		// NB: "yes" represents disabled
 		if(this.map.settings.wpgmza_settings_map_draggable != "yes")

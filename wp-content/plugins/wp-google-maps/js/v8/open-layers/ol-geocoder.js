@@ -69,8 +69,11 @@ jQuery(function($) {
 			format: "json"
 		};
 		
-		if(options.componentRestrictions && options.componentRestrictions.country)
+		if(options.componentRestrictions && options.componentRestrictions.country){
 			data.countrycodes = options.componentRestrictions.country;
+		} else if(options.country){
+			data.countrycodes = options.country;
+		}
 		
 		$.ajax("https://nominatim.openstreetmap.org/search/", {
 			data: data,
@@ -139,6 +142,22 @@ jQuery(function($) {
 		if(!options)
 			throw new Error("Invalid options");
 		
+		if(WPGMZA.LatLng.REGEXP.test(options.address))
+		{
+			var latLng = WPGMZA.LatLng.fromString(options.address);
+			
+			callback([{
+				geometry: {
+					location: latLng
+				},
+				latLng: latLng,
+				lat: latLng.lat,
+				lng: latLng.lng
+			}], WPGMZA.Geocoder.SUCCESS);
+			
+			return;
+		}
+		
 		if(options.location)
 			options.latLng = new WPGMZA.LatLng(options.location);
 		
@@ -189,6 +208,11 @@ jQuery(function($) {
 			finish = function(response, status)
 			{
 				var address = response[0].display_name;
+
+				if(options.fullResult){
+					address = response[0];
+				}
+				
 				callback([address], status);
 			}
 		}

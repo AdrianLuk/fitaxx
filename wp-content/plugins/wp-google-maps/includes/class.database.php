@@ -13,8 +13,8 @@ class Database extends Factory
 		global $wpgmza_version;
 		
 		$this->version = get_option('wpgmza_db_version');
-		
-		if(version_compare($this->version, $wpgmza_version, '<'))
+
+		if(!$this->version || version_compare($this->version, $wpgmza_version, '<'))
 		{
 			if(!empty($this->version))
 			{
@@ -24,6 +24,20 @@ class Database extends Factory
 			
 			$this->install();
 		}
+	}
+	
+	public static function getCharsetAndCollate()
+	{
+		global $wpdb;
+		$charset_collate = '';
+
+		if(!empty($wpdb->charset))
+			$charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
+
+		if (!empty($wpdb->collate))
+			$charset_collate .= " COLLATE $wpdb->collate";
+		
+		return $charset_collate;
 	}
 	
 	public function install()
@@ -39,6 +53,13 @@ class Database extends Factory
 		$this->installPolylineTable();
 		$this->installCircleTable();
 		$this->installRectangleTable();
+
+		$this->installPointLabelsTable();
+		$this->installImageOverlayTable();
+
+		$this->installAdminNoticesTable();
+		
+		$this->setDefaults();
 		
 		update_option('wpgmza_db_version', $wpgmza_version);
 	}
@@ -49,7 +70,7 @@ class Database extends Factory
 		
 		$sql = "CREATE TABLE `$WPGMZA_TABLE_NAME_MAPS` (
 			id int(11) NOT NULL AUTO_INCREMENT,
-			map_title varchar(55) NOT NULL,
+			map_title varchar(256) NOT NULL,
 			map_width varchar(6) NOT NULL,
 			map_height varchar(6) NOT NULL,
 			map_start_lat varchar(700) NOT NULL,
@@ -84,7 +105,7 @@ class Database extends Factory
 			default_to VARCHAR(700) NOT NULL,
 			other_settings longtext NOT NULL,
 			PRIMARY KEY  (id)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1";
+			) AUTO_INCREMENT=1 " . Database::getCharsetAndCollate();
 
 		dbDelta($sql);
 	}
@@ -114,8 +135,9 @@ class Database extends Factory
 			sticky tinyint(1) DEFAULT '0',
 			other_data LONGTEXT NOT NULL,
 			latlng POINT,
+			layergroup INT(3) DEFAULT '0',
 			PRIMARY KEY  (id)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1";
+			) AUTO_INCREMENT=1 " . Database::getCharsetAndCollate();
 
 		dbDelta($sql);
 	}
@@ -140,8 +162,10 @@ class Database extends Factory
 			ohlinecolor VARCHAR(7) NOT NULL,
 			ohopacity VARCHAR(3) NOT NULL,
 			polyname VARCHAR(100) NOT NULL,
+			linethickness VARCHAR(3) NOT NULL,
+			layergroup INT(3) DEFAULT '0',
 			PRIMARY KEY  (id)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1";
+			) AUTO_INCREMENT=1 " . Database::getCharsetAndCollate();
 
 		dbDelta($sql);
 	}
@@ -158,8 +182,9 @@ class Database extends Factory
 			linethickness VARCHAR(3) NOT NULL,
 			opacity VARCHAR(3) NOT NULL,
 			polyname VARCHAR(100) NOT NULL,
+			layergroup INT(3) DEFAULT '0',
 			PRIMARY KEY  (id)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1";
+			) AUTO_INCREMENT=1 " . Database::getCharsetAndCollate();
 
 		dbDelta($sql);
 	}
@@ -176,8 +201,18 @@ class Database extends Factory
 			radius FLOAT,
 			color VARCHAR(16),
 			opacity FLOAT,
+			lineColor VARCHAR(16),
+			lineOpacity FLOAT DEFAULT '0',
+			description TEXT,
+			hoverEnabled tinyint(1) DEFAULT '0',
+			ohFillColor VARCHAR(16),
+			ohLineColor VARCHAR(16),
+			ohFillOpacity FLOAT,
+			ohLineOpacity FLOAT,
+			link VARCHAR(700) NOT NULL,
+			layergroup INT(3) DEFAULT '0',
 			PRIMARY KEY  (id)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1";
+			) AUTO_INCREMENT=1 " . Database::getCharsetAndCollate();
 
 		dbDelta($sql);
 	}
@@ -194,9 +229,100 @@ class Database extends Factory
 			cornerB POINT,
 			color VARCHAR(16),
 			opacity FLOAT,
+			lineColor VARCHAR(16),
+			lineOpacity FLOAT DEFAULT '0',
+			description TEXT,
+			hoverEnabled tinyint(1) DEFAULT '0',
+			ohFillColor VARCHAR(16),
+			ohLineColor VARCHAR(16),
+			ohFillOpacity FLOAT,
+			ohLineOpacity FLOAT,
+			link VARCHAR(700) NOT NULL,
+			layergroup INT(3) DEFAULT '0',
 			PRIMARY KEY  (id)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1";
+			) AUTO_INCREMENT=1 " . Database::getCharsetAndCollate();
 
 		dbDelta($sql);
+	}
+
+	protected function installPointLabelsTable(){
+		global $WPGMZA_TABLE_NAME_POINT_LABELS;
+
+		$sql = "CREATE TABLE `$WPGMZA_TABLE_NAME_POINT_LABELS` (
+			id int(11) NOT NULL AUTO_INCREMENT,
+			map_id int(11) NOT NULL,
+			name TEXT,
+			center POINT,
+			fillColor VARCHAR(16),
+			lineColor VARCHAR(16),
+			opacity FLOAT,
+			fontSize VARCHAR(3),
+			PRIMARY KEY  (id)
+			) AUTO_INCREMENT=1 " . Database::getCharsetAndCollate();
+
+		dbDelta($sql);
+	}
+
+	protected function installImageOverlayTable(){
+		global $WPGMZA_TABLE_NAME_IMAGE_OVERLAYS;
+
+		$sql = "CREATE TABLE `$WPGMZA_TABLE_NAME_IMAGE_OVERLAYS` (
+			id int(11) NOT NULL AUTO_INCREMENT,
+			map_id int(11) NOT NULL,
+			name TEXT,
+			cornerA POINT,
+			cornerB POINT,
+			image VARCHAR(700),
+			opacity FLOAT,
+			PRIMARY KEY  (id)
+			) AUTO_INCREMENT=1 " . Database::getCharsetAndCollate();
+
+		dbDelta($sql);
+	}
+
+	protected function installAdminNoticesTable(){
+		global $WPGMZA_TABLE_NAME_ADMIN_NOTICES;
+
+		$sql = "CREATE TABLE `$WPGMZA_TABLE_NAME_ADMIN_NOTICES` (
+			id int(11) NOT NULL AUTO_INCREMENT,
+			name VARCHAR(255),
+			message TEXT,
+			active_date DATETIME,
+			options LONGTEXT,
+			dismissed TINYINT(1) DEFAULT '1',
+			PRIMARY KEY  (id)
+			) AUTO_INCREMENT=1 " . Database::getCharsetAndCollate();
+
+		dbDelta($sql);		
+	}
+	
+	protected function setDefaults()
+	{
+		
+	}
+
+	public function onFirstRun()
+	{
+		$map = Map::createInstance(array(
+			"map_title"				=> __("My first map","wp-google-maps"),
+			"map_start_lat"			=> "45.950464398418106",
+			"map_start_lng"			=> "-109.81550500000003",
+			"map_width"				=> "100",
+			"map_height"			=> "400",
+			"map_width_type"		=> "%",
+			"map_height_type"		=> "px",
+			"map_start_location"	=> "45.950464398418106,-109.81550500000003",
+			"map_start_zoom"		=> "2",
+			"directions_enabled"	=> '0',
+			"alignment"				=> "4"
+		));
+		
+		$marker = Marker::createInstance(array(
+			"map_id"				=> $map->id,
+			"address"				=> "California",
+			"lat"					=> 36.778261,
+			"lng"					=> -119.4179323999,
+			"approved"				=> 1
+		));
 	}
 }

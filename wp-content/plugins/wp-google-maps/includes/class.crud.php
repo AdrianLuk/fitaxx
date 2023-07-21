@@ -35,6 +35,9 @@ class Crud extends Factory implements \IteratorAggregate, \JsonSerializable
 	{
 		global $wpdb;
 		
+		$this->table_name = $table_name;
+		Crud::cacheColumnsByTableName($table_name);
+		
 		$this->fields = array();
 		$this->overrides = array();
 		
@@ -71,26 +74,30 @@ class Crud extends Factory implements \IteratorAggregate, \JsonSerializable
 		else
 			throw new \Exception('Invalid ID');
 		
-		$this->table_name = $table_name;
-		
 		$this->id = $id;
 		
-		Crud::cacheColumnsByTableName($table_name);
-		
-		if($read_mode != Crud::BULK_READ)
-		{
-			if($this->id == -1)
+		if($read_mode != Crud::BULK_READ){
+			if($this->id == -1){
 				$this->create();
-			else
-				$this->read(Marker::SINGLE_READ);
-		}
-		else
-		{
+			} else {
+				if(!empty($this->id)){
+					// Only attempt a read if not empty as this can lead to erroneous error being thrown
+					$this->read(Marker::SINGLE_READ);
+				}
+			}
+		} else {
 			$arbitraryDataColumnName = $this->get_arbitrary_data_column_name();
 			
 			if(!empty($arbitraryDataColumnName) && !empty($this->fields[$arbitraryDataColumnName]))
 				$this->parse_arbitrary_data($this->fields[$arbitraryDataColumnName]);
 		}
+		
+		$this->onCrudInitialized();
+	}
+	
+	protected function onCrudInitialized()
+	{
+		
 	}
 	
 	private static function cacheColumnsByTableName($table_name)
@@ -114,7 +121,7 @@ class Crud extends Factory implements \IteratorAggregate, \JsonSerializable
 		Crud::$cached_columns_by_table_name[$table_name] = $columns;
 	}
 	
-	protected static function getColumnsByTableName($table_name)
+	public static function getColumnsByTableName($table_name)
 	{
 		Crud::cacheColumnsByTableName($table_name);
 		
@@ -151,6 +158,7 @@ class Crud extends Factory implements \IteratorAggregate, \JsonSerializable
 		$stmt = $wpdb->prepare("DELETE FROM `{$table_name}` WHERE id IN ($placeholders)", $ids);
 		$wpdb->query($stmt);
 	}
+
 	
 	/**
 	 * Gets the table name for this object type
@@ -228,20 +236,6 @@ class Crud extends Factory implements \IteratorAggregate, \JsonSerializable
 			case 'real':
 				$placeholder = '%f';
 				break;
-				
-			/*case 'geometry':
-			case 'point':
-			case 'linestring':
-			case 'polygon':
-			case 'multipoint':
-			case 'multilinestring':
-			case 'multipolygon':
-			case 'geometrycollection':
-				$placeholders[] = 'NULL';
-				
-				// This can be implemented in a subclass
-				
-				break;*/
 				
 			default:
 				$placeholder = '%s';
@@ -396,7 +390,7 @@ class Crud extends Factory implements \IteratorAggregate, \JsonSerializable
 	
 	protected function getReadColumns()
 	{
-		return "*";
+		return array("*");
 	}
 	
 	/**
@@ -410,7 +404,10 @@ class Crud extends Factory implements \IteratorAggregate, \JsonSerializable
 		
 		$this->assert_not_trashed();
 		
-		$stmt = $wpdb->prepare("SELECT * FROM " . $this->get_table_name() . " WHERE id = %d", array($this->id));
+		$columns = implode(', ', $this->getReadColumns());
+		
+		$stmt = $wpdb->prepare("SELECT $columns FROM " . $this->get_table_name() . " WHERE id = %d", array($this->id));
+		
 		$results = $wpdb->get_results($stmt);
 		
 		if(empty($results))
@@ -522,6 +519,33 @@ class Crud extends Factory implements \IteratorAggregate, \JsonSerializable
 		$this->trashed = true;
 	}
 	
+	public function duplicate()
+	{
+		global $wpdb;
+		
+		$columns = array();
+		
+		foreach($wpdb->get_col("SHOW COLUMNS FROM `{$this->table_name}`") as $name)
+		{
+			if($name == 'id')
+				continue;
+			
+			$columns []= $name;
+		}
+		
+		$imploded = implode(',', $columns);
+		
+		$query = "INSERT INTO {$this->table_name} ($imploded) SELECT $imploded FROM {$this->table_name} WHERE id=%d";
+		
+		$stmt = $wpdb->prepare($query, $this->id);
+		
+		$wpdb->query($stmt);
+		
+		$class = get_class($this);
+		
+		return $class::createInstance($wpdb->insert_id);
+	}
+	
 	/**
 	 * Set variables in bulk, this reduces the number of database calls
 	 * @param string|array|object Either a string naming the property to be set (with a second argument which is the value), or an array or object of key and value pairs to be set on this object
@@ -532,24 +556,32 @@ class Crud extends Factory implements \IteratorAggregate, \JsonSerializable
 	{
 		$this->assert_not_trashed();
 		
-		if(is_string($arg))
-		{
+		if(is_string($arg)){
+			if(is_string($val)){
+				$val = wp_kses_post($val);
+			}
 			$this->__set($arg, $val);
-		}
-		else if(is_array($arg) || is_object($arg))
-		{
-			foreach($arg as $key => $value)
-			{
-				if($this->is_read_only($key))
+		} else if(is_array($arg) || is_object($arg)){
+			foreach($arg as $key => $value){
+				if($this->is_read_only($key)){
 					throw new \Exception('Property is read only');
+				}
 				
+				if(is_string($value)){
+					$value = wp_kses_post($value);
+				}
+
+				if($key === 'link'){
+					$value = html_entity_decode($value);
+				}
+
 				$this->fields[$key] = $value;
 			}
 			
 			$this->update();
-		}
-		else
+		} else{
 			throw new \Exception('Invalid argument');
+		}
 		
 		return $this;
 	}
@@ -571,6 +603,7 @@ class Crud extends Factory implements \IteratorAggregate, \JsonSerializable
 	 * @throws \Exception The object has been trashed
 	 * @return \ArrayIterator
 	 */
+	#[\ReturnTypeWillChange]
 	public function getIterator()
 	{
 		$this->assert_not_trashed();
@@ -583,6 +616,7 @@ class Crud extends Factory implements \IteratorAggregate, \JsonSerializable
 	 * @throws \Exception
 	 * @return array
 	 */
+	#[\ReturnTypeWillChange]
 	public function jsonSerialize()
 	{
 		$this->assert_not_trashed();
@@ -628,6 +662,9 @@ class Crud extends Factory implements \IteratorAggregate, \JsonSerializable
 	{
 		$this->assert_not_trashed();
 		
+		if($name == 'id')
+			return true;
+		
 		return isset($this->fields[$name]);
 	}
 	
@@ -647,6 +684,10 @@ class Crud extends Factory implements \IteratorAggregate, \JsonSerializable
 		
 		if($this->is_read_only($name))
 			throw new \Exception('Property is read only');
+		
+		if(is_string($value)){
+			$value = htmlspecialchars_decode(wp_kses_post($value));
+		}
 		
 		$this->fields[$name] = $value;
 		

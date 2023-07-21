@@ -15,7 +15,7 @@ if(!defined('ABSPATH'))
  */
 function trace($str)
 {
-	echo $str . "\r\n";
+	echo esc_html($str) . "\r\n";
 }
 
 /**
@@ -894,7 +894,7 @@ class XPathConverter
 	protected function convertAttribute($attr)
 	{
 		$name = $attr->name;
-		$value = addslashes($attr->value);
+		$value = @addslashes($attr->value);
 		
 		switch($attr->operator)
 		{

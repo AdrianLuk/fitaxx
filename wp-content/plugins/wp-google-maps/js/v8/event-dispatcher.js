@@ -89,7 +89,7 @@ jQuery(function($) {
 		{
 			obj = arr[i];
 		
-			if(obj.listener == listener && obj.thisObject == thisObject && obj.useCapture == useCapture)
+			if((arguments.length == 1 || obj.listener == listener) && obj.thisObject == thisObject && obj.useCapture == useCapture)
 			{
 				arr.splice(i, 1);
 				return;
@@ -123,10 +123,9 @@ jQuery(function($) {
 	 * @memberof WPGMZA.EventDispatcher
 	 * @param {string|WPGMZA.Event} event Either the event type as a string, or an instance of WPGMZA.Event
 	 */
-	WPGMZA.EventDispatcher.prototype.dispatchEvent = function(event)
-	{
-		if(!(event instanceof WPGMZA.Event))
-		{
+	WPGMZA.EventDispatcher.prototype.dispatchEvent = function(event) {
+
+		if(!(event instanceof WPGMZA.Event)) {
 			if(typeof event == "string")
 				event = new WPGMZA.Event(event);
 			else
@@ -137,6 +136,8 @@ jQuery(function($) {
 					event[name] = src[name];
 			}
 		}
+
+
 
 		event.target = this;
 			
@@ -179,7 +180,6 @@ jQuery(function($) {
 				
 				customEvent[key] = value;
 			}
-			
 			$(topMostElement).trigger(customEvent);
 		}
 	}
