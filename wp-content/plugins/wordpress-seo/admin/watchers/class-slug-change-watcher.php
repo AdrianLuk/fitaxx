@@ -17,20 +17,20 @@ class WPSEO_Slug_Change_Watcher implements WPSEO_WordPress_Integration {
 	 */
 	public function register_hooks() {
 		// If the current plugin is Yoast SEO Premium, stop registering.
-		if ( WPSEO_Utils::is_yoast_seo_premium() ) {
+		if ( YoastSEO()->helpers->product->is_premium() ) {
 			return;
 		}
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 
 		// Detect a post trash.
-		add_action( 'wp_trash_post', array( $this, 'detect_post_trash' ) );
+		add_action( 'wp_trash_post', [ $this, 'detect_post_trash' ] );
 
 		// Detect a post delete.
-		add_action( 'before_delete_post', array( $this, 'detect_post_delete' ) );
+		add_action( 'before_delete_post', [ $this, 'detect_post_delete' ] );
 
 		// Detects deletion of a term.
-		add_action( 'delete_term_taxonomy', array( $this, 'detect_term_delete' ) );
+		add_action( 'delete_term_taxonomy', [ $this, 'detect_term_delete' ] );
 	}
 
 	/**
@@ -41,7 +41,7 @@ class WPSEO_Slug_Change_Watcher implements WPSEO_WordPress_Integration {
 	public function enqueue_assets() {
 		global $pagenow;
 
-		if ( ! in_array( $pagenow, array( 'edit.php', 'edit-tags.php' ), true ) ) {
+		if ( ! in_array( $pagenow, [ 'edit.php', 'edit-tags.php' ], true ) ) {
 			return;
 		}
 
@@ -52,7 +52,7 @@ class WPSEO_Slug_Change_Watcher implements WPSEO_WordPress_Integration {
 	/**
 	 * Shows an message when a post is about to get trashed.
 	 *
-	 * @param integer $post_id The current post ID.
+	 * @param int $post_id The current post ID.
 	 *
 	 * @return void
 	 */
@@ -71,7 +71,7 @@ class WPSEO_Slug_Change_Watcher implements WPSEO_WordPress_Integration {
 	/**
 	 * Shows an message when a post is about to get trashed.
 	 *
-	 * @param integer $post_id The current post ID.
+	 * @param int $post_id The current post ID.
 	 *
 	 * @return void
 	 */
@@ -90,19 +90,20 @@ class WPSEO_Slug_Change_Watcher implements WPSEO_WordPress_Integration {
 	/**
 	 * Shows a message when a term is about to get deleted.
 	 *
-	 * @param integer $term_id The term ID that will be deleted.
+	 * @param int $term_taxonomy_id The term taxonomy ID that will be deleted.
 	 *
 	 * @return void
 	 */
-	public function detect_term_delete( $term_id ) {
-		if ( ! $this->is_term_viewable( $term_id ) ) {
+	public function detect_term_delete( $term_taxonomy_id ) {
+		if ( ! $this->is_term_viewable( $term_taxonomy_id ) ) {
 			return;
 		}
+		$term = \get_term_by( 'term_taxonomy_id', (int) $term_taxonomy_id );
 
 		$first_sentence = sprintf(
 			/* translators: 1: term label */
 			__( 'You just deleted a %1$s.', 'wordpress-seo' ),
-			$this->get_taxonomy_label_for_term( $term_id )
+			$this->get_taxonomy_label_for_term( $term->term_id )
 		);
 
 		$message = $this->get_message( $first_sentence );
@@ -134,12 +135,12 @@ class WPSEO_Slug_Change_Watcher implements WPSEO_WordPress_Integration {
 	/**
 	 * Checks if the term is viewable.
 	 *
-	 * @param string $term_id The term ID to check.
+	 * @param int $term_taxonomy_id The term taxonomy ID to check.
 	 *
 	 * @return bool Whether the term is viewable or not.
 	 */
-	protected function is_term_viewable( $term_id ) {
-		$term = get_term( $term_id );
+	protected function is_term_viewable( $term_taxonomy_id ) {
+		$term = \get_term_by( 'term_taxonomy_id', (int) $term_taxonomy_id );
 
 		if ( ! $term || is_wp_error( $term ) ) {
 			return false;
@@ -193,11 +194,11 @@ class WPSEO_Slug_Change_Watcher implements WPSEO_WordPress_Integration {
 	 * @return bool Whether or not the post is visible.
 	 */
 	protected function check_visible_post_status( $post_status ) {
-		$visible_post_statuses = array(
+		$visible_post_statuses = [
 			'publish',
 			'static',
 			'private',
-		);
+		];
 
 		return in_array( $post_status, $visible_post_statuses, true );
 	}
@@ -236,10 +237,10 @@ class WPSEO_Slug_Change_Watcher implements WPSEO_WordPress_Integration {
 	protected function add_notification( $message ) {
 		$notification = new Yoast_Notification(
 			$message,
-			array(
+			[
 				'type'           => 'notice-warning is-dismissible',
 				'yoast_branding' => true,
-			)
+			]
 		);
 
 		$notification_center = Yoast_Notification_Center::get();

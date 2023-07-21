@@ -11,10 +11,12 @@
 class WPSEO_Tracking_Settings_Data implements WPSEO_Collection {
 
 	/**
-	 * @var array $anonymous_settings contains all of the option_names which need to be
-	 * anonimized before they can be sent elsewhere.
+	 * The options that need to be anonymized before they can be sent elsewhere.
+	 *
+	 * @var array All of the option_names which need to be
+	 * anonymized before they can be sent elsewhere.
 	 */
-	private $anonymous_settings = array(
+	private $anonymous_settings = [
 		'baiduverify',
 		'googleverify',
 		'msverify',
@@ -24,6 +26,7 @@ class WPSEO_Tracking_Settings_Data implements WPSEO_Collection {
 		'alternate_website_name',
 		'company_logo',
 		'company_name',
+		'company_alternate_name',
 		'person_name',
 		'person_logo',
 		'person_logo_id',
@@ -38,22 +41,45 @@ class WPSEO_Tracking_Settings_Data implements WPSEO_Collection {
 		'og_frontpage_desc',
 		'og_frontpage_image',
 		'og_frontpage_image_id',
+		'open_graph_frontpage_title',
+		'open_graph_frontpage_desc',
+		'open_graph_frontpage_image',
+		'open_graph_frontpage_image_id',
+		'other_social_urls',
+		'mastodon_url',
 		'pinterest_url',
 		'pinterestverify',
 		'twitter_site',
 		'youtube_url',
 		'wikipedia_url',
-		'fbadminapp',
-	);
+		'semrush_tokens',
+		'zapier_api_key',
+		'wincher_tokens',
+		'wincher_website_id',
+		'least_readability_ignore_list',
+		'least_seo_score_ignore_list',
+		'most_linked_ignore_list',
+		'least_linked_ignore_list',
+		'indexables_page_reading_list',
+		'publishing_principles_id',
+		'ownership_funding_info_id',
+		'actionable_feedback_policy_id',
+		'corrections_policy_id',
+		'ethics_policy_id',
+		'diversity_policy_id',
+		'diversity_staffing_report_id',
+	];
 
 	/**
-	 * @var array $include_list contains the option_names for the options we want to track.
+	 * The options we want to track.
+	 *
+	 * @var array The option_names for the options we want to track.
 	 */
-	private $include_list = array(
+	private $include_list = [
 		'ms_defaults_set',
 		'version',
 		'disableadvanced_meta',
-		'onpage_indexability',
+		'ryte_indexability',
 		'baiduverify',
 		'googleverify',
 		'msverify',
@@ -63,6 +89,7 @@ class WPSEO_Tracking_Settings_Data implements WPSEO_Collection {
 		'environment_type',
 		'content_analysis_active',
 		'keyword_analysis_active',
+		'inclusive_language_analysis_active',
 		'enable_admin_bar_menu',
 		'enable_cornerstone_content',
 		'enable_xml_sitemap',
@@ -70,13 +97,13 @@ class WPSEO_Tracking_Settings_Data implements WPSEO_Collection {
 		'show_onboarding_notice',
 		'first_activated_on',
 		'myyoast-oauth',
+		'dynamic_permalinks',
 		'website_name',
 		'alternate_website_name',
 		'company_logo',
 		'company_name',
 		'company_or_person',
 		'person_name',
-		'title_test',
 		'forcerewritetitle',
 		'separator',
 		'title-home-wpseo',
@@ -96,7 +123,6 @@ class WPSEO_Tracking_Settings_Data implements WPSEO_Collection {
 		'disable-date',
 		'disable-post_format',
 		'disable-attachment',
-		'is-media-purge-relevant',
 		'breadcrumbs-404crumb',
 		'breadcrumbs-display-blog-page',
 		'breadcrumbs-boldlast',
@@ -112,13 +138,10 @@ class WPSEO_Tracking_Settings_Data implements WPSEO_Collection {
 		'company_or_person_user_id',
 		'stripcategorybase',
 		'noindex-post',
-		'showdate-post',
 		'display-metabox-pt-post',
 		'noindex-page',
-		'showdate-page',
 		'display-metabox-pt-page',
 		'noindex-attachment',
-		'showdate-attachment',
 		'display-metabox-pt-attachment',
 		'display-metabox-tax-category',
 		'noindex-tax-category',
@@ -146,6 +169,10 @@ class WPSEO_Tracking_Settings_Data implements WPSEO_Collection {
 		'og_frontpage_desc',
 		'og_frontpage_image',
 		'og_frontpage_image_id',
+		'open_graph_frontpage_title',
+		'open_graph_frontpage_desc',
+		'open_graph_frontpage_image',
+		'open_graph_frontpage_image_id',
 		'opengraph',
 		'pinterest_url',
 		'pinterestverify',
@@ -154,8 +181,57 @@ class WPSEO_Tracking_Settings_Data implements WPSEO_Collection {
 		'twitter_card_type',
 		'youtube_url',
 		'wikipedia_url',
-		'fbadminapp',
-	);
+		'mastodon_url',
+		'indexables_indexing_completed',
+		'semrush_integration_active',
+		'semrush_tokens',
+		'semrush_country_code',
+		'enable_enhanced_slack_sharing',
+		'zapier_integration_active',
+		'zapier_api_key',
+		'enable_metabox_insights',
+		'enable_link_suggestions',
+		'enable_index_now',
+		'workouts',
+		'wincher_integration_active',
+		'wincher_tokens',
+		'wincher_website_id',
+		'wincher_automatically_add_keyphrases',
+		'first_time_install',
+		'other_social_urls',
+		'remove_feed_global',
+		'remove_feed_global_comments',
+		'remove_feed_post_comments',
+		'remove_feed_authors',
+		'remove_feed_categories',
+		'remove_feed_tags',
+		'remove_feed_custom_taxonomies',
+		'remove_feed_post_types',
+		'remove_feed_search',
+		'remove_atom_rdf_feeds',
+		'remove_shortlinks',
+		'remove_rest_api_links',
+		'remove_rsd_wlw_links',
+		'remove_oembed_links',
+		'remove_generator',
+		'remove_emoji_scripts',
+		'remove_powered_by_header',
+		'remove_pingback_header',
+		'clean_campaign_tracking_urls',
+		'clean_permalinks',
+		'clean_permalinks_extra_variables',
+		'search_cleanup',
+		'search_cleanup_emoji',
+		'search_cleanup_patterns',
+		'search_character_limit',
+		'redirect_search_pretty_urls',
+		'wordproof_integration_active',
+		'indexables_overview_state',
+		'deny_search_crawling',
+		'deny_wp_json_crawling',
+		'deny_adsbot_crawling',
+		'last_known_no_unindexed',
+	];
 
 	/**
 	 * Returns the collection data.
@@ -174,15 +250,16 @@ class WPSEO_Tracking_Settings_Data implements WPSEO_Collection {
 		// Returns the settings of which the keys intersect with the values of the include list.
 		$options = array_intersect_key( $options, array_flip( $this->include_list ) );
 
-		return array(
+		return [
 			'settings' => $this->anonymize_settings( $options ),
-		);
+		];
 	}
 
 	/**
 	 * Anonimizes the WPSEO_Options array by replacing all $anonymous_settings values to 'used'.
 	 *
 	 * @param array $settings The settings.
+	 *
 	 * @return array The anonymized settings.
 	 */
 	private function anonymize_settings( $settings ) {
@@ -191,6 +268,7 @@ class WPSEO_Tracking_Settings_Data implements WPSEO_Collection {
 				$settings[ $setting ] = 'used';
 			}
 		}
+
 		return $settings;
 	}
 }
