@@ -6,6 +6,7 @@
             "key": "field_5d1bc0d96eb14",
             "label": "Delivery Locations",
             "name": "delivery_locations",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -25,6 +26,7 @@
                     "key": "field_5d1bc14d6eb15",
                     "label": "Location",
                     "name": "location",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -38,12 +40,14 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_5d1bc0d96eb14"
                 },
                 {
                     "key": "field_5d1bc1576eb16",
                     "label": "Price",
                     "name": "price",
+                    "aria-label": "",
                     "type": "number",
                     "instructions": "",
                     "required": 0,
@@ -59,14 +63,17 @@
                     "append": "",
                     "min": 0,
                     "max": "",
-                    "step": ""
+                    "step": "",
+                    "parent_repeater": "field_5d1bc0d96eb14"
                 }
-            ]
+            ],
+            "rows_per_page": 20
         },
         {
             "key": "field_5d1bc1796eb17",
             "label": "Delivery Times",
             "name": "delivery_times",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -86,6 +93,7 @@
                     "key": "field_5d1bc1b188cae",
                     "label": "Timeframe",
                     "name": "timeframe",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -99,7 +107,54 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_5d1bc1796eb17"
+                }
+            ],
+            "rows_per_page": 20
+        },
+        {
+            "key": "field_65b2bca8af1bc",
+            "label": "Delivery Days",
+            "name": "delivery_days",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Day of the week for delivery",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "table",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "field_65b2bcd0af1bd",
+            "button_label": "Add Day",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_65b2bcd0af1bd",
+                    "label": "Day",
+                    "name": "day",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_65b2bca8af1bc"
                 }
             ]
         }
@@ -121,5 +176,6 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1626465761
+    "show_in_rest": 0,
+    "modified": 1706213067
 }
